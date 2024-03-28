@@ -9,11 +9,20 @@
 
   \centering
 
-  \IfFileExists{logos/tum-\fg.pdf}{%
-    \includegraphics[height=20mm]{logos/tum-\fg.pdf}
-  }{%
-    \vspace*{20mm}
-  }
+  %\IfFileExists{logos/tum-\fg.pdf}{%
+  %  \includegraphics[height=20mm]{logos/tum-\fg.pdf}
+  %}{%
+  %  \vspace*{20mm}
+  %}
+
+  \begin{tikzpicture}[y = -1cm, scale = .40]
+    \draw (0, 0) -- (4, 0) -- (4, 4) -- (5, 4) -- (5, 0) -- (10, 0) --
+          (10, 5) -- (9, 5) -- (9, 1) -- (8, 1) -- (8, 5) -- (7, 5) --
+    (7, 1) -- (6, 1) -- (6, 5) -- (3, 5) -- (3, 1) -- (2, 1) --
+    (2, 5) -- (1, 5) -- (1, 1) -- (0, 1) -- cycle
+    %[line width = 0pt, draw = white, fill = tumblue];
+    [fill = TUMBlue, line width = 0pt, draw = white];
+  \end{tikzpicture}
 
   \vspace{5mm}
   {\huge\MakeUppercase{School of \getSchool{} --- \getFaculty{}} \par}
@@ -21,7 +30,7 @@
   \vspace{5mm}
   {\large\MakeUppercase{\getUniversity{}} \par}
 
-  \vspace{15mm}
+  \vspace{25mm}
   {\Large \getDoctype{} in \getDegree{} \par}
 
   \vspace{10mm}
@@ -29,6 +38,12 @@
 
   \vspace{10mm}
   {\LARGE \getAuthor{}}
+
+  \vspace{30mm}
+  \begin{tikzpicture}
+    \draw (0, 0) arc (95:445:1cm) [ultra thick, draw = TUMBlue];
+    \draw (0.09, 0.2) -- (0.09, -1.8) [very thick, draw = TUMBlue];
+  \end{tikzpicture}
 
   \IfFileExists{logos/faculty-\fg.pdf}{%
     \vfill{}

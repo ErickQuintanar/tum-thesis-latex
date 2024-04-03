@@ -1,5 +1,29 @@
 \chapter{Introduction}\label{chapter:introduction}
 
-\section{Section}
-a.	Introduce the reason quantum algorithms can’t be run in current quantum devices and the need for NISQ appropriate algorithms.
-b.	Describe the potential uses of noise in QML as a potential increase in robustness.
+- Quantum mechanics explained, jump to quantum computing. (Quantum Computing: Progress and Prospects)~\cite{national_academies_of_sciences_engineering_and_medicine_quantum_2019}
+- Quantum algorithms are better for specific tasks. (Quantum Advantage papers)~\cite{shor_polynomial-time_1997, van_dam_quantum_2006, hallgren_polynomial-time_2007}
+- Shor's algorithm breaks current asymmetric cryptographic implementations. (Shor)~\cite{shor_polynomial-time_1997}
+
+\section{Motivation}
+- These quantum algorithms can't be run due to noise. (NISQ)~\cite{preskill_quantum_2018}
+- Error mitigation and fault tolerance (Quantum computing)~\cite{shor_quantum_nodate}, improving hw, is important and still being researched. (NISQ)~\cite{preskill_quantum_2018}
+- Intro to machine learning, its uses and widespread popularity. Presents possible risks and challenges. (On the opportunities and risks of foundational models)~\cite{bommasani_opportunities_2022}
+- What is QML and why are people doing it? (Machine Learning with Quantum Computers)~\cite{schuld_machine_2021}
+
+- Adversarial attacks can be crafted to force a ML model to missclassify an input. (Intriguing properties of NN)~\cite{szegedy_intriguing_2014}
+- Adversarial attacks can be transferred in between models. (Transferability in Machine Learning: from Phenomena to Black-Box Attacks using Adversarial Samples)~\cite{papernot_transferability_2016}
+- Adversarial training as a defense for adversarial attacks enhancing generalization. (Explaining and harnessing | intriguing properties of NN)~\cite{goodfellow_explaining_2015, szegedy_intriguing_2014}
+- Present the limitations of adversarial training in large-scale systems. (AML at scale)~\cite{kurakin_adversarial_2017}
+- Describe the potential uses of noise in QML as a potential increase in robustness. (QML a classical perspective)~\cite{ciliberto_quantum_2018}
+
+TODO\@:
+- Could we claim that noise in QML might also be a defense against data poisoning attacks? (AML at scale)~\cite{kurakin_adversarial_2017}
+
+\section{Research Goals}
+1. Test the effect of different types of noise in QML regarding robustness.
+2. Test the effect of noise in different parts of the QML circuits.
+3. Test the effect of noise between VQA and Kernel methods.
+4. Test the models with different types of adversarial attacks (FGSM, CaW, PGD)
+
+\section{Outline}
+Write here what is the general structure of the thesis.

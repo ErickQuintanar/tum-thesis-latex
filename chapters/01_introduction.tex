@@ -1,20 +1,72 @@
-\chapter{Introduction}\label{chapter:introduction}
+\chapter{Introduction}\label{chapter:introduction} \
 
-- Quantum mechanics explained, jump to quantum computing. (Quantum Computing: Progress and Prospects)~\cite{national_academies_of_sciences_engineering_and_medicine_quantum_2019}
-- Quantum algorithms are better for specific tasks. (Quantum Advantage papers)~\cite{shor_polynomial-time_1997, van_dam_quantum_2006, hallgren_polynomial-time_2007}
-- Shor's algorithm breaks current asymmetric cryptographic implementations. (Shor)~\cite{shor_polynomial-time_1997}
+In recent years the interest on techniques to utilize quantum mechanics has been rising.
+One of the many applications is quantum computing, where devices based on the laws
+of quantum theory are exploited to process information~\cite{national_academies_of_sciences_engineering_and_medicine_quantum_2019}.
+Although current classical computes have become very powerful, they still struggle to
+compute many applications that quantum computers can in theory easily solve. \
 
-\section{Motivation}
-- These quantum algorithms can't be run due to noise. (NISQ)~\cite{preskill_quantum_2018}
-- Error mitigation and fault tolerance (Quantum computing)~\cite{shor_quantum_nodate}, improving hw, is important and still being researched. (NISQ)~\cite{preskill_quantum_2018}
-- Intro to machine learning, its uses and widespread popularity. Presents possible risks and challenges. (On the opportunities and risks of foundational models)~\cite{bommasani_opportunities_2022}
-- What is QML and why are people doing it? (Machine Learning with Quantum Computers)~\cite{schuld_machine_2021}
+Many quantum algorithms for quantum computers have been proposed that highly
+outperform a classical computer with the best known algorithms~\cite{shor_polynomial-time_1997, van_dam_quantum_2006, hallgren_polynomial-time_2007}.
+These quantum algorithms solve in polynomial time problems that quickly become
+intractable to solve in a classical computer, as they normally grow exponentially.
+The most famous algorithm is Shor's algorithm, which can find the prime factors
+of an integer. This algorithm is of special interest because if quantum devices
+were able to execute it, the current confidentiality and integrity guarantees
+that the RSA~\cite{rivest_method_1978} cryptographic mechanism offers would be violated~\cite{shor_polynomial-time_1997}. \
 
-- Adversarial attacks can be crafted to force a ML model to missclassify an input. (Intriguing properties of NN)~\cite{szegedy_intriguing_2014}
-- Adversarial attacks can be transferred in between models. (Transferability in Machine Learning: from Phenomena to Black-Box Attacks using Adversarial Samples)~\cite{papernot_transferability_2016}
-- Adversarial training as a defense for adversarial attacks enhancing generalization. (Explaining and harnessing | intriguing properties of NN)~\cite{goodfellow_explaining_2015, szegedy_intriguing_2014}
-- Present the limitations of adversarial training in large-scale systems. (AML at scale)~\cite{kurakin_adversarial_2017}
-- Describe the potential uses of noise in QML as a potential increase in robustness. (QML a classical perspective)~\cite{ciliberto_quantum_2018}
+\section{Motivation} \
+
+Even though the previously mentioned quantum algorithms would surpass the performance
+of the best classical algorithms, they still can not be executed in current quantum
+computers due to noise~\cite{preskill_quantum_2018}. This noise occurs from the fact
+that current quantum devices are not completely isolated from the environment and every
+time we perform an operation on them we introduce a disturbance. This type of device
+is known as \ac{nisq}, meaning that there will be significant noise when operating
+the quantum device. \
+
+In order to reduce the influence of noise in \ac{nisq} devices, either the precision
+in which quantum computers can be manipulated has to improve or error-correcting
+codes have to be implemented~\cite{shor_quantum_nodate}. Currently both techniques are
+being heavily researched and in conjunction will lead to the next generation of
+quantum devices, namely fault-tolerant quantum computers. \
+
+A technology that right now has gained a bigger presence in our society is \ac{ml}.
+There have been many important breakthroughs for \ac{ml} in the past few years, with
+uses in natural language processing, computer vision, anomaly detection, and many
+more fields~\cite{bommasani_opportunities_2022}. Nowadays \ac{ml} has a big impact
+in society, and even though it depicts big opportunities for improvement in
+society it also represents significant risks. \
+
+Quantum computing and \ac{ml} are information processing techniques that have
+improved significantly in recent years. This lead to the natural desire of
+harnessing the advantages of both and to the emergence of a new field of study
+denominated \ac{qml}~\cite{schuld_machine_2021}. \ac{qml} explores several ideas
+like whether quantum devices are better at \ac{ml} than classical computers or
+if quantum information adds new data that affects how machines recognize patterns. \
+
+Returning to the possible risks that \ac{ml} might encounter, several attacks have
+been developed to force a \ac{ml} model to missclassify an input~\cite{szegedy_intriguing_2014}.
+These attacks are denominated adversarial attacks and are based on crafting specific
+input data that has been slightly modified to cause the model to erroneously classify
+the input. At the beginning, when the first adversarial attacks were developed,
+they required to know the architecture of the model to be able to fool it.
+Nevertheless, it was proved that adversarial attacks are transferable between
+models with the same use case, without knowing the architecture of the model or
+the dataset it was trained on~\cite{papernot_transferability_2016}. \
+
+Adversarial training was developed in order to defend \ac{ml} models against
+adversarial attacks~\cite{goodfellow_explaining_2015, szegedy_intriguing_2014}.
+Adversarial training consists of including adversarial samples into the training
+of the \ac{ml} mnodel to better generalize its classification. This mechanism
+has a tradeoff, in which the accuracy of the model lowers, while increasing the
+resilience to adversarial attacks~\cite{kurakin_adversarial_2017}. \
+
+In classical \ac{ml} noise in training has been shown to improve generalization
+performance and local optima avoidance~\cite{ciliberto_quantum_2018}. This
+property from noise is particularly interesting in \ac{nisq} devices, as their
+inherent noise might be able to improve \ac{qml} performance, accuracy and
+resilience against adversarial attacks. \
 
 TODO\@:
 - Could we claim that noise in QML might also be a defense against data poisoning attacks? (AML at scale)~\cite{kurakin_adversarial_2017}

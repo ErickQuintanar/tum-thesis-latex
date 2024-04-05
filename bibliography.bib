@@ -246,3 +246,24 @@ Publisher: Cambridge University Press},
 	langid = {english},
 	doi = {10.1007/978-3-030-83098-4},
 }
+
+@article{rivest_method_1978,
+	title = {A method for obtaining digital signatures and public-key cryptosystems},
+	volume = {21},
+	issn = {0001-0782, 1557-7317},
+	url = {https://dl.acm.org/doi/10.1145/359340.359342},
+	doi = {10.1145/359340.359342},
+	abstract = {An encryption method is presented with the novel property that publicly revealing an encryption key does not thereby reveal the corresponding decryption key. This has two important consequences: (1) Couriers or other secure means are not needed to transmit keys, since a message can be enciphered using an encryption key publicly revealed by the intented recipient. Only he can decipher the message, since only he knows the corresponding decryption key. (2) A message can be “signed” using a privately held decryption key. Anyone can verify this signature using the corresponding publicly revealed encryption key. Signatures cannot be forged, and a signer cannot later deny the validity of his signature. This has obvious applications in “electronic mail” and “electronic funds transfer” systems. A message is encrypted by representing it as a number M, raising M to a publicly specified power e, and then taking the remainder when the result is divided by the publicly specified product,
+              n
+              , of two large secret primer numbers p and q. Decryption is similar; only a different, secret, power d is used, where e * d ≡ 1(mod (p - 1) * (q - 1)). The security of the system rests in part on the difficulty of factoring the published divisor,
+              n
+              .},
+	pages = {120--126},
+	number = {2},
+	journaltitle = {Communications of the {ACM}},
+	shortjournal = {Commun. {ACM}},
+	author = {Rivest, R. L. and Shamir, A. and Adleman, L.},
+	urldate = {2024-04-04},
+	date = {1978-02},
+	langid = {english},
+}

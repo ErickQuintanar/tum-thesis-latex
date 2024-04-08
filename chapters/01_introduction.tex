@@ -3,24 +3,24 @@
 In recent years the interest on techniques to utilize quantum mechanics has been rising.
 One of the many applications is quantum computing, where devices based on the laws
 of quantum theory are exploited to process information~\cite{national_academies_of_sciences_engineering_and_medicine_quantum_2019}.
-Although current classical computes have become very powerful, they still struggle to
-compute many applications that quantum computers can in theory easily solve. \
+Although current classical computers have become very powerful, they still struggle to
+process many applications that quantum computers can in theory easily solve. \
 
 Many quantum algorithms for quantum computers have been proposed that highly
 outperform a classical computer with the best known algorithms~\cite{shor_polynomial-time_1997, van_dam_quantum_2006, hallgren_polynomial-time_2007}.
 These quantum algorithms solve in polynomial time problems that quickly become
 intractable to solve in a classical computer, as they normally grow exponentially.
 The most famous algorithm is Shor's algorithm~\cite{shor_polynomial-time_1997}, which can find the prime factors
-of an integer. This algorithm is of special interest because if quantum devices
+of an integer. It is of special interest because if quantum devices
 were able to execute it, the current confidentiality and integrity guarantees
 that the RSA~\cite{rivest_method_1978} cryptographic mechanism offers would be violated. \
 
 \section{Motivation} \
 
 Even though the previously mentioned quantum algorithms would surpass the performance
-of the best classical algorithms, they still can not be executed in current quantum
-computers due to noise~\cite{preskill_quantum_2018}. This noise occurs from the fact
-that current quantum devices are not completely isolated from the environment and every
+of the best classical ones, they still can not be executed in current quantum
+computers due to noise~\cite{preskill_quantum_2018}. This noise occurs because
+current quantum devices are not completely isolated from the environment and every
 time we perform an operation on them we introduce a disturbance. This type of device
 is known as \ac{nisq}, meaning that there will be significant noise when operating
 the quantum device. \
@@ -50,7 +50,7 @@ been developed to force a \ac{ml} model to missclassify an input~\cite{szegedy_i
 These attacks are denominated adversarial attacks and are based on crafting specific
 input data that has been slightly modified to cause the model to erroneously classify
 the input. At the beginning, when the first adversarial attacks were developed,
-they required to know the architecture of the model to be able to fool it.
+they needed to know the architecture of the model to be able to fool it.
 Nevertheless, it was proved that adversarial attacks are transferable between
 models with the same use case, without knowing the architecture of the model or
 the dataset it was trained on~\cite{papernot_transferability_2016}. \

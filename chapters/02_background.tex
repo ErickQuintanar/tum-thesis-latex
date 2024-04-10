@@ -1,6 +1,6 @@
 \chapter{Theoretical Background}\label{chapter:background} \
 
-In Chapter \ref{chapter:background} we will introduce the
+In Chapter~\ref{chapter:background} we will introduce the
 background information that is required to understand
 the main ideas of this thesis. First we introduce
 the basic concepts of quantum computing. Then we will
@@ -12,7 +12,7 @@ and adversarial training as a defense mechanism. \
 
 \section{Fundamentals of Quantum Computing} \
 
-\subsection{Qubit} \
+\subsection{Qubit}\label{subsection:qubit} \
 
 The basic computing unit in quantum computing is the
 \textit{qubit}~\cite{schumacher_quantum_1995}. Similar to the classical
@@ -45,7 +45,11 @@ value and with probability \(|\beta|^2\) we will observe a
 \textit{1} value. This distribution is determined by the
 Born rule~\cite{born_quantenmechanik_1926} and states that \(|\alpha|^2 + |\beta|^2 \stackrel{!}{=} 1\).
 The Born rule thus implies that a qubit state is a unitary vector in
-a two-dimensional complex vector space. \
+a two-dimensional complex vector space. Although the
+probability amplitudes can take on any complex value as long
+as they fulfill the Born rule, when we perform a measurement
+on the qubit it \textit{collapses} to one of the two basis
+states. \
 
 \begin{equation}\label{eq:qubit_superposition}
   \ket{\psi} = \alpha\ket{0} + \beta\ket{1}
@@ -82,32 +86,158 @@ observable effects, we can omit it and write the state of a qubit as: \
 where \(\theta\) and \(\varphi\) determine a point in the Bloch
 sphere~\cite{bloch_nuclear_1946}. The Bloch sphere (Fig.~\ref{fig:bloch_sphere})
 is a helpful visual representation for understanding the state of a
-qubit. \
+qubit. In Section~\ref{section:noise} this representation will be
+utilized to show the effects of quantum noise on a quantum state. It
+can also be used to visualize the effect of the operations performed
+on quantum states, these operations are called \textit{gates} and 
+they will be introduced in Subsection~\ref{subsection:gates}. \
 
 \begin{figure}[ht]
   \includegraphics[scale=0.1]{figures/Bloch_sphere.png}
   \centering
-  \caption{Bloch sphere representation of a qubit. Image taken from
-           \href{https://commons.wikimedia.org/wiki/File:Bloch_Sphere.svg}{https://commons.wikimedia.org/wiki/File:Bloch\_Sphere.svg}
-           under the \href{https://en.wikipedia.org/wiki/Creative_Commons}{Creative Commons Attribution-Share Alike 3.0 Unported license}.}
-\end{figure}\label{fig:bloch_sphere} \
+  \caption{Bloch sphere representation of a qubit. Image taken from \href{https://commons.wikimedia.org/wiki/File:Bloch_Sphere.svg}{https://commons.wikimedia.org/wiki/File:Bloch\_Sphere.svg} under the \href{https://en.wikipedia.org/wiki/Creative_Commons}{Creative Commons Attribution-Share Alike 3.0 Unported license}.}
+~\label{fig:bloch_sphere}
+\end{figure} \
 
-    - Introuce Bloch sphere \
-    - Introduce many qubits system \
-    - Introduce entanglement, 11 \ 
+\subsection{Multiple qubits} \
+
+To describe multiple qubits we utilize the fundamentals presented in
+Subsection~\ref{subsection:qubit} and expand them. For two qubits
+\(\ket{00}, \ket{01}, \ket{10}\), and \(\ket{11}\) are the computational basis.
+A general representation for a two qubit system can be found in 
+Equation~\ref{eq:two_qubits}, where all the probability amplitudes must
+follow the Born rule. \ 
+
+\begin{equation}\label{eq:two_qubits}
+  \ket{\psi} = \alpha_{00}\ket{00} + \alpha_{01}\ket{01} + \alpha_{10}\ket{10} + \alpha_{11}\ket{11}
+\end{equation} \
+
+Due to the Born rule the measurement results for
+\(x = \left\{00, 01, 10, 11\right\}\) follow the probability
+distribution determined by \(|\alpha_{x}|^2\). Similar to a
+single qubit, once a measurement on both qubits is performed,
+the state of the qubits will collapse to the measured computational
+basis. Nevertheless, with multiple qubits we are able to perform
+measurements on a subset of qubits. In the case of a two-qubit
+system, measuring the first qubit will collapse its value. However,
+the second's qubit state will remain. In the case of Eq.~\ref{eq:two_qubits},
+if \textit{0} was measured in the first qubit, the amplitudes \(\alpha_{10}\)
+and \(\alpha_{11}\) would disappear from the state as they are no longer
+possible. Furthermore, the remaining amplitudes must be normalized,
+such as in Eq.~\ref{eq:measure_first}, to fulfill Born's rule.  \
+
+\begin{equation}\label{eq:measure_first}
+  \ket{\psi'} = \frac{\alpha_{00}\ket{00} + \alpha_{01}\ket{01}}
+                    {\sqrt{|\alpha_{00}|^2 + |\alpha_{01}|^2}}
+\end{equation} \
+
+In Equation~\ref*{eq:multiple_qubits} we can find a general representation of
+a set of \textit{n} qubits. For a system composed by \textit{n} qubits there are \(2^n\)
+amplitudes. If we tried to simulate a quantum system with \(n = 50\), assuming
+that complex numbers require 8 bytes to be stored~\cite{numpy}, a classical computer would need
+approximately 9000 terabytes to store the generated quantum state. This simple calculation
+shows the reason why quantum computers are so promising and also why classical computers
+are not able to process quantum information efficiently. \
+% (2**50)*8 = 9007199254740992
+% https://docs.scipy.org/doc/numpy-1.17.0/user/basics.types.html
+
+\begin{equation}\label{eq:multiple_qubits}
+  \ket{\psi} = \alpha_{00}\ket{0\cdots0} + \cdots + \alpha_{2^{n-1}}\ket{1\cdots1}
+\end{equation} \
+
+\subsection{Quantum Gates}\label{subsection:gates}
 - Introduce quantum gates \
     - Equate a gate with a unitary matrix \
     - Pauli Gates \
-    - Hadamard Gates \
+\begin{equation}\label{eq:pauli_x}
+    X = \begin{pmatrix}
+          0 & 1 \\
+          1 & 0
+        \end{pmatrix} \qquad \qquad
+    \Qcircuit @C=1em @R=1em {
+      & \gate{X} & \qw
+    }
+\end{equation} \
+
+\begin{equation}\label{eq:pauli_y}
+  Y = \begin{pmatrix}
+        0 & -i \\
+        i & 0
+      \end{pmatrix} \qquad \qquad
+  \Qcircuit @C=1em @R=1em {
+    & \gate{Y} & \qw
+  }
+\end{equation} \
+
+\begin{equation}\label{eq:pauli_z}
+  Z = \begin{pmatrix}
+        1 & 0 \\
+        0 & -1
+      \end{pmatrix} \qquad \qquad
+  \Qcircuit @C=1em @R=1em {
+    & \gate{Z} & \qw
+  }
+\end{equation} \
+
+    - Hadamard Gate \
+\begin{equation}\label{eq:hadamard}
+  H = \frac{1}{\sqrt{2}} 
+      \begin{pmatrix}
+        1 & 1 \\
+        1 & 1
+      \end{pmatrix} \qquad \qquad
+  \Qcircuit @C=1em @R=1em {
+    & \gate{H} & \qw
+  }
+\end{equation} \
+
+- Multiple qbits gates
+
+\begin{equation}\label{eq:cnot}
+  CNOT = \begin{pmatrix}
+          1 & 0 & 0 & 0 \\
+          0 & 1 & 0 & 0 \\
+          0 & 0 & 0 & 1 \\
+          0 & 0 & 1 & 0 \\
+        \end{pmatrix} \qquad \qquad
+  \Qcircuit @C=1em @R=1em {
+      & \ctrl{1} & \qw \\
+      & \targ & \qw \\
+  }
+\end{equation} \
+
+\begin{equation}\label{eq:swap}
+  SWAP = \begin{pmatrix}
+          1 & 0 & 0 & 0 \\
+          0 & 0 & 1 & 0 \\
+          0 & 1 & 0 & 0 \\
+          0 & 0 & 0 & 1 \\
+        \end{pmatrix} \qquad \qquad
+  \Qcircuit @C=1em @R=1em {
+    & \qswap & \qw \\
+    & \qswap \qwx & \qw \\
+  }
+\end{equation} \
+
+- Introduce entanglement and bell states, 11,16 \
+\begin{equation}\label{eq:entanglement}
+  \Qcircuit @C=1em @R=1em {
+    & \gate{H} & \ctrl{1} & \qw \\
+    & \qw & \targ & \qw \\
+  } \qquad \qquad
+  \frac{1}{\sqrt{2}} \left(\ket{00} + \ket{11}\right)
+\end{equation}
+
 - Introduce quantum circuits \
 - Introduce quantum measurement \
 \subsection{Density Operator}\label{subsection:density_operator}
 - Introduce the density operator \
 - Introduce quantum algorithms* \
 
-i.	Introduce the required quantum concepts for the reader to understand noise in quantum computing.
+Todo:
+- Citation for hadamard gate, pauli gate.
 
-\section{Quantum Noise}
+\section{Quantum Noise}\label{section:noise}
 i.	Describe the types of noise that can occur.
 ii.	Explain where can noise occur.
 iii.	State how noise can be simulated.

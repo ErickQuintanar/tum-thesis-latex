@@ -12,6 +12,10 @@ and adversarial training as a defense mechanism. \
 
 \section{Fundamentals of Quantum Computing} \
 
+% TODO: Most concepts are presented in a simpliflied way.
+%       Say most info can be found in books. if not fully
+%       understood.
+
 \subsection{Qubit}\label{subsection:qubit} \
 
 The basic computing unit in quantum computing is the
@@ -60,7 +64,7 @@ several different small particles. However, the mathematical
 qubit abstraction helps establish a baseline computing unit
 for quantum computing independent of which particle it is
 being represented by~\cite{nielsen_quantum_2010}. While in this perfect
-mathematical description noise doesn't occur, there are
+mathematical description noise does not occur, there are
 different mechanisms to represent the noise that quantum
 computers suffer from, namely the density operator that will
 be introduced in Subsection~\ref{subsection:density_operator}. \
@@ -124,7 +128,8 @@ the second's qubit state will remain. In the case of Eq.~\ref{eq:two_qubits},
 if \textit{0} was measured in the first qubit, the amplitudes \(\alpha_{10}\)
 and \(\alpha_{11}\) would disappear from the state as they are no longer
 possible. Furthermore, the remaining amplitudes must be normalized,
-such as in Eq.~\ref{eq:measure_first}, to fulfill Born's rule.  \
+such as in Eq.~\ref{eq:measure_first}, to fulfill the normalization
+restriction.  \
 
 \begin{equation}\label{eq:measure_first}
   \ket{\psi'} = \frac{\alpha_{00}\ket{00} + \alpha_{01}\ket{01}}
@@ -145,29 +150,83 @@ are not able to process quantum information efficiently. \
   \ket{\psi} = \alpha_{00}\ket{0\cdots0} + \cdots + \alpha_{2^{n-1}}\ket{1\cdots1}
 \end{equation} \
 
-\subsection{Quantum Gates}\label{subsection:gates}
-- Introduce quantum gates \
-    - Equate a gate with a unitary matrix \
-    - Pauli Gates \
-\begin{equation}\label{eq:pauli_x}
-    X = \begin{pmatrix}
-          0 & 1 \\
-          1 & 0
-        \end{pmatrix} \qquad \qquad
-    \Qcircuit @C=1em @R=1em {
-      & \gate{X} & \qw
-    }
-\end{equation} \
+\subsection{Quantum Gates}\label{subsection:gates}\
 
-\begin{equation}\label{eq:pauli_y}
-  Y = \begin{pmatrix}
-        0 & -i \\
-        i & 0
+Once that quantum states have been defined, performing operations
+on them is the next step to understand how quantum computing works.
+These operations are denominated \textit{quantum gates} and they
+modify the quantum state according to its properties. A quantum gate
+can be represented as a matrix that fulfills one single property,
+namely that it is a unitary matrix. In Equation~\ref{eq:unitary} we
+can observe that a unitary matrix is one which when multiplied by its
+own transpose conjugate is equal to the identity matrix.
+
+\begin{equation}\label{eq:unitary}
+  UU^{\dag} = I
+\end{equation}
+
+This property is required because when a quantum gate is used on a
+quantum state, the resulting quantum state has to be a valid normalized
+quantum state. By being a unitary matrix, this effect is achieved.
+There are infinitely many unitary matrices, however, there are some
+of specific importance. The most important single-qubit quantum
+gates will be introduced in Subsection~\ref{subsubsection:single_qubit},
+while the most significant multiple-qubits gates will be presented
+in Subsection~\ref{subsubsection:multiple_qubit} \
+
+\subsubsection{Single-Qubit Gates}\label{subsubsection:single_qubit} \
+
+Single-Qubit gates can be described by a two by two unitary matrix. The
+first three quantum gates introduced are described by the Pauli matrices.
+They are defined as the X, Y and Z gates because each matrix represents
+a \(\pi\) rotation around the Bloch sphere in their respective axis. \
+
+\paragraph{X Gate} \
+
+The X gate's matrix and its gate representations can be found in
+Equation~\ref{eq:pauli_x}. In classical computing, the X gate is
+conceptually equivalent to the NOT gate, thus it
+is also known as a quantum NOT gate. \
+
+\begin{equation}\label{eq:pauli_x}
+  X = \begin{pmatrix}
+        0 & 1 \\
+        1 & 0
       \end{pmatrix} \qquad \qquad
   \Qcircuit @C=1em @R=1em {
-    & \gate{Y} & \qw
+    & \gate{X} & \qw
+  } \qquad
+  \Qcircuit @C=1em @R=1em {
+    & \targ & \qw
   }
 \end{equation} \
+
+In Equation~\ref{eq:pauli_x_basis} we can see the effect of the X
+gate, where the computational basis states are flipped. This phenomena
+is known as a \textit{bit flip}. \
+
+\begin{equation}\label{eq:pauli_x_basis}
+  X\ket{0} = \begin{pmatrix}
+               0 & 1 \\
+               1 & 0
+             \end{pmatrix}
+             \begin{pmatrix} 1 \\ 0 \end{pmatrix} = 
+             \begin{pmatrix} 0 \\ 1 \end{pmatrix} =
+             \ket{1}, \qquad
+  X\ket{1} = \begin{pmatrix}
+              0 & 1 \\
+              1 & 0
+            \end{pmatrix}
+            \begin{pmatrix} 0 \\ 1 \end{pmatrix} = 
+            \begin{pmatrix} 1 \\ 0 \end{pmatrix} =
+            \ket{0}
+\end{equation} \
+
+\paragraph{Z Gate} \
+
+Unlike the X gate, there is no conceptually equivalent
+gate for the Z gate in classical computing. In Equation~\ref{eq:pauli_z}
+we can observe the matrix and symbol representation of the Z gate. \
 
 \begin{equation}\label{eq:pauli_z}
   Z = \begin{pmatrix}
@@ -179,7 +238,79 @@ are not able to process quantum information efficiently. \
   }
 \end{equation} \
 
-    - Hadamard Gate \
+The effects of the Z gate can be found in Equation~\ref{eq:pauli_z_basis}.
+We can observe that the \(\ket{0}\) state remains unmodified while
+the \(\ket{1}\) state is negative after the operation. This phenomena
+is known as a \textit{phase flip}. \
+
+\begin{equation}\label{eq:pauli_z_basis}
+  Z\ket{0} = \begin{pmatrix}
+               1 & 0 \\
+               0 & -1
+             \end{pmatrix}
+             \begin{pmatrix} 1 \\ 0 \end{pmatrix} = 
+             \begin{pmatrix} 0 \\ 1 \end{pmatrix} =
+             \ket{0}, \qquad
+  Z\ket{1} = \begin{pmatrix}
+               1 & 0 \\
+               0 & -1
+            \end{pmatrix}
+            \begin{pmatrix} 0 \\ 1 \end{pmatrix} = 
+            \begin{pmatrix} 1 \\ 0 \end{pmatrix} =
+            -\ket{1}
+\end{equation} \
+
+\paragraph{Y Gate} \
+
+The Y gate also doesn't have a conceptually equivalent gate
+in classical computing. More interestingly the Y gate can be described
+by the product of the X and Z matrix up to a global phase. The matrix
+and symbol representation of the Y gate can be found in
+Equation~\ref{eq:pauli_y}. \
+
+\begin{equation}\label{eq:pauli_y}
+  Y = \begin{pmatrix}
+        0 & -i \\
+        i & 0
+      \end{pmatrix} \qquad \qquad
+  \Qcircuit @C=1em @R=1em {
+    & \gate{Y} & \qw
+  }
+\end{equation} \
+
+In Equation~\ref{eq:pauli_y_basis} we can see how the Y gate
+modifies the computational basis states. In it we can observe that
+a bit flip and a phase flip have been executed, while \(i\) has been
+added as a global phase. \
+
+\begin{equation}\label{eq:pauli_y_basis}
+  Y\ket{0} = \begin{pmatrix}
+               0 & -i \\
+               i & 0
+             \end{pmatrix}
+             \begin{pmatrix} 1 \\ 0 \end{pmatrix} = 
+             \begin{pmatrix} 0 \\ 1 \end{pmatrix} =
+             i\ket{1}, \qquad
+  Y\ket{1} = \begin{pmatrix}
+               0 & -i \\
+               i & 0
+            \end{pmatrix}
+            \begin{pmatrix} 0 \\ 1 \end{pmatrix} = 
+            \begin{pmatrix} 1 \\ 0 \end{pmatrix} =
+            -i\ket{0}
+\end{equation} \
+
+As a complement to the Pauli gates, there are gates that
+perform a specific \(\theta\) rotation around each axis of the
+Bloch sphere. They are known as \(RX\left(\theta\right)\),
+\(RY\left(\theta\right)\) and \(RZ\left(\theta\right)\). \
+
+\paragraph{Hadamard Gate} \
+
+The Hadamard gate is one of the most useful single-qubit gates.
+It will be later used in Subsection~\ref{subsubsection:entanglement}
+to create \textit{entanglement} between two different qubits. \
+
 \begin{equation}\label{eq:hadamard}
   H = \frac{1}{\sqrt{2}} 
       \begin{pmatrix}
@@ -191,7 +322,29 @@ are not able to process quantum information efficiently. \
   }
 \end{equation} \
 
-- Multiple qbits gates
+The effects of the Hadamard gate can be observed in
+Equation~\ref{eq:hadamard_basis}. The resulting states from applying
+the Hadamard gate to the computational basis are denominated
+\(\ket{+}\) and \(\ket{-}\) respectively and they represent
+a superposition with equal probability for both basis to be measured. \
+
+\begin{equation}\label{eq:hadamard_basis}
+  H\ket{0} = \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) = \ket{+} \qquad
+  H\ket{1} = \frac{1}{\sqrt{2}} \left( \ket{0} - \ket{1} \right) = \ket{-}
+\end{equation} \
+
+Another interesting property of the previously mentioned single-qubit
+gates is that all of them are involutory. An involutory matrix is a
+square matrix that is its own inverse. This implies that performing
+twice the same gate will not modify the quantum state as the identity
+transformation would have been applied. \
+
+% MAYBE: Add S and T gates
+
+\subsubsection{Multiple-Qubits Gates}\label{subsubsection:multiple_qubit} \
+
+% TODO: State what the size of the matrix must be depending on the qubits
+% it is affecting
 
 \begin{equation}\label{eq:cnot}
   CNOT = \begin{pmatrix}
@@ -219,6 +372,12 @@ are not able to process quantum information efficiently. \
   }
 \end{equation} \
 
+% MAYBE: Add toffoli gate
+
+- Introduce quantum circuits \
+
+\subsubsection*{Entanglement}\label{subsubsection:entanglement}
+
 - Introduce entanglement and bell states, 11,16 \
 \begin{equation}\label{eq:entanglement}
   \Qcircuit @C=1em @R=1em {
@@ -228,10 +387,9 @@ are not able to process quantum information efficiently. \
   \frac{1}{\sqrt{2}} \left(\ket{00} + \ket{11}\right)
 \end{equation}
 
-- Introduce quantum circuits \
 - Introduce quantum measurement \
 \subsection{Density Operator}\label{subsection:density_operator}
-- Introduce the density operator \
+- Introduce the density operator, schuld 87 \
 - Introduce quantum algorithms* \
 
 Todo:

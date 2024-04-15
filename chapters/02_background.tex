@@ -305,6 +305,10 @@ perform a specific \(\theta\) rotation around each axis of the
 Bloch sphere. They are known as \(RX\left(\theta\right)\),
 \(RY\left(\theta\right)\) and \(RZ\left(\theta\right)\). \
 
+% MAYBE: Expand the RXYZ gates as they can become important for
+% parametrized ansatzs. schuld 104
+% MAYBE: Expand on the general rotation gate RZ RY RZ
+
 \paragraph{Hadamard Gate} \
 
 The Hadamard gate is one of the most useful single-qubit gates.
@@ -326,7 +330,8 @@ The effects of the Hadamard gate can be observed in
 Equation~\ref{eq:hadamard_basis}. The resulting states from applying
 the Hadamard gate to the computational basis are denominated
 \(\ket{+}\) and \(\ket{-}\) respectively and they represent
-a superposition with equal probability for both basis to be measured. \
+a superposition with equal probability for both computational 
+basis to be measured. \
 
 \begin{equation}\label{eq:hadamard_basis}
   H\ket{0} = \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) = \ket{+} \qquad
@@ -343,8 +348,21 @@ transformation would have been applied. \
 
 \subsubsection{Multiple-Qubits Gates}\label{subsubsection:multiple_qubit} \
 
-% TODO: State what the size of the matrix must be depending on the qubits
-% it is affecting
+Multiple-Qubits gates are not that different from single-qubit gates,
+they still have to be unitary. Nevertheless, depending on the qubits
+that the gate is trying to modify, the size of the matrix will change.
+Formally, if a gate is applying a transformation to \(n\) qubits, then
+the dimensions of the gate's matrix \(M \in \mathbb{C}^{2^n \times 2^n}\).
+Therefore, if \(n = 2\) then \(M\) would have the size
+\(\mathbb{C}^{4 \times 4}\). \
+
+\paragraph{Controlled NOT Gate} \
+
+The~\ac{cnot} gate is a two-qubit quantum gate. It has a
+\textit{control} qubit and a \textit{target} qubit. In
+Equation~\ref{eq:cnot} we can observe the matrix and
+symbol representation where the first qubit is the control
+qubit and the second is the target qubit. \
 
 \begin{equation}\label{eq:cnot}
   CNOT = \begin{pmatrix}
@@ -356,8 +374,64 @@ transformation would have been applied. \
   \Qcircuit @C=1em @R=1em {
       & \ctrl{1} & \qw \\
       & \targ & \qw \\
-  }
+  } \qquad \qquad
+  \begin{matrix}
+    CNOT\ket{00} = \ket{00} \\
+    CNOT\ket{01} = \ket{01} \\
+    CNOT\ket{10} = \ket{11} \\
+    CNOT\ket{11} = \ket{10} \\
+  \end{matrix}
 \end{equation} \
+
+The effects of the \ac{cnot} gate can be seen in Equation~\ref{eq:cnot},
+where depending on the value of the control qubit, a NOT gate will be
+applied on the target wire. This can also be represented as
+\(\ket{A,B}\rightarrow\ket{A,B\oplus A}\) performing an XOR between
+the control and target qubits and storing the value in the second qubit. \
+
+Regarding the~\ac{cnot} matrix in Equation~\ref{eq:cnot}, an intuiton
+can be gained regarding the columns of the matrix, the computational
+basis, and the effects of the gate. The ordering of the columns each
+represent the input state with regards to the computational basis.
+The first column represents \(\ket{00}\), the second column \(\ket{01}\),
+the third column \(\ket{10}\) and so on. Moreover, the values that the vectors
+represent in each column are associated with the output values after the gate
+has been applied, e.g. \(\begin{pmatrix}1&0&0&0\end{pmatrix}^\top= \ket{00}\),
+\(\begin{pmatrix}0&1&0&0\end{pmatrix}^\top= \ket{01}\),
+\(\begin{pmatrix}0&0&1&0\end{pmatrix}^\top= \ket{10}\), etc. \
+
+We can observe this phenomena between the third and fourth column in
+Eq.~\ref{eq:cnot}, where the columns and values swap. Also this
+intuiton helps us construct the matrix from the~\ac{cnot} gate when the
+control and the target qubits have been inverted. In  Equation~\ref{eq:cnot_inverted}
+we construct the matrix from the effects the CNOT gate would have in
+the different computation basis states. \
+
+\begin{equation}\label{eq:cnot_inverted}
+  \begin{matrix}
+    CNOT\ket{00} = \ket{00} \\
+    CNOT\ket{01} = \ket{11} \\
+    CNOT\ket{10} = \ket{10} \\
+    CNOT\ket{11} = \ket{01} \\
+  \end{matrix} \qquad \qquad
+  \Qcircuit @C=1em @R=1em {
+      & \targ & \qw \\
+      & \ctrl{-1} & \qw \\
+  } \qquad \qquad
+  CNOT_2 = \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0 \\
+    0 & 1 & 0 & 0 \\
+  \end{pmatrix}
+\end{equation} \
+
+\paragraph{SWAP gate} \
+
+The SWAP gate's effect are introduced in Equation~\ref{eq:swap}. It shows
+that the value of the first qubit is swapped with the value of the
+second value. Therefore, the gate will only have an effect if the qubits'
+values are different. \
 
 \begin{equation}\label{eq:swap}
   SWAP = \begin{pmatrix}
@@ -369,14 +443,23 @@ transformation would have been applied. \
   \Qcircuit @C=1em @R=1em {
     & \qswap & \qw \\
     & \qswap \qwx & \qw \\
-  }
+  } \qquad \qquad
+  \begin{matrix}
+    SWAP\ket{00} = \ket{00} \\
+    SWAP\ket{01} = \ket{10} \\
+    SWAP\ket{10} = \ket{01} \\
+    SWAP\ket{11} = \ket{11} \\
+  \end{matrix}
 \end{equation} \
+
+The introduced two-qubit gates are also involutory. Therefore, applying
+them twice would not modify the original quantum state. \
 
 % MAYBE: Add toffoli gate
 
 - Introduce quantum circuits \
 
-\subsubsection*{Entanglement}\label{subsubsection:entanglement}
+\subsubsection{Entanglement}\label{subsubsection:entanglement}
 
 - Introduce entanglement and bell states, 11,16 \
 \begin{equation}\label{eq:entanglement}

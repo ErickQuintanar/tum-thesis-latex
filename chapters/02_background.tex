@@ -139,7 +139,7 @@ restriction.  \
 In Equation~\ref*{eq:multiple_qubits} we can find a general representation of
 a set of \textit{n} qubits. For a system composed by \textit{n} qubits there are \(2^n\)
 amplitudes. If we tried to simulate a quantum system with \(n = 50\), assuming
-that complex numbers require 8 bytes to be stored~\cite{numpy}, a classical computer would need
+that complex numbers require 8 bytes to be stored~\cite{harris_array_2020}, a classical computer would need
 approximately 9000 terabytes to store the generated quantum state. This simple calculation
 shows the reason why quantum computers are so promising and also why classical computers
 are not able to process quantum information efficiently. \
@@ -457,20 +457,73 @@ them twice would not modify the original quantum state. \
 
 % MAYBE: Add toffoli gate
 
-- Introduce quantum circuits \
-
 \subsubsection{Entanglement}\label{subsubsection:entanglement}
+One of quantum mechanics most important concepts is entanglement, it is
+also what fundamentally enables quantum computing to perform better
+than classical computing. Entanglement occurs when two or more
+particles' quantum states are correlated and cannot be described or 
+measured independently of each other. In quantum computing the
+simplest and most common sequence of gates to entangle two qubits
+can be found in Equation~\ref{eq:entanglement}, where the Hadamard
+gate puts the first qubit in a superposition and the CNOT gate creates
+a dependent relationship between both qubits. \
 
-- Introduce entanglement and bell states, 11,16 \
 \begin{equation}\label{eq:entanglement}
   \Qcircuit @C=1em @R=1em {
-    & \gate{H} & \ctrl{1} & \qw \\
-    & \qw & \targ & \qw \\
+    \lstick{\ket{0}} & \gate{H} & \ctrl{1} & \qw \\
+    \lstick{\ket{0}} & \qw & \targ & \qw \\
   } \qquad \qquad
-  \frac{1}{\sqrt{2}} \left(\ket{00} + \ket{11}\right)
+  \ket{\psi} = \frac{1}{\sqrt{2}} \left(\ket{00} + \ket{11}\right)
 \end{equation}
 
+Reminiscing the fact that measuring a qubit will collapse its quantum
+state to one of the computational basis. In the case of \(\ket{\psi}\),
+according to the effects of Equation~\ref{eq:measure_first}, measuring the
+first qubit will eliminate one of the two possible states. If the measured
+value of the first qubit is \textit{0}, then \(\ket{\psi'} = \ket{00}\).
+If \textit{1} is measured, then \(\ket{\psi'} = \ket{11}\). In the case
+where we measured \textit{0}, the second qubit will be \textit{0} when
+it is measured, else the second qubit would be \textit{1}. Therefore,
+without measuring the second qubit we can know the value it will take 
+if it was measured. \
+
+% cite teletransportation and superdensecoding
+
+\begin{equation}\label{eq:bell_states}
+  \begin{matrix}
+    \ket{00} \implies \ket{\Phi^+} = \frac{1}{\sqrt{2}} \left(\ket{00} + \ket{11}\right) \\
+    \ket{10} \implies \ket{\Phi^-} = \frac{1}{\sqrt{2}} \left(\ket{00} - \ket{11}\right) 
+  \end{matrix} \qquad \qquad
+  \begin{matrix}
+    \ket{01} \implies \ket{\Psi^+} = \frac{1}{\sqrt{2}} \left(\ket{01} + \ket{10}\right) \\
+    \ket{11} \implies \ket{\Psi^-} = \frac{1}{\sqrt{2}} \left(\ket{01} - \ket{10}\right)
+  \end{matrix}
+\end{equation} \
+
+The quantum states created by the circuit in Equation~\ref{eq:entanglement}
+with differring basis inputs are called Bell's states or EPR
+states~\cite{einstein_can_1935}. The Bell's states represent the maximally entangled
+state between two qubits. In Equation~\ref{eq:bell_states} we can observe
+the four resulting states, where in the \(\Phi\) states the value of the
+measured qubit will be the same as the non-measured qubit. For the \(\Psi\)
+states, the value of the measured qubit will be the opposite of the
+non-measured qubit. This relationship holds independent on whether the
+first or the second qubit in the system is measured. \
+
+Entanglement is one of the most powerful tools in quantum mechanics.
+Some of the documented uses of entanglement (mainly using EPR states)
+are superdense coding~\cite{bennett_communication_1992} and quantum
+teleportation~\cite{bennett_teleporting_1993}. Quantum teleportation
+describes transmitting quantum information from
+a sender to a receiver in a different location. Superdense coding refers
+to transferring a certain amount of classical bits of information using
+a lesser number of qubits, therefore, sending more information with less
+resources. \
+
 - Introduce quantum measurement \
+
+- Introduce quantum circuits \
+
 \subsection{Density Operator}\label{subsection:density_operator}
 - Introduce the density operator, schuld 87 \
 - Introduce quantum algorithms* \

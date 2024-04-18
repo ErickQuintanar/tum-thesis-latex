@@ -23,7 +23,7 @@ The basic computing unit in quantum computing is the
 bit, a qubit also has a state. While a bit has either a
 \textit{0} or \textit{1} state, the qubit can have
 many more states. The quantum equivalent to the classical
-bit states would be \(\ket{0}\) and \(\ket{1}\) in Dirac
+bit states would be \(\ket{0}\) and \(\ket{1}\) (spoken as \textit{ket}) in Dirac
 notation~\cite{dirac_new_1939} and they represent the orthonormal computational
 basis states in Equation~\ref{eq:qubit_bases}. \
 
@@ -35,6 +35,12 @@ basis states in Equation~\ref{eq:qubit_bases}. \
                 0 \\ 1
               \end{pmatrix}
 \end{equation} \
+
+The complementing element to Dirac's notation is the \textit{bra}:
+\(\bra{0}\) and \(\bra{1}\). The \textit{bra} is the transposed
+vector from a \textit{ket}. The outer product of two vectors \(u\) and
+\(v\) in dirac notation is written as \(\ketbra{u}{v}\). While the inner
+product of the same vectors is expressed as \(\braket{u}{v}\). \
 
 What makes the qubit different and more capable than
 the classical bit is that it can also have different states
@@ -69,7 +75,7 @@ different mechanisms to represent the noise that quantum
 computers suffer from, namely the density operator that will
 be introduced in Subsection~\ref{subsection:density_operator}. \
 
-\subsection{Bloch Sphere} \
+\subsection{Bloch Sphere}\label{subsection:bloch} \
 
 The qubit state from Equation~\ref{eq:qubit_superposition} can be
 rewritten into Equation~\ref{eq:qubit_global_phase}, where \(e\)
@@ -99,7 +105,7 @@ they will be introduced in Subsection~\ref{subsection:gates}. \
 \begin{figure}[ht]
   \includegraphics[scale=0.1]{figures/Bloch_sphere.png}
   \centering
-  \caption{Bloch sphere representation of a qubit. Image taken from \href{https://commons.wikimedia.org/wiki/File:Bloch_Sphere.svg}{https://commons.wikimedia.org/wiki/File:Bloch\_Sphere.svg} under the \href{https://en.wikipedia.org/wiki/Creative_Commons}{Creative Commons Attribution-Share Alike 3.0 Unported license}.}
+  \caption{Bloch sphere representation of a qubit. Image taken from \href{https://commons.wikimedia.org/wiki/File:Bloch_Sphere.svg}{Wikimedia Commons} under the \href{https://en.wikipedia.org/wiki/Creative_Commons}{Creative Commons Attribution-Share Alike 3.0 Unported license}.}
 ~\label{fig:bloch_sphere}
 \end{figure} \
 
@@ -319,7 +325,7 @@ to create \textit{entanglement} between two different qubits. \
   H = \frac{1}{\sqrt{2}} 
       \begin{pmatrix}
         1 & 1 \\
-        1 & 1
+        1 & -1
       \end{pmatrix} \qquad \qquad
   \Qcircuit @C=1em @R=1em {
     & \gate{H} & \qw
@@ -457,7 +463,7 @@ them twice would not modify the original quantum state. \
 
 % MAYBE: Add toffoli gate
 
-\subsubsection{Entanglement}\label{subsubsection:entanglement}
+\subsection{Entanglement}\label{subsubsection:entanglement}
 One of quantum mechanics most important concepts is entanglement, it is
 also what fundamentally enables quantum computing to perform better
 than classical computing. Entanglement occurs when two or more
@@ -486,8 +492,6 @@ where we measured \textit{0}, the second qubit will be \textit{0} when
 it is measured, else the second qubit would be \textit{1}. Therefore,
 without measuring the second qubit we can know the value it will take 
 if it was measured. \
-
-% cite teletransportation and superdensecoding
 
 \begin{equation}\label{eq:bell_states}
   \begin{matrix}
@@ -520,12 +524,179 @@ to transferring a certain amount of classical bits of information using
 a lesser number of qubits, therefore, sending more information with less
 resources. \
 
-- Introduce quantum measurement \
+\subsection{Quantum Measurement} \
 
-- Introduce quantum circuits \
+So far performing a measurement will collapse the quantum state to
+one of the two computational basis. Nonetheless, a quantum state
+can be measured in several different basis depending on the
+measurement operator that is being used. Quantum measurements
+are defined by a set \(M_m\) of measurement operators. This
+set must fulfill the \textit{completeness equation} property
+(Eq.~\ref{eq:completeness}) where all the operators must add
+to the identity matrix. This property can be interpreted as
+all the probability amplitudes from the quantum state must
+add up to one. \
 
-\subsection{Density Operator}\label{subsection:density_operator}
-- Introduce the density operator, schuld 87 \
+\begin{equation}\label{eq:completeness}
+    \sum_{m}M_m^{\dag}M_m = I 
+    \implies \sum_{m}p\left(m\right) = \sum_{m}\bra{\psi}M_m^{\dag}M_m\ket{\psi} = 1
+\end{equation} \
+
+Given a quantum state \(\ket{\psi}\) right before a measurement, the
+probability of measuring \(m\) is defined as
+\(p\left(m\right) = \bra{\psi}M_m^{\dag}M_m\ket{\psi}\).
+The quantum state after the measurement \(\ket{\psi'}\) is described in
+Equation~\ref{eq:state_after}. \
+
+\begin{equation}\label{eq:state_after}
+  \ket{\psi'} = \frac{M_m\ket{\psi}}{\sqrt{\bra{\psi}|M_m^{\dag}M_m|\ket{\psi}}}
+\end{equation}
+
+We can apply this framework to the computational basis. The
+measurement operators of the computational basis are
+\(M_0 = \ketbra{0}{0}\) and \(M_1 = \ketbra{1}{1}\). Both
+of the operators are Hermitian, thus they are equal to their
+conjugate transpose and \(M_m^{\dag}M_m = M_m^2\). 
+Solving the square matrix of both measurement operators 
+yields the original matrix \(M_m^2 = M_m\). We can observe
+now that the completeness property is fulfilled in
+Equation~\ref{eq:completeness_computational}. \
+
+\begin{equation}\label{eq:completeness_computational}
+  M_0^{\dag}M_0 + M_1^{\dag}M_1 = M_0 + M_1 = I
+\end{equation} \
+
+For a state \(\ket{\psi} = \alpha\ket{0} + \beta\ket{1}\) we
+can utilize this new framework to explain what the probability
+of measuring \textit{0} or \textit{1} is. In Equation~\ref{eq:probability}
+we can observe that the probability of measuring \textit{0} is
+\(\abs{\alpha}^2\), equal to the magnitude mentioned
+in Subsection~\ref{subsection:qubit}. \
+
+\begin{equation}\label{eq:probability}
+  p\left(0\right) = \bra{\psi}M_0^{\dag}M_0\ket{\psi} =
+  \bra{\psi}M_0\ket{\psi} = \abs{\alpha}^2
+\end{equation} \
+
+With Equation~\ref{eq:probability} we can also easily derive that the probability for
+measuring the value \textit{1} is \(p\left(1\right) = \abs{\beta}^2\).
+In Equation~\ref{eq:state_after_computational} we calculate how measuring
+affects the quantum state, we use Equation~\ref{eq:state_after} with the
+derived probability values. Recalling that a global phase has no effect
+in a qubit (Subsection~\ref{subsection:bloch}), we can assume that
+\(\frac{\alpha}{\abs{\alpha}}\ket{0} = \ket{0}\) and
+\(\frac{\beta}{\abs{\beta}}\ket{1} = \ket{1}\). \
+
+\begin{equation}\label{eq:state_after_computational}
+    \ket{\psi_0'} = \frac{M_0\ket{\psi}}{\abs{\alpha}} =
+    \frac{\alpha}{\abs{\alpha}}\ket{0} \qquad \qquad
+    \ket{\psi_1'} = \frac{M_1\ket{\psi}}{\abs{\beta}} =
+    \frac{\beta}{\abs{\beta}}\ket{1}
+\end{equation} \
+
+One would assume that knowing the magnitude of the probability amplitudes
+is enough to reconstruct a quantum state, however, this is not the case.
+For the states \(\ket{+}\) and \(\ket{-}\) the probability of measuring
+the value \textit{0} is \(p\left(0\right) = \frac{1}{2}\) and the probability
+of measuring the value \textit{1} is \(p\left(1\right) = \frac{1}{2}\).
+Nevertheless, the quantum states \(\ket{+}\) and \(\ket{-}\) are not
+equivalent. This occurs because there isn't any quantum measurement capable
+of discerning between quantum states unless they are orthonormal.\
+
+To be able to differentiate \(\ket{+}\) and \(\ket{-}\) we
+need to measure in a different basis composed by orthonormal vectors.
+The normalization property assures that they will be valid quantum states.
+The orthogonality property guarantees linear independence between vectors,
+thus, they can describe any quantum state in terms of the basis. In
+this case we can use \(\ket{+}\) and \(\ket{-}\) as the new vectors for
+the basis. We ensure that the vectors are normalized by calculating the
+inner product of the vectors with themselves \(\braket{+}{+}=\braket{-}{-}=1\).
+We guarantee that the vectors are orthogonal by calculating the
+inner product of the vectors with each other \(\braket{+}{-}=\braket{-}{+}=0\). \
+
+\begin{equation}\label{eq:projector_hadamard}
+  M_+ = \ketbra{+}{+} = \begin{pmatrix}
+                          \frac{1}{2} & \frac{1}{2} \\
+                          \frac{1}{2} & \frac{1}{2}
+                        \end{pmatrix} \qquad \qquad
+  M_- = \ketbra{-}{-} = \begin{pmatrix}
+                          \frac{1}{2} & -\frac{1}{2} \\
+                          -\frac{1}{2} & \frac{1}{2}
+                        \end{pmatrix}
+\end{equation} \
+
+The measurement operators derived from the new basis can be found
+in Equation~\ref{eq:projector_hadamard}. These operators can now
+be used to calculate the probability to measure either \(\ket{+}\)
+or \(\ket{-}\). Similar to the computational basis case, both
+measurement projectors are Hermitian. Thus, we can derive the
+expression for the probability to measure \(x \in \left\{+,-\right\}\)
+where \(p\left(x\right) = \bra{\psi}M_x\ket{\psi}\). With this new
+expression we can clearly differentiate in Equation~\ref{eq:hadamard_states}
+the \(\ket{+}\) and \(\ket{-}\) quantum states. \
+
+\begin{equation}\label{eq:hadamard_states}
+  \begin{matrix}
+    p\left(+\right) = \bra{+}M_+\ket{+} = 1 \\
+    p\left(+\right) = \bra{-}M_+\ket{-} = 0
+  \end{matrix} \qquad \qquad
+  \begin{matrix}
+    p\left(-\right) = \bra{+}M_-\ket{+} = 0\\
+    p\left(-\right) = \bra{-}M_-\ket{-} = 1
+  \end{matrix}
+\end{equation} \
+
+\subsubsection{Projective Measurement} \
+
+Projective measurements are a special case of quantum measurements.
+They are characterized by an \textit{observable}, denoted as \(M\),
+which is a Hermitian operator acting on the state space of the observed system.
+The observable's spectral decomposition is in Equation~\ref{eq:observable},
+where we can see that \(M\) is composed by the sum of the projector \(P_m\)
+multiplied by the corresponding eigenvalue \(m\). The observable's
+eigenvalues are the possible values for the measurement. \
+
+\begin{equation}\label{eq:observable}
+  M = \sum_{m}mP_m
+\end{equation} \
+
+From the observable we can derive an expression in Equation~\ref{eq:expectation}
+for the expectation value. This expression is often denoted as \(\ev{M}\).
+The expectation value denotes the value of the average measurement with
+respect to the observable. More importantly, the expectation value can be
+interpreted as the weighted average of what would be measured over many experiments,
+thus, analytically calculating the result of several trials. \ 
+
+\begin{equation}\label{eq:expectation}
+  \mathbb{E}\left(M\right) =
+  \sum_{m}m*p\left(m\right) =
+  \sum_{m}m\bra{\psi}P_m\ket{\psi} =
+  \bra{\psi} \left(\sum_{m}mP_m\right) \ket{\psi} =
+  \bra{\psi}M\ket{\psi}
+\end{equation} \
+
+The Pauli Z matrix is of special importance as an observable. In Equation
+~\ref{eq:observable_z} we can find the spectral decomposition of the
+Pauli Z matrix. It has the eigenvalues \textit{1} and \textit{-1}, that
+correspond to its eigenstates \(\ket{0}\) and \(\ket{1}\). The eigenstates
+match the computational basis and form its measurement operators. Hence,
+the Pauli Z matrix is widely used as an observable for the computational
+basis. \
+
+\begin{equation}\label{eq:observable_z}
+  Z = 1 * \ketbra{0}{0} + \left(-1\right) * \ketbra{1}{1}
+\end{equation} \
+
+% MAYBE: Standard Deviation / nielsen 88
+
+% MAYBE: Talk about how to retrieve the probability amplitudes experimentally with statistics - schuld 105
+
+\subsection{Quantum Circuit} \
+
+\subsection{Density Operator}\label{subsection:density_operator} \
+
+- Introduce the density operator / schuld 87, nielsen 98 \
+
 - Introduce quantum algorithms* \
 
 Todo:

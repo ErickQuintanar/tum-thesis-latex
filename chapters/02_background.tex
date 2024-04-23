@@ -524,7 +524,7 @@ to transferring a certain amount of classical bits of information using
 a lesser number of qubits, therefore, sending more information with less
 resources. \
 
-\subsection{Quantum Measurement} \
+\subsection{Quantum Measurement}\label{subsection:measurement} \
 
 So far performing a measurement will collapse the quantum state to
 one of the two computational basis. Nonetheless, a quantum state
@@ -692,6 +692,42 @@ basis. \
 % MAYBE: Talk about how to retrieve the probability amplitudes experimentally with statistics - schuld 105
 
 \subsection{Quantum Circuit} \
+
+Quantum circuits have already been informally introduced (Eq.~\ref{eq:entanglement}),
+however, formalizing their structure is essential to understand quantum computing.
+The main components are the qubit~\ref{subsection:qubit}, quantum
+gates~\ref{subsection:gates} and quantum measurements~\ref{subsection:measurement}.
+In Equation~\ref{eq:circuit} the qubits are represented as \textit{wires} and are
+abstracted from their physical implementation. The quantum gates in the wire act
+from left to right and there can be no loops. If there are any gates before a
+control operation, the gates must be executed before, therefore, creating a
+dependency between operations and wires. \
+
+\begin{equation}\label{eq:circuit}
+  \Qcircuit @C=1em @R=1em {
+    \lstick{\ket{1}} & \gate{Y}         & \targ       & \meterB{Z} & \cw \\
+    \lstick{}        & \multigate{2}{U} & \ctrlo{-1}  & \qw        & \qw \\
+    \lstick{}        & \ghost{U}        & \qw         & \qw        & \qw \\
+    \lstick{}        & \ghost{U}        & \qw         & \qw        & \qw
+      \inputgroupv{2}{4}{1em}{1em}{\ket{\psi}}}
+\end{equation} \
+
+If there is no input state on the circuit's left side, the initial quantum
+state is \(\ket{0}\). Otherwise, an initial quantum state affecting one
+wire can be represented with a ket. Additionally, a multi-qubit initial
+quantum state can be characterized by a ket containing the quantum state
+and a curly brace referencing the affected wires. A unitary matrix \(U\)
+acting as a quantum gate on several qubits can be represented as rectangle
+that covers the modified wires. \
+
+When using a control gate (e.g.~\ac{cnot}) the control wire is represented
+with a black dot. A white dot can be used if the control value must be
+\(\ket{0}\), which is equivalent to performing an X gate before and after
+the value is controlled. Finally, the metronome symbol is utilized to indicate
+a measurement of the qubit value in the wire it appears. An observable can be
+specified, else, the measurement is performed with respect to the computational
+basis. The result is an eigenvalue from the obersvable and becomes a
+classical value, which is represented by using a double-lined wire. \
 
 \subsection{Density Operator}\label{subsection:density_operator} \
 

@@ -15,6 +15,7 @@ and adversarial training as a defense mechanism. \
 % TODO: Most concepts are presented in a simpliflied way.
 %       Say most info can be found in books. if not fully
 %       understood.
+%       Introduce all the written concepts, linked with their references
 
 \subsection{Qubit}\label{subsection:qubit} \
 
@@ -37,7 +38,7 @@ basis states in Equation~\ref{eq:qubit_bases}. \
 \end{equation} \
 
 The complementing element to Dirac's notation is the \textit{bra}:
-\(\bra{0}\) and \(\bra{1}\). The \textit{bra} is the transposed
+\(\bra{0}\) and \(\bra{1}\). The \textit{bra} is the conjugate transposed
 vector from a \textit{ket}. The outer product of two vectors \(u\) and
 \(v\) in dirac notation is written as \(\ketbra{u}{v}\). While the inner
 product of the same vectors is expressed as \(\braket{u}{v}\). \
@@ -168,11 +169,12 @@ can observe that a unitary matrix is one which when multiplied by its
 own transpose conjugate is equal to the identity matrix.
 
 \begin{equation}\label{eq:unitary}
-  UU^{\dag} = I
+  UU^{\dag} = I \qquad \qquad
+  \ket{\psi} \xrightarrow{U} U\ket{\psi} = \ket{\psi'}
 \end{equation}
 
 This property is required because when a quantum gate is used on a
-quantum state, the resulting quantum state has to be a valid normalized
+quantum state (Eq.~\ref{eq:unitary}), the resulting quantum state has to be a valid normalized
 quantum state. By being a unitary matrix, this effect is achieved.
 There are infinitely many unitary matrices, however, there are some
 of specific importance. The most important single-qubit quantum
@@ -695,8 +697,8 @@ basis. \
 
 Quantum circuits have already been informally introduced (Eq.~\ref{eq:entanglement}),
 however, formalizing their structure is essential to understand quantum computing.
-The main components are the qubit~\ref{subsection:qubit}, quantum
-gates~\ref{subsection:gates} and quantum measurements~\ref{subsection:measurement}.
+The main components are the qubit (Subsec.~\ref{subsection:qubit}), quantum
+gates (Subsec.~\ref{subsection:gates}), and quantum measurements (Subsec.~\ref{subsection:measurement}).
 In Equation~\ref{eq:circuit} the qubits are represented as \textit{wires} and are
 abstracted from their physical implementation. The quantum gates in the wire act
 from left to right and there can be no loops. If there are any gates before a
@@ -731,7 +733,92 @@ classical value, which is represented by using a double-lined wire. \
 
 \subsection{Density Operator}\label{subsection:density_operator} \
 
-- Introduce the density operator / schuld 87, nielsen 98 \
+The current definition of quantum states as amplitude state vectors is
+enough to explain closed quantum systems. However, quantum computers
+are open quantum systems, meaning that they are influenced by
+their environment. This influence changes the notion from \textit{pure}
+into \textit{mixed} quantum states. Mixed quantum states present a
+probabilistic perspective of quantum states and are represented by the
+density operator \(\rho\). The density operator is vital for the thesis,
+as it is utilized to model noise in open quantum systems. \
+
+The density operator describes a quantum system's state that is not
+fully known. In Equation~\ref{eq:density_operator} we can find
+the expression for the density operator, where the system is found
+in the set of states \(\ket{\psi_i}\) with probability \(p_i\) where
+\(i \in \left[1,N\right]\). \
+
+\begin{equation}\label{eq:density_operator}
+  \rho = \sum_{i=1}^{N}p_i\ketbra{\psi_i}{\psi_i}
+\end{equation} \
+
+The density operator is also called a density matrix and it has three main
+properties. The first one is that all the density operators are Hermitian.
+Secondly, the density matrix's trace must be equal to 1. Finally, all
+density operators are positive semidefinite. Thus, for any quantum state
+\(\ket{\psi}\) we have that \(\bra{\psi}\rho\ket{\psi} \geq 0\). For a
+given density operator \(\rho\), we can quantify how pure the quantum
+state is. The \textit{purity} \(\gamma\) of \(\rho\) is defined as 
+\(\gamma\left(\rho\right) = \trace{\rho^2}\). For a pure state \(\rho\),
+\(\gamma\left(\rho\right) = 1\), while for a mixed state the purity is less
+than 1. The maximally mixed state is proportional to the identity matrix
+and has a minimum purity of 1/2. \
+
+In Equation~\ref{eq:unitary} we showed how a unitary operation \(U\) modifies
+the quantum state \(\ket{\psi}\). Given a state represented by the density
+operator \(\rho\), in Equation~\ref{eq:density_evolution} we can observer the
+effects of performing a unitary operation \(U\) to the state \(\ket{\psi'}\)
+that appears with probability \(p_i\). \
+
+\begin{equation}\label{eq:density_evolution}
+  \rho \xrightarrow{U} \sum_{i=1}^{N}p_{i}U\ketbra{\psi_i}{\psi_i}U^{\dag} =
+  U\rho U^{\dag} = \rho_{U}
+\end{equation} \
+
+The measurement operations also have to be adapted. We perform a
+measurement with the operator \(M_m\). The probablity of measuring
+\(m\) given an initial state \(\ket{\psi}\) is described in Equation
+~\ref{eq:density_probability}. \
+
+\begin{equation}\label{eq:density_probability}
+  p\left(m|i\right) = \bra{\psi_i}M_{m}^{\dag}M_{m}\ket{\psi_i} =
+  \trace\left(M_{m}^{\dag}M_{m}\ketbra{\psi_i}{\psi_i}\right)
+\end{equation} \
+
+Utilizing the law of total probability, Equation~\ref{eq:density_operator}
+and~\ref{eq:density_probability} we can further specify in 
+Equation~\ref{eq:density_probability_2} the probability of measuring
+\(m\) for the density operator \(\rho\). \
+
+\begin{equation}\label{eq:density_probability_2}
+  p\left(m\right) = \sum_{i}p\left(m|i\right)p_{i} =
+  \sum_{i}p_{i}\trace\left(M_{m}^{\dag}M_{m}\ketbra{\psi_i}{\psi_i}\right) =
+  \trace\left(M_{m}^{\dag}M_{m}\rho \right)
+\end{equation} \
+
+To finalize the measurement adaptations, \(\rho_m\) is the state of
+the density operator after measuring \(m\). It is described by
+Equation~\ref{eq:density_after_measurement}. \
+
+\begin{equation}\label{eq:density_after_measurement}
+  \rho_m = 
+  \frac{M_{m}\rho M_{m}^{\dag}}{\trace\left(M_{m}^{\dag}M_{m}\rho\right)}
+\end{equation} \
+
+If \(M\) is an observable, using Equation~\ref{eq:expectation}, we derive
+the expression for the expectation value of \(M\) given state \(\rho\)
+in Equation~\ref{eq:density_expectation}. This derivation also takes 
+advantage from the linearity property of the trace. \
+
+\begin{equation}\label{eq:density_expectation}
+  \ev{M} = \sum_{i}p_i\bra{\psi_i}M\ket{\psi_i} =
+  \sum_{i}p_i\trace\left(\ketbra{\psi_i}{\psi_i}M\right) =
+  \trace\left(\sum_{i}p_i\ketbra{\psi_i}{\psi_i}M\right) =
+  \trace\left(\rho M\right)
+\end{equation} \
+
+% MAYBE: Add reduced density operator - nielsen 105 / xanadu n.3
+% MAYBE: Add purification - nielsen 109 / xanadu n.3
 
 - Introduce quantum algorithms* \
 
@@ -740,8 +827,10 @@ Todo:
 
 \section{Quantum Noise}\label{section:noise}
 i.	Describe the types of noise that can occur.
+% nielsen 373
 ii.	Explain where can noise occur.
 iii.	State how noise can be simulated.
+% Kraus operator for quantum channels - noisy circuits, pennylane / schuld 268
 
 \section{Quantum Machine Learning}
 i.	Present the difference between QML and classical ML\@.

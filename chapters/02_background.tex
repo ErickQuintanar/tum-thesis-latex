@@ -12,10 +12,22 @@ and adversarial training as a defense mechanism. \
 
 \section{Fundamentals of Quantum Computing} \
 
-% TODO: Most concepts are presented in a simpliflied way.
-%       Say most info can be found in books. if not fully
-%       understood.
-%       Introduce all the written concepts, linked with their references
+First we introduce the qubit (Subsec.~\ref{subsection:qubit}),
+the Bloch sphere (Subsec.~\ref{subsection:bloch}), and
+multiple qubits (Subsec.~\ref{subsubsection:multiple_qubit}).
+Afterwards, we present the operations to manipulate qubits in 
+Subsection~\ref{subsection:gates}. Then, we describe entanglement
+(Subsec.~\ref{subsubsection:entanglement}), a primordial
+property of quantum mechanics. Thereafter, quantum circuits (Subsec.
+~\ref{subsection:circuit}) and measurements (Subsec.
+~\ref{subsection:measurement}) measurement are explained.
+Finally, the density operator (Subsec.~\ref{subsection:density_operator})
+is defined to enable the description of noise in quantum systems. \
+
+The information from this section is mainly extracted from
+Nielsen's book ~\cite{nielsen_quantum_2010}, further information
+regarding quantum computing and quantum information can be found
+there. \
 
 \subsection{Qubit}\label{subsection:qubit} \
 
@@ -693,7 +705,7 @@ basis. \
 
 % MAYBE: Talk about how to retrieve the probability amplitudes experimentally with statistics - schuld 105
 
-\subsection{Quantum Circuit} \
+\subsection{Quantum Circuit}\label{subsection:circuit} \
 
 Quantum circuits have already been informally introduced (Eq.~\ref{eq:entanglement}),
 however, formalizing their structure is essential to understand quantum computing.
@@ -820,10 +832,9 @@ advantage from the linearity property of the trace. \
 % MAYBE: Add reduced density operator - nielsen 105 / xanadu n.3
 % MAYBE: Add purification - nielsen 109 / xanadu n.3
 
-- Introduce quantum algorithms* \
+% MAYBE: Introduce quantum algorithms* \
 
-Todo:
-- Citation for hadamard gate, pauli gate.
+% MAYBE: Citation for hadamard gate, pauli gate.
 
 \section{Quantum Noise}\label{section:noise}
 i.	Describe the types of noise that can occur.

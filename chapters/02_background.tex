@@ -25,7 +25,7 @@ Finally, the density operator (Subsec.~\ref{subsection:density_operator})
 is defined to enable the description of noise in quantum systems. \
 
 The information from this section is mainly extracted from
-Nielsen's book ~\cite{nielsen_quantum_2010}, further information
+Nielsen's book~\cite{nielsen_quantum_2010}, further information
 regarding quantum computing and quantum information can be found
 there. \
 
@@ -771,10 +771,11 @@ density operators are positive semidefinite. Thus, for any quantum state
 \(\ket{\psi}\) we have that \(\bra{\psi}\rho\ket{\psi} \geq 0\). For a
 given density operator \(\rho\), we can quantify how pure the quantum
 state is. The \textit{purity} \(\gamma\) of \(\rho\) is defined as 
-\(\gamma\left(\rho\right) = \trace{\rho^2}\). For a pure state \(\rho\),
+\(\gamma\left(\rho\right) = \trace\left(\rho^2\right)\). For a pure state \(\rho\),
 \(\gamma\left(\rho\right) = 1\), while for a mixed state the purity is less
 than 1. The maximally mixed state is proportional to the identity matrix
-and has a minimum purity of 1/2. \
+and has a purity of \(1/d\), where \(d\) is the dimension of the Hilbert
+space where \(\rho\) is defined. \
 
 In Equation~\ref{eq:unitary} we showed how a unitary operation \(U\) modifies
 the quantum state \(\ket{\psi}\). Given a state represented by the density
@@ -788,7 +789,7 @@ that appears with probability \(p_i\). \
 \end{equation} \
 
 The measurement operations also have to be adapted. We perform a
-measurement with the operator \(M_m\). The probablity of measuring
+measurement with the operator \(M_m\). The probability of measuring
 \(m\) given an initial state \(\ket{\psi}\) is described in Equation
 ~\ref{eq:density_probability}. \
 
@@ -836,12 +837,311 @@ advantage from the linearity property of the trace. \
 
 % MAYBE: Citation for hadamard gate, pauli gate.
 
-\section{Quantum Noise}\label{section:noise}
-i.	Describe the types of noise that can occur.
-% nielsen 373
-ii.	Explain where can noise occur.
-iii.	State how noise can be simulated.
-% Kraus operator for quantum channels - noisy circuits, pennylane / schuld 268
+\section{Quantum Noise}\label{section:noise} \
+
+In this section we introduce the fundamental concepts to understand
+how noise affects quantum systems. The existing types of quantum noise
+will be presented in Subsection~\ref{subsection:noise_types}. Furthermore,
+we present the theory of quantum operations and the different classes of
+quantum operations regarding noise in Subsection
+~\ref{subsection:operation_types}. \
+
+Significant quantum noise commonly originates from the interaction of
+the quantum system with its environment. While a completely isolated
+quantum system would considerably reduce the noise from the environment,
+it would prevent us from performing any operation to the quantum state.
+This concept is known as the coherence-controllability trade-off
+~\cite{yoneda_quantum-dot_2018}. \
+
+Due to this trade-off, open quantum systems theory has been developed.
+Designing a model for the interactions between a quantum system and
+its environment is key to accurately describe quantum operations that
+happen in the real world. \
+
+\subsection{Types of Quantum Noise}\label{subsection:noise_types} \
+
+Quantum noise can be categorized into two types, coherent and
+incoherent noise~\cite{pravia_robust_2003}. Coherent noise is most commonly
+derived from systematic errors like miscalibration, inaccurate
+control signal, or coupling to low-frequency fields~\cite{kaufmann_characterization_2023}.
+These disturbances are constant, reversible and don't cause any
+information loss. Coherent noise can be characterized by unitary matrices
+being applied to the quantum state. \
+
+A specific case of coherent noise is miscalibration on Pauli rotational
+gates. Given a desired rotation \(\theta\), the rotational gate incurs
+an error \(\epsilon\). In Equation~\ref{eq:rotation_error} we can notice
+how one miscalibrated gate can be interpreted as applying the desired
+rotation \(\theta\) and then applying an additional rotation by
+\(\epsilon\). In this case the unitary matrix which describes the
+coherent error is the matrix describing the rotational gate by the
+\(\epsilon\) angle. \
+
+\begin{equation}\label{eq:rotation_error}
+  R_x\left(\theta + \epsilon\right) = R_x\left(\theta\right)R_x\left(\epsilon\right)
+\end{equation}
+
+Contrarily, coherent noise is stochastic and emerges from insufficiently
+isolating the quantum system from its surroundings. This in turn results
+on irreversible information loss. Incoherence is often represented as a
+probabilistic distribution of unitary processes resulting from experimental
+parameters that change gradually over time~\cite{boulant_incoherent_2004}.
+Therefore, decoherent noise cannot be explained by a single unitary matrix
+but by quantum noise operations. Quantum noise operations will be introduced
+in Subsection~\ref{subsection:operation_types} and are described as
+completely positive superoperators. \
+
+An important difference between coherent and incoherent noise is the
+magnitude of the influence that they have on a quantum system.
+Coherent noise's influence on a quantum system grows quadratically
+with respect to the circuit's length~\cite{iverson_coherence_2020}. Conversely, for
+incoherent noise, the influence on a quantum system grows at worst
+linearly with the circuit's size. \
+% MAYBE: Add information regarding error correction and mitigation.
+
+Once we know which type of noise we might encounter performing operations
+in a quantum system, it is of special importance to know when and where
+it can occur. There are three main places in a quantum algorithm where
+noise can be present. The first occasion were we might encounter is when
+preparing the initial state of the quantum system. The second location
+where noise can be found is when performing any gate quantum gate.
+Finally, every time a measurement is performed we will come across noise.
+It is remarkable to note that both, coherent and incoherent noise, can
+appear in any of these places, even at the same time. \
+
+While noise in every part of the quantum system is significant, there
+are some operations that are constantly repeated and therefore will result
+in noisier calculations~\cite{resch_benchmarking_2022}. Noise when executing quantum gates
+is, on average, responsible for most of the induced noise, as these
+operations are constantly repeated depending on the length of the circuit. 
+Normally, state preparation and measurements are performed once at the
+beginning and at the end of the quantum circuit respectively. Consequently,
+the noise from both operations has a diminished impact on the quantum
+system in comparison to the quantum gates' noise. \ 
+% FIND CITATION, ELSE VIDEO FROM IBM NOISE
+
+\subsection{Types of Quantum Noise Operations}\label{subsection:operation_types} \
+
+Quantum operations are utilized to characterize the effect of the
+environment on open quantum systems. In Equation~\ref{eq:kraus_operation}
+we derive the expression to describe a quantum operation, this form is
+called the operator-sum representation~\cite{breuer_theory_2007}. This equation extends
+the expression in Eq.~\ref{eq:density_evolution} with Kraus operators
+\(\left\{K_i\right\}\)~\cite{kraus_general_1971}. \
+
+\begin{equation}\label{eq:kraus_operation}
+  \Phi \left(\rho\right) = \sum_{i} K_{i} \rho K_{i}^{\dag}
+\end{equation} \
+
+The quantum operation \(\Phi\) is a completely positive map which
+describes the change of quantum state \(\rho\) with Kraus operators
+\(\left\{K_i\right\}\). For non-trace-preserving quantum operations
+(like noise) a relaxation of the completeness equation
+(Eq.~\ref{eq:completeness}) for the Kraus operators is displayed
+in Equation~\ref{eq:kraus_condition}. \
+
+\begin{equation}\label{eq:kraus_condition}
+  \sum_{i} K_{i}^{\dag} K_{i} \leq I
+\end{equation} \
+
+The operator-sum representation encapsulates the quantum system's
+dynamics without needing explicit consideration of environmental
+properties. All the relevant information is condensed into the 
+Kraus operators. Therefore, if we can derive the Kraus operators, we
+can observe the effects of the environment on the quantum system. \
+
+\paragraph{Bit Flip} \
+
+A bit flip is characterized by the Kraus operators in Equation
+~\ref{eq:bit_kraus}. These operators indicate that a bit flip
+will happen to the quantum state with probability \(p\), while
+the state will not change with probability \(1-p\). If \(p=1\)
+then the operation will just be like applying a X gate. \
+
+\begin{equation}\label{eq:bit_kraus}
+  K_0 = \sqrt{1-p} \begin{pmatrix}
+          1 & 0 \\
+          0 & 1 \\
+        \end{pmatrix} \qquad \qquad
+  K_1 = \sqrt{p} \begin{pmatrix}
+          0 & 1 \\
+          1 & 0 \\
+        \end{pmatrix}
+\end{equation} \
+
+The effects of quantum operations can be illustrated on the Bloch sphere.
+This depiction is very helpful to understand consequence of noise on
+quantum states. In Figure~\ref{fig:bit_flip} we can observe the effects
+of the bit flip channel with \(p=0.3\). The distorted bloch sphere shows
+that the \(x\)-axis remains unaffected but the \(y-z\) plane is compressed,
+limiting the possible values for the quantum state. \
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.39]{figures/bit_flip.png}
+  \centering
+  \caption{Effects of a bit flip channel on the Bloch sphere. Taken from~\cite{nielsen_quantum_2010}.}
+~\label{fig:bit_flip}
+\end{figure} \
+
+\paragraph{Phase Flip} \
+
+A phase flip is defined by the Kraus operators detailed in Equation
+~\ref{eq:phase_kraus}. These operators signify that a phase flip
+may occur on the quantum state with a probability of \(p\), whereas
+the state will remain unchanged with a probability of \(1-p\). If
+\(p=1\) then the operation will essentially apply a Z gate. \
+
+\begin{equation}\label{eq:phase_kraus}
+  K_0 = \sqrt{1-p} \begin{pmatrix}
+          1 & 0 \\
+          0 & 1 \\
+        \end{pmatrix} \qquad \qquad
+  K_1 = \sqrt{p} \begin{pmatrix}
+          1 & 0 \\
+          0 & -1 \\
+        \end{pmatrix}
+\end{equation} \
+
+Figure~\ref{fig:phase_flip} depicts the impact of the bit flip
+channel when \(p=0.3\). We can appreciate that in the modified
+Bloch sphere the \(z\)-axis is left untouched while the \(x-y\)
+plane is reduced. Thus, the quantum state becomes less pure. \
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.39]{figures/phase_flip.png}
+  \centering
+  \caption{Effects of a phase flip channel on the Bloch sphere. Taken from~\cite{nielsen_quantum_2010}.}
+~\label{fig:phase_flip}
+\end{figure} \
+
+\paragraph{Depolarizing Channel} \
+
+The effects that the depolarizing channel has on a quantum state
+are described by the Kraus operators in Equation
+~\ref{eq:depolarizing_kraus}. The operators describe that with
+probability \(p/3\) each of the operators \(X\), \(Y\), and \(Z\)
+will be performed. Therefore, the quantum state is not modified with
+probability \(1-p\). We can further define the effect of these operators
+as \textit{depolarizing} the quantum state with probability \(p\).
+Depolarizing a quantum state means substituting \(\rho\) for the maximally
+mixed state. \
+
+\begin{equation}\label{eq:depolarizing_kraus}
+  \begin{split}
+    K_0 = \sqrt{1-p} \begin{pmatrix}
+            1 & 0 \\
+            0 & 1 \\
+          \end{pmatrix} \qquad \qquad
+    K_1 = \sqrt{p/3} \begin{pmatrix}
+            0 & 1 \\
+            1 & 0 \\
+          \end{pmatrix} \\
+    K_2 = \sqrt{p/3} \begin{pmatrix}
+            0 & -i \\
+            i & 0 \\
+          \end{pmatrix}  \qquad \quad
+    K_3 = \sqrt{p/3} \begin{pmatrix}
+            1 & 0 \\
+            0 & -1 \\
+          \end{pmatrix}
+  \end{split}
+\end{equation} \
+
+In Figure~\ref{fig:depolarizing_flip}, we observe the effects of the 
+depolarizing channel with a probability of \(p=0.5\). Notably, the
+magnitude shrinks evenly in the modified Bloch sphere. Consequently,
+the quantum state experiences a decrease range from all axis. \
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.39]{figures/depolarizing_channel.png}
+  \centering
+  \caption{Effects of a depolarizing channel on the Bloch sphere. Taken from~\cite{nielsen_quantum_2010}.}
+~\label{fig:depolarizing_flip}
+\end{figure} \
+
+\paragraph{Amplitude Damping} \
+
+The effects of amplitude damping can be equated to
+\textit{energy dissipation} in the quantum system. Interaction with
+the environment might lead to physycal phenomena like scattering,
+dissipation, attenuation, and spontaneous emission, which are all
+described by the effects of amplitude damping. An amplitude
+damping channel is defined by the Kraus operators outlined in
+Equation~\ref{eq:amplitude_kraus}. The \(K_0\) operator leaves
+\(\ket{0}\) unchanged but reduces the amplitude of \(\ket{1}\).
+This occurs because there was no loss of energy to the environment,
+leading the environment to believe the system is probably in \(\ket{0}\)
+rather than \(\ket{1}\). The \(K_1\) operator performs a a bit
+flip to \(\ket{1}\), signifying that the state lost energy to the
+environment. \
+
+\begin{equation}\label{eq:amplitude_kraus}
+  K_0 = \begin{pmatrix}
+          1 & 0 \\
+          0 & \sqrt{1-\gamma} \\
+        \end{pmatrix} \qquad \qquad
+  K_1 = \begin{pmatrix}
+          0 & \sqrt{\gamma} \\
+          0 & 0 \\
+        \end{pmatrix}
+\end{equation} \
+
+Figure~\ref{fig:amplitude_damping} illustrates the impact of the
+amplitude damping channel with a probability of \(p=0.8\). Remarkably,
+the magnitude contracts across the modified Bloch sphere and is pulled
+towards the \(\ket{0}\) pole. As a result, the quantum state undergoes
+a reduction in possible quantum states values. \
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.39]{figures/amplitude_damping.png}
+  \centering
+  \caption{Effects of an amplitude damping channel on the Bloch sphere. Taken from~\cite{nielsen_quantum_2010}.}
+~\label{fig:amplitude_damping}
+\end{figure} \
+
+\paragraph{Phase Damping} \
+
+The effects of phase damping are unique to quantum mechanics, where
+a loss of information occurs without losing any energy. A phase
+damping channel is characterized by the Kraus operators presented
+in Equation~\ref{eq:phase_damping_kraus}. Similar to amplitude
+damping's \(K_0\), \(\ket{0}\) remains unchanged and the amplitude
+of \(\ket{1}\) is reduced. However, \(K_1\) consumes \(\ket{0}\)
+and reduces the amplitude of \(\ket{1}\). \
+
+\begin{equation}\label{eq:phase_damping_kraus}
+  K_0 = \begin{pmatrix}
+          1 & 0 \\
+          0 & \sqrt{1-\gamma} \\
+        \end{pmatrix} \qquad \qquad
+  K_1 = \begin{pmatrix}
+          0 & 0 \\
+          0 & \sqrt{\gamma} \\
+        \end{pmatrix}
+\end{equation} \
+
+To better understand the effects of phase damping, we can derive equivalent but
+differently expressed Kraus operators. In Equation~\ref{eq:phase_damping_kraus_mod}
+with \(\alpha = \left(1 + \sqrt{1 - \lambda}\right)\) we can rewrite the
+Kraus operators such that they correspond to the phase flip's operators with
+the probabilities inversed. This is important because while the physical
+quantum process don't match, the transformation of the quantum state due to
+the noise is the same. Thus, the effect of phase damping on the Bloch sphere
+can be observed in Figure~\ref{fig:phase_flip}. \
+
+\begin{equation}\label{eq:phase_damping_kraus_mod}
+  K'_0 = \sqrt{\alpha} \begin{pmatrix}
+    1 & 0 \\
+    0 & 1 \\
+  \end{pmatrix} \qquad \qquad
+  K'_1 = \sqrt{1-\alpha} \begin{pmatrix}
+    1 & 0 \\
+    0 & -1 \\
+  \end{pmatrix}
+\end{equation} \
+
+% MAYBE: add fidelity, infidelity, diamond distance measure (iverson and preskill)
+% MAYBE: state correlation (pravia)
 
 \section{Quantum Machine Learning}
 i.	Present the difference between QML and classical ML\@.

@@ -18,7 +18,7 @@ that the RSA~\cite{rivest_method_1978} cryptographic mechanism offers would be v
 \section{Motivation} \
 
 Even though the previously mentioned quantum algorithms would surpass the performance
-of the best classical ones, they still can not be executed in current quantum
+of the best classical ones, they still can not be executed on current quantum
 computers due to noise~\cite{preskill_quantum_2018}. This noise occurs because
 current quantum devices are not completely isolated from the environment and every
 time we perform an operation on them we introduce a disturbance. This type of device
@@ -49,11 +49,12 @@ Returning to the possible risks that \ac{ml} might encounter, several attacks ha
 been developed to force a \ac{ml} model to missclassify an input~\cite{szegedy_intriguing_2014}.
 These attacks are denominated adversarial attacks and are based on crafting specific
 input data that has been slightly modified to cause the model to erroneously classify
-the input. At the beginning, when the first adversarial attacks were developed,
-they needed to know the architecture of the model to be able to fool it.
-Nevertheless, it was proved that adversarial attacks are transferable between
-models with the same use case, without knowing the architecture of the model or
-the dataset it was trained on~\cite{papernot_transferability_2016}. \
+the input. These small modifications are imperceptible for humans. At the beginning,
+when the first adversarial attacks were developed, they needed to know the
+architecture of the model to be able to fool it. Nevertheless, it was proved
+that adversarial attacks are transferable between models with the same use
+case, without knowing the architecture of the model or the dataset it was
+trained on~\cite{papernot_transferability_2016}. \
 
 Adversarial training was developed in order to defend \ac{ml} models against
 adversarial attacks~\cite{goodfellow_explaining_2015, szegedy_intriguing_2014}.

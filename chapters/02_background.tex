@@ -20,14 +20,13 @@ Subsection~\ref{subsection:gates}. Then, we describe entanglement
 (Subsec.~\ref{subsubsection:entanglement}), a primordial
 property of quantum mechanics. Thereafter, quantum circuits (Subsec.
 ~\ref{subsection:circuit}) and measurements (Subsec.
-~\ref{subsection:measurement}) measurement are explained.
-Finally, the density operator (Subsec.~\ref{subsection:density_operator})
+~\ref{subsection:measurement}) are explained. Finally, the
+density operator (Subsec.~\ref{subsection:density_operator})
 is defined to enable the description of noise in quantum systems. \
 
-The information from this section is mainly extracted from
-Nielsen's book~\cite{nielsen_quantum_2010}, further information
-regarding quantum computing and quantum information can be found
-there. \
+The information from this section is mainly based on Nielsen's
+book~\cite{nielsen_quantum_2010}, further information regarding
+quantum computing and quantum information can be found there. \
 
 \subsection{Qubit}\label{subsection:qubit} \
 
@@ -71,21 +70,21 @@ The Born rule thus implies that a qubit state is a unitary vector in
 a two-dimensional complex vector space. Although the
 probability amplitudes can take on any complex value as long
 as they fulfill the Born rule, when we perform a measurement
-on the qubit it \textit{collapses} to one of the two basis
-states. \
+in the computational base on the qubit it \textit{collapses}
+to one of the two basis states. \
 
 \begin{equation}\label{eq:qubit_superposition}
   \ket{\psi} = \alpha\ket{0} + \beta\ket{1}
 \end{equation} \
 
 In the real physical world qubits can be implemented by
-several different small particles. However, the mathematical
+several different mechanisms. However, the mathematical
 qubit abstraction helps establish a baseline computing unit
-for quantum computing independent of which particle it is
+for quantum computing independent of which mechanism it is
 being represented by~\cite{nielsen_quantum_2010}. While in this perfect
 mathematical description noise does not occur, there are
 different mechanisms to represent the noise that quantum
-computers suffer from, namely the density operator that will
+computers suffer from, e.g. the density operator that will
 be introduced in Subsection~\ref{subsection:density_operator}. \
 
 \subsection{Bloch Sphere}\label{subsection:bloch} \
@@ -139,7 +138,7 @@ Due to the Born rule the measurement results for
 \(x = \left\{00, 01, 10, 11\right\}\) follow the probability
 distribution determined by \(|\alpha_{x}|^2\). Similar to a
 single qubit, once a measurement on both qubits is performed,
-the state of the qubits will collapse to the measured computational
+the state of the qubits will collapse to the measured
 basis. Nevertheless, with multiple qubits we are able to perform
 measurements on a subset of qubits. In the case of a two-qubit
 system, measuring the first qubit will collapse its value. However,
@@ -174,7 +173,7 @@ are not able to process quantum information efficiently. \
 Once that quantum states have been defined, performing operations
 on them is the next step to understand how quantum computing works.
 These operations are denominated \textit{quantum gates} and they
-modify the quantum state according to its properties. A quantum gate
+modify the quantum state according to gates' properties. A quantum gate
 can be represented as a matrix that fulfills one single property,
 namely that it is a unitary matrix. In Equation~\ref{eq:unitary} we
 can observe that a unitary matrix is one which when multiplied by its
@@ -186,13 +185,16 @@ own transpose conjugate is equal to the identity matrix.
 \end{equation}
 
 This property is required because when a quantum gate is used on a
-quantum state (Eq.~\ref{eq:unitary}), the resulting quantum state has to be a valid normalized
-quantum state. By being a unitary matrix, this effect is achieved.
-There are infinitely many unitary matrices, however, there are some
-of specific importance. The most important single-qubit quantum
-gates will be introduced in Subsection~\ref{subsubsection:single_qubit},
-while the most significant multiple-qubits gates will be presented
-in Subsection~\ref{subsubsection:multiple_qubit} \
+quantum state (Eq.~\ref{eq:unitary}), the resulting quantum state has to
+be a valid normalized quantum state. By being a unitary matrix, this
+effect is achieved. Applying a quantum gate to a quantum state can also be
+mathematically interpreted as a matrix-vector multiplication between the
+gate's unitary matrix and the quantum state vector. There are infinitely
+many unitary matrices, however, there are some of specific importance.
+The most important single-qubit quantum gates will be introduced in
+Subsection~\ref{subsubsection:single_qubit}, while the most significant
+multiple-qubits gates will be presented in 
+Subsection~\ref{subsubsection:multiple_qubit} \
 
 \subsubsection{Single-Qubit Gates}\label{subsubsection:single_qubit} \
 
@@ -322,11 +324,35 @@ added as a global phase. \
 
 As a complement to the Pauli gates, there are gates that
 perform a specific \(\theta\) rotation around each axis of the
-Bloch sphere. They are known as \(RX\left(\theta\right)\),
-\(RY\left(\theta\right)\) and \(RZ\left(\theta\right)\). \
+Bloch sphere. They are known as \(R_{X}\left(\theta\right)\),
+\(R_{Y}\left(\theta\right)\) and \(R_{Z}\left(\theta\right)\).
+Their unitary matrices and symbols can be found in Equation
+~\ref{eq:rotation_gates}. \
 
-% MAYBE: Expand the RXYZ gates as they can become important for
-% parametrized ansatzs. schuld 104
+\begin{equation}\label{eq:rotation_gates}
+  \begin{split}
+    R_X\left(\phi\right) = \begin{pmatrix}
+          \cos\left(\frac{\phi}{2}\right) & -i\sin\left(\frac{\phi}{2}\right) \\
+          -i\sin\left(\frac{\phi}{2}\right) & \cos\left(\frac{\phi}{2}\right)
+        \end{pmatrix} \qquad \qquad \qquad
+    R_Z\left(\phi\right) = \begin{pmatrix}
+          e^{-i\frac{\phi}{2}} & 0 \\
+          0 & e^{i\frac{\phi}{2}}
+        \end{pmatrix} \\
+    R_Y\left(\phi\right) = \begin{pmatrix}
+          \cos\left(\frac{\phi}{2}\right) & -\sin\left(\frac{\phi}{2}\right) \\
+          \sin\left(\frac{\phi}{2}\right) & \cos\left(\frac{\phi}{2}\right)
+        \end{pmatrix} \qquad
+    \Qcircuit @C=1em @R=1em {
+      & \gate{R_{X}(\phi)} & \gate{R_{Y}(\phi)} & \gate{R_{Z}(\phi)} & \qw
+    }
+  \end{split}
+\end{equation} \
+
+More importantly, each Pauli matrix can be derived up to a
+global phase from their respective rotational gate for a
+given angle \(\theta = \pi\).
+
 % MAYBE: Expand on the general rotation gate RZ RY RZ
 
 \paragraph{Hadamard Gate} \
@@ -450,7 +476,7 @@ the different computation basis states. \
 
 The SWAP gate's effect are introduced in Equation~\ref{eq:swap}. It shows
 that the value of the first qubit is swapped with the value of the
-second value. Therefore, the gate will only have an effect if the qubits'
+second qubit. Therefore, the gate will only have an effect if the qubits'
 values are different. \
 
 \begin{equation}\label{eq:swap}
@@ -479,13 +505,26 @@ them twice would not modify the original quantum state. \
 
 \subsection{Entanglement}\label{subsubsection:entanglement}
 One of quantum mechanics most important concepts is entanglement, it is
-also what fundamentally enables quantum computing to perform better
-than classical computing. Entanglement occurs when two or more
-particles' quantum states are correlated and cannot be described or 
-measured independently of each other. In quantum computing the
-simplest and most common sequence of gates to entangle two qubits
-can be found in Equation~\ref{eq:entanglement}, where the Hadamard
-gate puts the first qubit in a superposition and the CNOT gate creates
+also what fundamentally enables quantum computing to potentially
+perform better than classical computing. Entanglement occurs when
+two or more particles' quantum states are correlated and cannot
+be described or measured independently of each other. \
+
+For two unentangled qubits with quantum states \(\ket{\phi}_A\)
+and \(\ket{\psi}_B\) respectively, we can describe the composite
+system formed by both qubits with the tensor product between their
+quantum states (Eq.~\ref{eq:separable_states}). Quantum states
+represented in this manner are referred to as separable states.
+Entangled systems can't be represented as separable states. \
+
+\begin{equation}\label{eq:separable_states}
+  \ket{\Psi}_{AB} = \ket{\phi}_A \otimes \ket{\psi}_B
+\end{equation} \
+
+In quantum computing the simplest and most common sequence of
+gates to entangle two qubits can be found in
+Equation~\ref{eq:entanglement}, where the Hadamard gate puts
+the first qubit in a superposition and the CNOT gate creates
 a dependent relationship between both qubits. \
 
 \begin{equation}\label{eq:entanglement}
@@ -532,11 +571,11 @@ Entanglement is one of the most powerful tools in quantum mechanics.
 Some of the documented uses of entanglement (mainly using EPR states)
 are superdense coding~\cite{bennett_communication_1992} and quantum
 teleportation~\cite{bennett_teleporting_1993}. Quantum teleportation
-describes transmitting quantum information from
-a sender to a receiver in a different location. Superdense coding refers
-to transferring a certain amount of classical bits of information using
-a lesser number of qubits, therefore, sending more information with less
-resources. \
+describes transmitting quantum information from a sender to a receiver
+in a different location by sending only classical data. Superdense
+coding refers to transferring a certain amount of classical bits of
+information using a lesser number of qubits, therefore, sending more
+information with less resources. \
 
 \subsection{Quantum Measurement}\label{subsection:measurement} \
 
@@ -668,6 +707,7 @@ which is a Hermitian operator acting on the state space of the observed system.
 The observable's spectral decomposition is in Equation~\ref{eq:observable},
 where we can see that \(M\) is composed by the sum of the projector \(P_m\)
 multiplied by the corresponding eigenvalue \(m\). The observable's
+eigenvectors form an orthonormal basis and its
 eigenvalues are the possible values for the measurement. \
 
 \begin{equation}\label{eq:observable}
@@ -881,22 +921,23 @@ coherent error is the matrix describing the rotational gate by the
   R_x\left(\theta + \epsilon\right) = R_x\left(\theta\right)R_x\left(\epsilon\right)
 \end{equation}
 
-Contrarily, coherent noise is stochastic and emerges from insufficiently
+Contrarily, incoherent noise is stochastic and emerges from insufficiently
 isolating the quantum system from its surroundings. This in turn results
 on irreversible information loss. Incoherence is often represented as a
 probabilistic distribution of unitary processes resulting from experimental
 parameters that change gradually over time~\cite{boulant_incoherent_2004}.
-Therefore, decoherent noise cannot be explained by a single unitary matrix
+Therefore, incoherent noise cannot be explained by a single unitary matrix
 but by quantum noise operations. Quantum noise operations will be introduced
 in Subsection~\ref{subsection:operation_types} and are described as
 completely positive superoperators. \
 
 An important difference between coherent and incoherent noise is the
 magnitude of the influence that they have on a quantum system.
-Coherent noise's influence on a quantum system grows quadratically
-with respect to the circuit's length~\cite{iverson_coherence_2020}. Conversely, for
-incoherent noise, the influence on a quantum system grows at worst
-linearly with the circuit's size. \
+Coherent noise's influence on a quantum system in some cases grows
+quadratically with respect to the circuit's length
+~\cite{iverson_coherence_2020}. Conversely, for incoherent noise,
+the influence on a quantum system grows at worst linearly with the
+circuit's size. \
 % MAYBE: Add information regarding error correction and mitigation.
 
 Once we know which type of noise we might encounter performing operations
@@ -1072,7 +1113,9 @@ Equation~\ref{eq:amplitude_kraus}. The \(K_0\) operator leaves
 This occurs because there was no loss of energy to the environment,
 leading the environment to believe the system is probably in \(\ket{0}\)
 rather than \(\ket{1}\). The \(K_1\) operator performs a a bit
-flip to \(\ket{1}\), signifying that the state lost energy to the
+flip to \(\ket{1}\) and reduces its amplitude by a factor of
+\(\sqrt{\gamma}\), where \(\gamma\) is the damping strength.
+This operation signifys that the state lost energy to the
 environment. \
 
 \begin{equation}\label{eq:amplitude_kraus}
@@ -1143,13 +1186,32 @@ can be observed in Figure~\ref{fig:phase_flip}. \
 % MAYBE: add fidelity, infidelity, diamond distance measure (iverson and preskill)
 % MAYBE: state correlation (pravia)
 
-\section{Quantum Machine Learning}
-i.	Present the difference between QML and classical ML\@.
-ii.	Introduce variational quantum circuits.
-iii.	Explain quantum kernel methods.
+\section{Quantum Machine Learning} \
 
-\section{Adversarial Machine Learning}
-i.	State generalization problems.
-ii.	Present different attacks such as FGSM, C\&W, and PGD\@.
-iii.	Introduce adversarial training as defence mechanism against adversarial attacks.
-iv.	Explain the relationship between general accuracy and adversarial resilience.
+% TODO: Introduce the subsections from the chapter and link them.
+
+% TODO: Present the difference between QML and classical ML. ~\cite{biamonte}
+
+% TODO: Present encoding dilemma and amplitude encoding.
+
+i.	Introduce variational quantum circuits. \
+
+% TODO: Introduce VQA's / ~\cite{cerezo}
+
+ii.	Explain quantum kernel methods. \
+% https://pennylane.ai/qml/demos/tutorial_classical_kernels/
+% https://pennylane.ai/qml/demos/tutorial_kernels_module/#training-qeks
+% TODO: Say what classical kernel methods are / ~\cite{wang}
+% TODO: Say what  quantum kernel embeddings are and how to train them / ~\cite{hubregsten}
+
+\section{Adversarial Machine Learning} \
+
+% TODO: Introduce the subsections from the chapter and link them.
+
+i.	State generalization problems.  \
+
+ii.	Present different attacks such as FGSM, C\&W, and PGD\@. \
+
+iii.	Introduce adversarial training as defence mechanism against adversarial attacks. \
+
+iv.	Explain the relationship between general accuracy and adversarial resilience. \

@@ -1,10 +1,19 @@
 \chapter{Implementation}\label{chapter:implementation}
 
-\section{Section}
-a.	Introduce the used datasets and why they were chosen.
-b.	Describe how the experiments have been chosen and created:
-    i.	Possible mixes with different types of noise, in different places, with different datasets and QML mechanisms.
+\section{Section} \
 
+1.	Explain why decoherent noise is used and not coherent. \
+
+  a. Coherent noise will probably just shift the bias. \
+
+  b. Coherent noise might add too much noise (quadratic growth). \
+
+  c. True random noise is required to improve generalization. \
+
+% TODO: Do an experiment implementing coherent noise to prove this claim.
+% Use https://pennylane.ai/qml/demos/tutorial_variational_classifier/ - circuit-centric quantum classifier ansatz
+
+\section{Experiments}
 
 Possible experiments: \
 
@@ -17,3 +26,10 @@ b. Variational quantum circuits and kernels \
  2. Phase damping (loss of information but not energy) \
 
  3. Simpler phase and bit flips \
+
+ \subsection{Variational Quantum Classifiers Training}\label{subsection:vqc_training} \
+
+ Introduce reproduction of variational circuits inspired by circuit centric ansatz. \
+
+% TODO: State the result of training QVC with regards to the chosen datasets.
+% TODO: Compare to paper adn state why they might be valid results.

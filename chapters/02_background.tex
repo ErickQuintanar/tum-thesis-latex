@@ -322,6 +322,8 @@ added as a global phase. \
             -i\ket{0}
 \end{equation} \
 
+\paragraph{Rotational Gates} \
+
 As a complement to the Pauli gates, there are gates that
 perform a specific \(\theta\) rotation around each axis of the
 Bloch sphere. They are known as \(R_{X}\left(\theta\right)\),
@@ -351,7 +353,12 @@ Their unitary matrices and symbols can be found in Equation
 
 More importantly, each Pauli matrix can be derived up to a
 global phase from their respective rotational gate for a
-given angle \(\theta = \pi\).
+given angle \(\theta = \pi\). Additionally, if two rotation
+gates of the same type are contiguously applied to a quantum
+state, they can be summarized by one gate of the same type
+executing a rotation of the both angles' sum, such that
+\(R(\alpha)R(\beta)\ket{\psi} = R(\alpha + \beta)\ket{\psi}\)
+is valid. \
 
 % MAYBE: Expand on the general rotation gate RZ RY RZ
 

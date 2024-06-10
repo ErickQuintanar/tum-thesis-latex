@@ -1,33 +1,15 @@
 \chapter{Design}\label{chapter:design} \
 
-\section{Section} \
+Describe how the experiments have been chosen and created:
+  i.	Possible mixes with different types of noise, in different places, with different datasets and QML mechanisms.
 
-1.	Explain why decoherent noise is used and not coherent. \
+\section{Datasets}\label{section:datasets} \
 
-  a. Coherent noise will probably just shift the bias. \
-
-  b. Coherent noise might add too much noise (quadratic growth). \
-
-  c. True random noise is required to improve generalization. \
-
-% TODO: Do an experiment implementing coherent noise to prove this claim.
-% Use https://pennylane.ai/qml/demos/tutorial_variational_classifier/ - circuit-centric quantum classifier ansatz
-
-- introduce reproduction of variational circuits inspired by circuit centric ansatz. \
-
-- describe that state preparation influences a lot for coherent noise. \
-
-\subsection{Datasets}\label{subsection:datasets} \
-
+Introduce the used datasets and why they were chosen. \
 % TODO: Describe the datasets that we are using and why.
 % TODO: Maybe perform a small feature engineering analysis on each dataset.
 
-\subsection{Variational Quantum Classifiers Training}\label{subsection:vqc_training} \
-
-% TODO: State the result of training QVC with regards to the chosen datasets.
-% TODO: Compare to paper adn state why they might be valid results.
-
-\subsection{State Preparation with Coherent Noise}\label{subsection:state_preparation_noise} \
+\section{State Preparation with Coherent Noise}\label{section:state_preparation_noise} \
 
 In the previous subsection the trained variational circuit classifiers
 utilized the amplitude embedding technique to encode classical data
@@ -122,15 +104,15 @@ notable difference between the calculated and the experimental results. \
 \end{table} \
 
 In relation to the test from the \(R_{Z}(\theta + \epsilon)\) gate, we
-are not able to observe any effect of either the rotation or the niose.
+are not able to observe any effect of either the rotation or the noise.
 This is because any Z transformation only modifies the phase of the
 quantum state, which cannot be measured with the Pauli Z observable.
 However, it is important to note that in the experimental results
-a difference of around 0.001 was observed in the result for the \(\ket{+}\)
+a difference of around 0.001 was observed in the result of the \(\ket{+}\)
 state measurement. \
 
 For the \ac{cnot} gate circuit we tested both cases (a control qubit on the
-first wire and a target qubit for the second wire and vice versa). For
+first wire and a target qubit on the second wire and vice versa). For
 the first case of the \ac{cnot}  gate circuit test, the noiseless expectation
 values with the Pauli Z observable can be found in Table
 ~\ref{tab:cnot_ideal}. Similarly to the \(R_{Y}(\theta)\) circuit test,
@@ -157,7 +139,7 @@ two qubits from the quantum state. \
 \end{table} \
 
 In Table~\ref{tab:cnot_iso_noise} we can find the calculated
-projective measurement with the Pauli Z matrix for the \ac{cnot} gate.
+projective measurements with the Pauli Z matrix for the \ac{cnot} gate.
 First of all we can observe that for the quantum states \(\ket{00}\)
 and \(\ket{01}\) the values don't incur in any noise as the control
 qubit is set to 0 and the Pauli X rotation is not performed on the target
@@ -169,15 +151,15 @@ measurements with an equal magnitude. \
   \centering
   \begin{tabular}{|c|c|c|}
     \hline
-    Quantum State & \ac{cnot} & \(\expval{Z}\) \\
+    Quantum State & \(\expval{Z}\) \\
     \hline
-    \(\ket{00}\) & \(\ket{00}\) & [1, 1] \\
+    \(\ket{00}\) & [1, 1] \\
     \hline
-    \(\ket{01}\) & \(\ket{01}\) & [1, -1] \\
+    \(\ket{01}\) & [1, -1] \\
     \hline
-    \(\ket{10}\) & \(\ket{11}\) & [-1, -0.985] \\
+    \(\ket{10}\) & [-1, -0.985] \\
     \hline
-    \(\ket{11}\) & \(\ket{10}\) & [-1, 0.985] \\
+    \(\ket{11}\) & [-1, 0.985] \\
     \hline
   \end{tabular}
   \caption{Expectation value with Pauli Z observable of \ac{cnot} gate with \(\epsilon = 10^{\circ}\).}\label{tab:cnot_iso_noise}
@@ -192,28 +174,159 @@ should be no noise present, however, both qubit measurements
 show disturbances in their value. Regarding the \(\ket{10}\) state
 the measurement values for both qubits are inverted. Finally,
 for the \(\ket{11}\) state the first qubit shows signs of noise
-while it should not, while the second qubit exhibits a different noise
-magnitude. \
+when it should not, while the second qubit exhibits a different noise
+magnitude than calculated. \
 
 \begin{table}[h]
   \centering
   \begin{tabular}{|c|c|c|}
     \hline
-    Quantum State & \ac{cnot} & \(\expval{Z}\) \\
+    Quantum State & \(\expval{Z}\) \\
     \hline
-    \(\ket{00}\) & \(\ket{00}\) & [1, 1] \\
+    \(\ket{00}\) & [1, 1] \\
     \hline
-    \(\ket{01}\) & \(\ket{01}\) & [0.992, -0.996] \\
+    \(\ket{01}\) & [0.992, -0.996] \\
     \hline
-    \(\ket{10}\) & \(\ket{11}\) & [-0.985, -1] \\
+    \(\ket{10}\) & [-0.985, -1] \\
     \hline
-    \(\ket{11}\) & \(\ket{10}\) & [-0.992, 0.996] \\
+    \(\ket{11}\) & [-0.992, 0.996] \\
     \hline
   \end{tabular}
   \caption{Obtained expectation value with Pauli Z observable of \ac{cnot} gate with \(\epsilon = 10^{\circ}\).}\label{tab:cnot_real_noise}
 \end{table} \
 
-% TODO: coherent noise didn't stay unitarily consistent aka it had some variation which is also not expected
+In theory the effects of coherent noise should be deterministic,
+as their effects can be described by a unitary matrix applied
+every time once a gate has been executed. In spite of that,
+the observed results from the experimental tests indicate that
+coherent noise with Qiskit's noise models plugged into Pennylane
+are not deterministic and fluctuate between a small margin range. \
 
-% TODO: state preparation with different lengths.
+All the gates that we tested presented differences with the
+calculated and obtained results. After further investigation
+we determined that the additional noise arises from the state
+preparation routine. In Pennylane's documentation we found that
+the \colorbox{inline_gray}{\lstinline|AmplitudeEmbedding|} function
+inherits from the \colorbox{inline_gray}{\lstinline|StatePrep|}
+function. Furthermore, there is a note that indicates
+if \colorbox{inline_gray}{\lstinline|StatePrep|} is not supported
+by the device, the method developped by Möttönen et al.~\cite{mottonen_transformation_2004}
+will be utilized. \
 
+The state preparation method proposed by Möttönen et al. utilizes a
+combination of \(R_{Y}(\theta)\), \(R_{Z}(\theta)\) and \ac{cnot}
+gates to transform a quantum state \(\ket{a}\) into another quantum state
+\(\ket{b}\). For \(n\) qubits this method has an upper bound of
+\(2^{n+2}-4n-4\) \ac{cnot} gates and \(2^{n+2}-5\) one-qubit elementary
+rotation gates (both \(R_{Y}(\theta)\) and \(R_{Z}(\theta)\)). These
+bounds grow exponentially, therefore their impact in conjunction with
+quantum noise will be greatly augmented with the number of qubits used.
+On the other hand, the bounds can be halved for special cases, e.g. when
+the initial or the final quantum state is a basis vector. \
+
+We performed some tests to see the impact state preparation has on
+a quantum circuit running on Qiskit's Aer noise simulator. The experiment
+consists on transforming the initial quantum state \(\ket{0_{n}}\)
+(where \(n\) is the number of qubits) to the quantum state where the
+magnitude of all the possible amplitude probabilities is equal. \
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.55]{figures/state-prep-gates-count.png}
+  \centering
+  \caption{Observed required gates to perform state preparation with Möttönen's method.}
+~\label{fig:state_prep}
+\end{figure} \
+
+In Figure~\ref{fig:state_prep} the theoretical upper bounds of
+Möttönen's state preparation method for both types of gates can
+be distinguished from the obtained gate counts in the experiment.
+While we can experimentally appreciate that the actual gate count
+does not grow as fast as the theoretical upper bounds (mainly because
+of the special case where we start from a computational basis vector),
+we can still observe an exponential growth in the \ac{cnot} gate count.
+Thus, if we perform state preparation with Möttönen's method, it will
+represent a significant source of noise impacting the \ac{qml} model. \
+
+To better comprehend the previously obtained coherent noise experimental
+results we created an artificial coherent noise simulation. This
+simulation utilizes Pennylane's \colorbox{inline_gray}{\lstinline|default.qubit|}
+device, which does not incur in any type of noise. To artificially
+introduce coherent noise into the quantum circuit we extract the
+performed quantum gates Möttönen's method would use for state
+preparation and after each gate introduce a corresponding rotational
+gate with \(theta = \epsilon\). \
+
+The results of the artificial coherent noise \ac{cnot} gate test are found
+in Table~\ref{tab:cnot_artificial_noise}. Although they still don't
+match the calculated ideal measurements from Table~\ref{tab:cnot_ideal},
+we can attribute the differences to noise incurred during state preparation
+using Möttönen's method. There should be no noise in any first qubit
+measurement, however, for the quantum states \(\ket{10}\) and \(\ket{11}\)
+state preparation for the first qubit causes noise in the measurements.
+Regarding the second qubit measurements, \(\ket{10}\) and \(\ket{11}\)
+should show less signs of noise. For \(\ket{01}\), there should not be
+any incurred noise. Again, the differences can be attributed to noise
+sustained during noise preparation. \
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|c|c|c|}
+    \hline
+    Quantum State & \(\expval{Z}\) \\
+    \hline
+    \(\ket{00}\) & [1, 1] \\
+    \hline
+    \(\ket{01}\) & [1, -0.940] \\
+    \hline
+    \(\ket{10}\) & [-0.985, -0.852] \\
+    \hline
+    \(\ket{11}\) & [-0.985, 0.929] \\
+    \hline
+  \end{tabular}
+  \caption{Obtained artificial expectation value with Pauli Z observable of \ac{cnot} gate with \(\epsilon = 10^{\circ}\).}\label{tab:cnot_artificial_noise}
+\end{table} \
+
+We can look into a specific case to further specify the influence
+of coherent noise during state preparation. In Equation
+~\ref{eq:cnot_artificial} the quantum circuit describing the state
+preparation using Möttönen's method and then applying one \ac{cnot} gate
+is illustrated. The state preparation part from the quantum circuit is
+enclosed by a dotted line box. The initial quantum state is \(\ket{00}\)
+and it is being transformed into \(\ket{01}\) by utilizing two
+\(R_{Y}(\theta)\) and two \ac*{cnot} gates. We can observe that after
+each operation there is a rotational gate that correspond to the coherent
+noise. \
+
+\begin{equation}\label{eq:cnot_artificial}
+  \Qcircuit @C=0.4em @R=0.4em {
+    & \qw                         & \qw                    & \ctrl{1} & \ctrl{1}               & \qw                         & \qw                    & \ctrl{1} & \ctrl{1}               & \ctrl{1} & \ctrl{1}               & \meterB{Z} \\
+    & \gate{R_{Y}(\frac{\pi}{4})} & \gate{R_{Y}(\epsilon)} & \targ    & \gate{R_{X}(\epsilon)} & \gate{R_{Y}(\frac{\pi}{4})} & \gate{R_{Y}(\epsilon)} & \targ    & \gate{R_{X}(\epsilon)} & \targ    & \gate{R_{X}(\epsilon)} & \meterB{Z}
+    \gategroup{1}{1}{2}{9}{0.8em}{--}
+  }
+\end{equation} \
+
+In this specific case, because the control qubit is set to 0, none
+of the control gates will perform any modification to the target wire.
+The control gates also don't modify the control qubit, thus, there are
+no perturbations in the measurement. Furthermore, we can simplify
+all the \(R_{Y}(\theta)\) gates into one by adding up their angles. The
+resulting gate is then \(R_{Y}(\frac{\pi}{2}+2\epsilon)\). If we 
+then apply the gate, we obtain the quantum state \(\ket{\psi} =
+R_{Y}(\frac{\pi}{2}+2\epsilon)\ket{0}\). We can now calculate
+the expectation value \(\expval{Z}{\psi}\) and the result will
+be -0.940 for an \(\epsilon = 0.175\), which is exactly what we get
+as a result in Table~\ref{tab:cnot_artificial_noise}. \
+
+One important conclusion regarding this experiment is that the
+quantum state \(\ket{0}\) does not require to be modified during
+the state preparation routine, consequently, it will not display
+any coherent noise disturbance. In addition, any control gate will
+not introduce any coherent noise to the target qubit if the control
+qubit is set to 0. \
+
+Finally, in the artifical test we get deterministic measurements that
+better represent coherent noise. Hence, for any further experiment
+utilizing coherent noise, we will combine Pennylane's
+\colorbox{inline_gray}{\lstinline|default.qubit|} with corresponding
+rotational gates after each quantum gate to achieve a model closer
+to reality. \

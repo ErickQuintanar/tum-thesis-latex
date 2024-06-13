@@ -1197,19 +1197,110 @@ can be observed in Figure~\ref{fig:phase_flip}. \
 
 % TODO: Introduce the subsections from the chapter and link them.
 
-% TODO: Present the difference between QML and classical ML. ~\cite{biamonte}
+The main task of \acf{ml} is to find patterns in data. Consequently,
+\acf{qml} takes this goal and extends it with the use of quantum
+algorithms to find patterns in data. Small quantum algorithms can produce
+statistical distributions that are difficult for \ac{ml} to identify.
+Thus, it is possible that \ac{qml} might identify patterns that
+classical \ac{ml} cannot~\cite{biamonte_quantum_2017}. Another interesting
+prospect of \ac{qml} is that it could potentially identify patterns with
+less computational effort than \ac{ml}, this is known as a
+\textit{quantum speedup}. \
 
-% TODO: Present encoding dilemma and amplitude encoding.
+There are four possible combinations between the intersection of
+\ac{ml} and quantum computing. These approaches depend on mixing
+the type of data and the processing device being utilized~\cite{schuld_machine_2021}.
+In this thesis we refer to \ac{qml} as the use of a quantum device to
+handle classical data. For this modality to work, \ac{qml} requires a data
+interface to encode classical data into the quantum device. Current 
+\ac{nisq} devices enable small \ac{qml} models with few qubits and
+quantum gates. This implies that the whole \ac{qml} pipeline is not
+able to run on a \ac{nisq} device. Consequently, the training of
+\ac{qml} models is implemented in a classical device. \
+
+In Equation~\ref{eq:qml_model} we can find a quantum circuit representing
+a \ac{qml} model. In general, \ac{qml} models consist of three main parts~\cite{schuld_supervised_2021}.
+At the beginning, each model must have an encoding component \(S_{x}\) to
+transform classical data into a suitable input for a quantum device.
+This is followed by the processing subroutine \(G_{\theta}\), which is composed
+by several quantum gates and is responsible for modifying the input
+according to the task. Finally, a measurement component can be found. The
+measurement's statistical properties are subsequently interpreted as
+the model's output. \
+
+\begin{equation}\label{eq:qml_model}
+  \Qcircuit @C=3em @R=1em @!R {
+    \lstick{\ket{0}} & \multigate{3}{S_{x}} \barrier[0em]{3} & \qw & \multigate{3}{G_{\theta}} \barrier[0em]{3} & \qw & \meter  \\
+    \lstick{\ket{0}} & \ghost{S_{x}}                         & \qw & \ghost{G_{\theta}}                         & \qw & \meter  \\
+    \lstick{\ket{0}} & \ghost{S_{x}}                         & \qw & \ghost{G_{\theta}}                         & \qw & \meter  \\
+    \lstick{\ket{0}} & \ghost{S_{x}}                         & \qw & \ghost{G_{\theta}}                         & \qw & \meter
+  }
+\end{equation} \
+
+The encoding component \(S_{x}\) symbolizes all possible strategies
+to represent a data point in an appropiate quantum state. In
+quantum computing, this process is achieved by performing a
+state preparation routine. Some encoding schemes are basis,
+angle and amplitude encoding~\cite{schuld_effect_2021}.
+While each scheme has its own characteristics, we will mainly
+focus on amplitude encoding. Amplitude encoding~\cite{rebentrost_quantum_2014}
+embeds the data point features into the amplitude probabilities
+of a quantum state. For a data point \(x \in \mathbb{C}^{N}\) the
+corresponding quantum state \(\ket{\psi_{x}}\) can be derived
+in Equation~\ref{eq:amplitude_encoding}: \
+
+\begin{equation}\label{eq:amplitude_encoding}
+  \ket{\psi_{x}} = \sum_{i=0}^{N-1}x_{i}\ket{i}
+\end{equation} \
+
+The data point \(x\) must fulfill two prerequisites. The first
+requirement is that it must be normalized such that
+\(\sum_{i}x_{i}^{2} = 1\). The second condition is that the
+data point must be padded such that \(N\) is a power of 2. These
+prerequisites ensure that \(\ket{\psi_{x}}\) is a valid quantum
+state according to the Born rule. Additionally, for \(N\) features
+the \ac{qml} model will need \(\log(N)\) qubits to properly encode
+them. \
+
+\ac{qml} model training is performed similarly to classical \ac{ml}.
+The parameters that conform the processing subroutine \(G_{\theta}\) are
+updated by trying to minimize a cost funtion. This update happens
+iteratively in a feedback loop, either by a black box mechanism or
+by looking into \(G_{\theta}\)'s properties (e.g.\ gradients) and adapting
+them accordingly. \
+
+With regards to the result's interpretation of \ac{qml} models, the most
+common technique is to measure the expectation value of \(m\) qubits and
+assign them to the \(k\) possible different classes. The relationship
+between \(m\) and \(k\) is \(m = \lceil \log(k) \rceil\), therefore the
+maximum number of classes is bound to the number of qubits the model
+utilizes. \
+
+\begin{equation}\label{eq:qml_prediction}
+  \ket{\psi_{x,\theta}} = G_{\theta} \ket{\psi_{x}}, \qquad
+  f_{\theta}(x) = \expval{M}{\psi_{x,\theta}} = \expval{M}_{x,\theta}
+\end{equation} \
+
+In Equation~\ref{eq:qml_prediction} we can observe that the
+model can be represented by a function \(f\) with parameters \(\theta\)
+and input \(x\). In order to perform a prediction we need to prepare
+the quantum state according to \(x\) (Eq.~\ref{eq:amplitude_encoding}).
+Then, the resulting state is processed by the \(G_{\theta}\) subroutine.
+Finally, with the observable \(M\) we measure the required amount of
+qubits. Each qubit measurement value will lay between the range of the
+observable's eigenvalues. Therefore, a threshold function is utilized to
+map the input to 0 or 1. Afterwards, all the measurements are binary
+decoded into the model's classes. \
 
 i.	Introduce variational quantum circuits. \
 
-% TODO: Introduce VQA's / ~\cite{cerezo}
+% TODO: Introduce VQA's / ~\cite{cerezo}, ~\cite{benedetti}, circuit-centric(?). get data from schuld book
 
 ii.	Explain quantum kernel methods. \
 % https://pennylane.ai/qml/demos/tutorial_classical_kernels/
 % https://pennylane.ai/qml/demos/tutorial_kernels_module/#training-qeks
-% TODO: Say what classical kernel methods are / ~\cite{wang}
-% TODO: Say what  quantum kernel embeddings are and how to train them / ~\cite{hubregsten}
+% TODO: Say roughly what classical kernel methods are / ~\cite{wang}
+% TODO: Say what  quantum kernel embeddings are and how to train them / ~\cite{hubregsten}, Supervised quantum machine learning models are kernel methods
 
 \section{Adversarial Machine Learning} \
 

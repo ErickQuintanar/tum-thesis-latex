@@ -1222,7 +1222,7 @@ In Equation~\ref{eq:qml_model} we can find a quantum circuit representing
 a \ac{qml} model. In general, \ac{qml} models consist of three main parts~\cite{schuld_supervised_2021}.
 At the beginning, each model must have an encoding component \(S_{x}\) to
 transform classical data into a suitable input for a quantum device.
-This is followed by the processing subroutine \(G_{\theta}\), which is composed
+This is followed by the processing subroutine \(W_{\theta}\), which is composed
 by several quantum gates and is responsible for modifying the input
 according to the task. Finally, a measurement component can be found. The
 measurement's statistical properties are subsequently interpreted as
@@ -1230,10 +1230,10 @@ the model's output. \
 
 \begin{equation}\label{eq:qml_model}
   \Qcircuit @C=3em @R=1em @!R {
-    \lstick{\ket{0}} & \multigate{3}{S_{x}} \barrier[0em]{3} & \qw & \multigate{3}{G_{\theta}} \barrier[0em]{3} & \qw & \meter  \\
-    \lstick{\ket{0}} & \ghost{S_{x}}                         & \qw & \ghost{G_{\theta}}                         & \qw & \meter  \\
-    \lstick{\ket{0}} & \ghost{S_{x}}                         & \qw & \ghost{G_{\theta}}                         & \qw & \meter  \\
-    \lstick{\ket{0}} & \ghost{S_{x}}                         & \qw & \ghost{G_{\theta}}                         & \qw & \meter
+    \lstick{\ket{0}} & \multigate{3}{S_{x}} \barrier[0em]{3} & \qw & \multigate{3}{W_{\theta}} \barrier[0em]{3} & \qw & \meter  \\
+    \lstick{\ket{0}} & \ghost{S_{x}}                         & \qw & \ghost{W_{\theta}}                         & \qw & \meter  \\
+    \lstick{\ket{0}} & \ghost{S_{x}}                         & \qw & \ghost{W_{\theta}}                         & \qw & \meter  \\
+    \lstick{\ket{0}} & \ghost{S_{x}}                         & \qw & \ghost{W_{\theta}}                         & \qw & \meter
   }
 \end{equation} \
 
@@ -1263,10 +1263,10 @@ the \ac{qml} model will need \(\log(N)\) qubits to properly encode
 them. \
 
 \ac{qml} model training is performed similarly to classical \ac{ml}.
-The parameters that conform the processing subroutine \(G_{\theta}\) are
+The parameters that conform the processing subroutine \(W_{\theta}\) are
 updated by trying to minimize a cost funtion. This update happens
 iteratively in a feedback loop, either by a black box mechanism or
-by looking into \(G_{\theta}\)'s properties (e.g.\ gradients) and adapting
+by looking into \(W_{\theta}\)'s properties (e.g.\ gradients) and adapting
 them accordingly. \
 
 With regards to the result's interpretation of \ac{qml} models, the most
@@ -1277,7 +1277,7 @@ maximum number of classes is bound to the number of qubits the model
 utilizes. \
 
 \begin{equation}\label{eq:qml_prediction}
-  \ket{\psi_{x,\theta}} = G_{\theta} \ket{\psi_{x}}, \qquad
+  \ket{\psi_{x,\theta}} = W_{\theta} \ket{\psi_{x}}, \qquad
   f_{\theta}(x) = \expval{M}{\psi_{x,\theta}} = \expval{M}_{x,\theta}
 \end{equation} \
 
@@ -1285,7 +1285,7 @@ In Equation~\ref{eq:qml_prediction} we can observe that the
 model can be represented by a function \(f\) with parameters \(\theta\)
 and input \(x\). In order to perform a prediction we need to prepare
 the quantum state according to \(x\) (Eq.~\ref{eq:amplitude_encoding}).
-Then, the resulting state is processed by the \(G_{\theta}\) subroutine.
+Then, the resulting state is processed by the \(W_{\theta}\) subroutine.
 Finally, with the observable \(M\) we measure the required amount of
 qubits. Each qubit measurement value will lay between the range of the
 observable's eigenvalues. Therefore, a threshold function is utilized to

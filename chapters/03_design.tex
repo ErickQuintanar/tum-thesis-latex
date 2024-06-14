@@ -5,16 +5,78 @@ Describe how the experiments have been chosen and created:
 
 \section{Datasets}\label{section:datasets} \
 
-Introduce the used datasets and why they were chosen. \
+In this section we will present which datasets are used in the thesis
+and the reasons why they were included. Current capabilities of
+quantum computers do not allow for big and complex quantum circuits
+to be executed. Thus, most of the datasets will have a smaller
+feature set in comparison to datasets used to benchmark classical
+\ac{ml} models. \
+
+The dataset selection was heavily influenced by the datasets utilized in
+~\cite{winderl_quantum_2023}. All the datasets but the Plus-Minus
+Dataset were retrieved from OpenML~\cite{vanschoren_openml_2014} using
+Scikit-learn~\cite{pedregosa_scikit-learn_2011} in Python. All data
+points that had missing features were removed, as well as all duplicate
+data points. \
+% TODO: check if the unstandardized dataset also converges being standardized
+%       and say otherwise all datasets were normalized and standardized
+
+\subsection{Iris Flower Dataset} \
+
+The Iris Flower dataset~\cite{fisher_use_1936} is a collection of
+150 data points regarding three different species of the Iris flower.
+Four features were collected, namely the length and width of the sepals
+and petals. For this dataset we made a special adaptation such that
+we would replicate the dataset used by~\cite{du_quantum_2021}. This
+adjustment is removing all data points with the class label
+\textit{virginica} and setting the feature \textit{petal width}
+to \(0\). \
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.5]{figures/iris-linear-separation.png}
+  \centering
+  \caption{Data plot of the Iris dataset's \textit{Sepal Width} and \textit{Sepal Length} features.}
+~\label{fig:iris_linear}
+\end{figure} \
+
+In Figure~\ref{fig:iris_linear} we can observe the purpose of this
+modifications. By removing the \textit{virginica} class we can
+linearly separate the dataset by using two different features,
+e.g.\ the \textit{petal length} and \textit{sepal length}. Furthermore,
+removing the feature \textit{petal width} makes the model focus on
+the other features, eliminating overhead and ensuring the \ac{qml}
+will converge to an optimal solution quicker. \
+
+% template:
+% - small description
+% - amount of features and name
+% - curiosities if given
+
+
+\subsection{Pima Indians Diabetes Dataset} \
+
+~\cite{smith_using_1988}
+
+\subsection{Wisconsin Breast Cancer (Diagnostic) Dataset} \
+
+~\cite{street_nuclear_1993}
+
+\subsection{Plus-Minus Dataset} \
+
+~\cite{wendlinger_comparative_2024}
+
+\subsection{MNIST Dataset} \
+
+~\cite{bottou_comparison_1994}
 % TODO: Describe the datasets that we are using and why.
 % TODO: Maybe perform a small feature engineering analysis on each dataset.
 
 \section{State Preparation with Coherent Noise}\label{section:state_preparation_noise} \
 
-In the previous subsection the trained variational circuit classifiers
-utilized the amplitude embedding technique to encode classical data
+In the next chapter (Sec.~\ref{section:vqc_training}) the trained variational circuit classifiers
+utilize the amplitude embedding technique to encode classical data
 into the \ac{qml} model. Pennylanes's \colorbox{inline_gray}{\lstinline|AmplitudeEmbedding|}
-was utilized to encode the data accordingly. In this subsection we will
+is utilized to encode the data accordingly. In this subsection we will
 present the impact of state preparation with coherent noise on quantum
 circuits. \
 
@@ -330,3 +392,6 @@ utilizing coherent noise, we will combine Pennylane's
 \colorbox{inline_gray}{\lstinline|default.qubit|} with corresponding
 rotational gates after each quantum gate to achieve a model closer
 to reality. \
+
+% TODO: Think why we should train AML classically and not quantum
+% TODO: Think about using which type of AML

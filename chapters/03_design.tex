@@ -17,13 +17,14 @@ The dataset selection was heavily influenced by the datasets utilized in
 Dataset were retrieved from OpenML~\cite{vanschoren_openml_2014} using
 Scikit-learn~\cite{pedregosa_scikit-learn_2011} in Python. All data
 points that had missing features were removed, as well as all duplicate
-data points. \
-% TODO: check if the unstandardized dataset also converges being standardized
-%       and say otherwise all datasets were normalized and standardized
+data points. Finally, all the datasets (except the Iris Flower Dataset
+~\ref{subsection:iris}) have been normalized per feature using the
+standard deviation and the resulting values were rescaled into the
+range between  [0,1]. \
 
-\subsection{Iris Flower Dataset} \
+\subsection{Iris Flower Dataset}\label{subsection:iris} \
 
-The Iris Flower dataset~\cite{fisher_use_1936} is a collection of
+The Iris Flower Dataset~\cite{fisher_use_1936} is a collection of
 150 data points regarding three different species of the Iris flower.
 Four features were collected, namely the length and width of the sepals
 and petals. For this dataset we made a special adaptation such that
@@ -39,7 +40,7 @@ to \(0\). \
 ~\label{fig:iris_linear}
 \end{figure} \
 
-In Figure~\ref{fig:iris_linear} we can observe the purpose of this
+In Figure~\ref{fig:iris_linear} we can observe the purpose of these
 modifications. By removing the \textit{virginica} class we can
 linearly separate the dataset by using two different features,
 e.g.\ the \textit{petal length} and \textit{sepal length}. Furthermore,
@@ -47,19 +48,38 @@ removing the feature \textit{petal width} makes the model focus on
 the other features, eliminating overhead and ensuring the \ac{qml}
 will converge to an optimal solution quicker. \
 
-% template:
-% - small description
-% - amount of features and name
-% - curiosities if given
+\subsection{Pima Indians Diabetes Dataset}\label{subsection:diabetes} \
 
+The \ac{pid} Dataset~\cite{smith_using_1988} contains
+768 data points collecting 8 features that were considered risk
+factors for the onset of diabetes. This dataset presents a class
+imbalance. To remediate the asymmetry in the classes distribution
+we removed 232 data points from the \textit{negative} class. The
+removal was performed randomly with a fixed seed to always
+keep the same data points and make the results reproducible. \
 
-\subsection{Pima Indians Diabetes Dataset} \
-
-~\cite{smith_using_1988}
+A class imbalance can lead to reduced performance of a \ac{ml} model
+~\cite{drummond_c45_nodate}. This decrease in accuracy could
+probably be translated to \ac{qml} models as well. Therefore,
+with the removal of the data points from the majority class, we
+obtain a completely balanced dataset and model performance should
+be maximized. \
 
 \subsection{Wisconsin Breast Cancer (Diagnostic) Dataset} \
 
-~\cite{street_nuclear_1993}
+The Wisconsin Breast Cancer Dataset~\cite{street_nuclear_1993} is
+composed by 699 data points collecting 10 features of breast masses
+that could potentially be carcinogenic. While this set is also
+unbalanced as the original \ac{pid} Dataset~\ref{subsection:diabetes},
+the asymmetry is not as pronounced. We left the class distribution
+untouched to check whether the \ac{qml} models would overcome class
+distribution imbalance. \
+
+It is interesting to note that in~\cite{winderl_quantum_2023}
+they reported that normalizing the dataset per feature with the
+standard deviation hindered the convergence of the \ac{qml} models.
+However, we didn't experience this when training our \ac{qml} models,
+thus, we do normalize the data per the feature. \
 
 \subsection{Plus-Minus Dataset} \
 
@@ -67,9 +87,41 @@ will converge to an optimal solution quicker. \
 
 \subsection{MNIST Dataset} \
 
-~\cite{bottou_comparison_1994}
-% TODO: Describe the datasets that we are using and why.
-% TODO: Maybe perform a small feature engineering analysis on each dataset.
+The MNIST Dataset~\cite{bottou_comparison_1994} is composed by
+70,000 images representing handwritten individual digits between
+the range from \(0\) to \(9\). Each image is a monocromatic gray scale
+image shaped by \(28 \times 28 = 746\) pixels. A \ac{qml} model would
+require 10 qubits to encode the features with the amplitude embedding
+technique. Because the amount of operations required for the
+\ac{qml} model to process the data increments exponentially, the model
+quickly becomes intractable to train in commonly available hardware.
+Therefore, we downsample the images by half to \(16 \times 16 = 256\) and
+the \ac{qml} model would now only require 8 qubits. In Figure
+~\ref{fig:mnist_resized} we can observe that downsampling the images
+does not significatively visually affect the image recognition. \
+
+\begin{figure}
+  \begin{subfigure}{0.49\textwidth}
+    \centering
+    \includegraphics[width = \textwidth]{figures/reshaped.jpg}
+    \caption{Original image.}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \centering
+    \includegraphics[width = \textwidth]{figures/resized.jpg}
+    \caption{Downsampled image.}
+  \end{subfigure}
+  \caption{Visual comparison between both images.}\label{fig:mnist_resized}
+\end{figure} \
+
+Similar to~\cite{winderl_quantum_2023} we further divide the MNIST
+set to simulate a binary classifier and a 4-class classifier task. The
+resulting datasets are named MNIST2 and MNIST4 respectively. To obtain
+the MNIST2 dataset, we exclude all classes but the images that contain
+a one or a nine. Furthermore, to retrieve the MNIST4 dataset we kept
+all the images with digits one, three, seven and nine. With this extension
+we can now compare how the \ac{qml} models accuracy varies with the
+amount of classes to categorize. \
 
 \section{State Preparation with Coherent Noise}\label{section:state_preparation_noise} \
 
@@ -275,7 +327,7 @@ if \colorbox{inline_gray}{\lstinline|StatePrep|} is not supported
 by the device, the method developped by Möttönen et al.~\cite{mottonen_transformation_2004}
 will be utilized. \
 
-The state preparation method proposed by Möttönen et al. utilizes a
+The state preparation method proposed by Möttönen et al.\ utilizes a
 combination of \(R_{Y}(\theta)\), \(R_{Z}(\theta)\) and \ac{cnot}
 gates to transform a quantum state \(\ket{a}\) into another quantum state
 \(\ket{b}\). For \(n\) qubits this method has an upper bound of
@@ -283,7 +335,7 @@ gates to transform a quantum state \(\ket{a}\) into another quantum state
 rotation gates (both \(R_{Y}(\theta)\) and \(R_{Z}(\theta)\)). These
 bounds grow exponentially, therefore their impact in conjunction with
 quantum noise will be greatly augmented with the number of qubits used.
-On the other hand, the bounds can be halved for special cases, e.g. when
+On the other hand, the bounds can be halved for special cases, e.g.\ when
 the initial or the final quantum state is a basis vector. \
 
 We performed some tests to see the impact state preparation has on

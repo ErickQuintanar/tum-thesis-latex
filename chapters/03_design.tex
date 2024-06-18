@@ -83,7 +83,10 @@ thus, we do normalize the data per the feature. \
 
 \subsection{Plus-Minus Dataset} \
 
-~\cite{wendlinger_comparative_2024}
+~\cite{wendlinger_comparative_2024} 18 x 18 = 324 monocromatic, plus,
+minus, vertical and horizontal line, 1200 samples. Useful to check
+semantical meaning, adversarial attacks literally transform into the
+other class. \
 
 \subsection{MNIST Dataset} \
 
@@ -101,12 +104,13 @@ the \ac{qml} model would now only require 8 qubits. In Figure
 does not significatively visually affect the image recognition. \
 
 \begin{figure}
-  \begin{subfigure}{0.49\textwidth}
+  \centering
+  \begin{subfigure}{0.35\textwidth}
     \centering
     \includegraphics[width = \textwidth]{figures/reshaped.jpg}
     \caption{Original image.}
-  \end{subfigure}
-  \begin{subfigure}{0.49\textwidth}
+  \end{subfigure} \qquad \qquad
+  \begin{subfigure}{0.35\textwidth}
     \centering
     \includegraphics[width = \textwidth]{figures/resized.jpg}
     \caption{Downsampled image.}
@@ -148,74 +152,44 @@ test circuit. In total there are three test circuits that describe the
 effect of coherent noise on the \(R_{Y}\), \(R_{Z}\) and \ac{cnot} gates.
 These gates were chosen because they are utilized by the strongly
 entangling layers ansatz. For the rotational gates, a \(\theta = \pi\)
-angle was chosen to simulate their equivalent non-rotational gates.\
+angle was chosen to simulate their equivalent non-rotational gates. \
 
-In Table~\ref{tab:ry_ideal} we can observe the ideal noiseless results
-for the \(R_{Y}(\pi)\) gate. This table yields the same result as applying
-the Pauli Y gate. We use the Pauli Z matrix as the observable. The 
-projective measurement values will be between the range of -1 and 1.
+In Table~\ref{tab:ry_noise} we can observe the ideal noiseless results
+for the \(R_{Y}(\pi)\) gate in the third column. This table yields the
+same result as applying the Pauli Y gate. We use the Pauli Z matrix as
+the observable. The projective measurement values will be between the
+range of -1 and 1. \
 
 \begin{table}[h]
   \centering
-  \begin{tabular}{|c|c|c|}
+  \begin{tabular}{|c|c|c|c|c|}
     \hline
-    Quantum State & \(R_{Y}\left(\pi\right)\) & \(\expval{Z}\) \\
+    Quantum State & \(R_{Y}\left(\pi\right)\) & \(\expval{Z}\) & Expected \(R_{Y}\left(\pi+\epsilon\right)\) & Obtained \(R_{Y}\left(\pi+\epsilon\right)\) \\
     \hline
-    \(\ket{0}\) & \(i\ket{1}\) & -1 \\
+    \(\ket{0}\) & \(i\ket{1}\)  & -1 & -0.985 & -0.985 \\
     \hline
-    \(\ket{1}\) & \(-i\ket{0}\) & 1 \\
+    \(\ket{1}\) & \(-i\ket{0}\) &  1 &  0.985 &  0.940 \\
     \hline
-    \(\ket{+}\) & \(-i\ket{-}\) & 0 \\
+    \(\ket{+}\) & \(-i\ket{-}\) &  0 &  0.174 &  0.340 \\
     \hline
   \end{tabular}
-  \caption{Expectation value with Pauli Z observable of \(R_{Y}\) gate with \(\theta = \pi\).}\label{tab:ry_ideal}
+  \caption{Expectation value with Pauli Z observable of \(R_{Y}\) gate with \(\theta = \pi\) and \(\epsilon = 10^{\circ}\).}\label{tab:ry_noise}
 \end{table} \
 
 The calculated expectation values for the \(R_{Y}(\theta + \epsilon)\) gate
-can be found in Table~\ref{tab:ry_iso_noise}. We can observe that the
-measurements from the resulting quantum state are perturbed. For the
-computational basis states the expected value is equally reduced in magnitude.
-For the superposition state \(\ket{+}\), the expected value 0 is shifted
-by the coherent noise. The magnitude of the disturbances from the
-measurements is directly proportional to \(\epsilon\). \
-
-\begin{table}[h]
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Quantum State & \(\expval{Z}\) for \(R_{Y}\left(\pi+\epsilon\right)\) \\
-    \hline
-    \(\ket{0}\) & -0.985 \\
-    \hline
-    \(\ket{1}\) & 0.985 \\
-    \hline
-    \(\ket{+}\) &  0.174 \\
-    \hline
-  \end{tabular}
-  \caption{Expectation value with Pauli Z observable of \(R_{Y}\) gate with \(\theta = \pi\) and \(\epsilon = 10^{\circ}\).}\label{tab:ry_iso_noise}
-\end{table} \
+can be found in the fourth column of Table~\ref{tab:ry_noise}. We can
+observe that the measurements from the resulting quantum state are
+perturbed. For the computational basis states the expected value is
+equally reduced in magnitude. For the superposition state \(\ket{+}\),
+the expected value 0 is shifted by the coherent noise. The magnitude
+of the disturbances from the measurements is directly proportional to
+\(\epsilon\). \
 
 The experimental results from adding coherent noise to the
-\(R_{Y}(\theta)\) gate are presented in Table~\ref{tab:ry_real_noise}. 
+\(R_{Y}(\theta)\) gate are presented in the fifth column of Table~\ref{tab:ry_noise}. 
 While for the \(\ket{0}\) state the result does match the calculated
 -0.985 value, for the other two tested quantum states there is a
 notable difference between the calculated and the experimental results. \
-
-\begin{table}[h]
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Quantum State & \(\expval{Z}\) for \(R_{Y}\left(\pi+\epsilon\right)\) \\
-    \hline
-    \(\ket{0}\) & -0.985 \\
-    \hline
-    \(\ket{1}\) & 0.940 \\
-    \hline
-    \(\ket{+}\) &  0.340 \\
-    \hline
-  \end{tabular}
-  \caption{Obtained expectation value with Pauli Z observable of \(R_{Y}\) gate with \(\theta = \pi\) and \(\epsilon = 10^{\circ}\).}\label{tab:ry_real_noise}
-\end{table} \
 
 In relation to the test from the \(R_{Z}(\theta + \epsilon)\) gate, we
 are not able to observe any effect of either the rotation or the noise.
@@ -228,31 +202,31 @@ state measurement. \
 For the \ac{cnot} gate circuit we tested both cases (a control qubit on the
 first wire and a target qubit on the second wire and vice versa). For
 the first case of the \ac{cnot}  gate circuit test, the noiseless expectation
-values with the Pauli Z observable can be found in Table
-~\ref{tab:cnot_ideal}. Similarly to the \(R_{Y}(\theta)\) circuit test,
+values with the Pauli Z observable can be found in the third column of Table
+~\ref{tab:cnot_noise}. Similarly to the \(R_{Y}(\theta)\) circuit test,
 the expectation values lie between a range of -1 and 1. Contrarily,
 for the case of the \ac{cnot}  gate we measure at the end of the circuit the
 two qubits from the quantum state. \
 
 \begin{table}[h]
   \centering
-  \begin{tabular}{|c|c|c|}
+  \begin{tabular}{|c|c|c|c|c|}
     \hline
-    Quantum State & \ac{cnot} & \(\expval{Z}\) \\
+    Quantum State & \ac{cnot} & \(\expval{Z}\) & Expected \(\expval{Z}+\epsilon\) & Obtained \(\expval{Z}+\epsilon\) \\
     \hline
-    \(\ket{00}\) & \(\ket{00}\) & [1, 1] \\
+    \(\ket{00}\) & \(\ket{00}\) & [1, 1]   & [1, 1]       & [1, 1]          \\
     \hline
-    \(\ket{01}\) & \(\ket{01}\) & [1, -1] \\
+    \(\ket{01}\) & \(\ket{01}\) & [1, -1]  & [1, -1]      & [0.992, -0.996] \\
     \hline
-    \(\ket{10}\) & \(\ket{11}\) & [-1, -1] \\
+    \(\ket{10}\) & \(\ket{11}\) & [-1, -1] & [-1, -0.985] & [-0.985, -1]    \\
     \hline
-    \(\ket{11}\) & \(\ket{10}\) & [-1, 1] \\
+    \(\ket{11}\) & \(\ket{10}\) & [-1, 1]  & [-1, 0.985]  & [-0.992, 0.996] \\
     \hline
   \end{tabular}
-  \caption{Expectation value with Pauli Z observable of \ac{cnot} gate.}\label{tab:cnot_ideal}
+  \caption{Expectation value with Pauli Z observable of \ac{cnot} gate with \(\epsilon = 10^{\circ}\).}\label{tab:cnot_noise}
 \end{table} \
 
-In Table~\ref{tab:cnot_iso_noise} we can find the calculated
+In Table~\ref{tab:cnot_noise} we can find in the fourth column the calculated
 projective measurements with the Pauli Z matrix for the \ac{cnot} gate.
 First of all we can observe that for the quantum states \(\ket{00}\)
 and \(\ket{01}\) the values don't incur in any noise as the control
@@ -261,26 +235,8 @@ qubit. Notwithstanding, for \(\ket{10}\) and \(\ket{11}\), where the
 control qubit is set, noise should be present in the second qubit's
 measurements with an equal magnitude. \
 
-\begin{table}[h]
-  \centering
-  \begin{tabular}{|c|c|c|}
-    \hline
-    Quantum State & \(\expval{Z}\) \\
-    \hline
-    \(\ket{00}\) & [1, 1] \\
-    \hline
-    \(\ket{01}\) & [1, -1] \\
-    \hline
-    \(\ket{10}\) & [-1, -0.985] \\
-    \hline
-    \(\ket{11}\) & [-1, 0.985] \\
-    \hline
-  \end{tabular}
-  \caption{Expectation value with Pauli Z observable of \ac{cnot} gate with \(\epsilon = 10^{\circ}\).}\label{tab:cnot_iso_noise}
-\end{table} \
-
 The experimental results from adding coherent noise to the
-\ac{cnot} gate are presented in Table~\ref{tab:cnot_real_noise}.
+\ac{cnot} gate are presented in the fifth column of Table~\ref{tab:cnot_noise}.
 Although the result for the \(\ket{00}\) state is the same as the
 previously calculated value, the experimental values obtained for
 the other three states differ. For the \(\ket{01}\) state there
@@ -290,24 +246,6 @@ the measurement values for both qubits are inverted. Finally,
 for the \(\ket{11}\) state the first qubit shows signs of noise
 when it should not, while the second qubit exhibits a different noise
 magnitude than calculated. \
-
-\begin{table}[h]
-  \centering
-  \begin{tabular}{|c|c|c|}
-    \hline
-    Quantum State & \(\expval{Z}\) \\
-    \hline
-    \(\ket{00}\) & [1, 1] \\
-    \hline
-    \(\ket{01}\) & [0.992, -0.996] \\
-    \hline
-    \(\ket{10}\) & [-0.985, -1] \\
-    \hline
-    \(\ket{11}\) & [-0.992, 0.996] \\
-    \hline
-  \end{tabular}
-  \caption{Obtained expectation value with Pauli Z observable of \ac{cnot} gate with \(\epsilon = 10^{\circ}\).}\label{tab:cnot_real_noise}
-\end{table} \
 
 In theory the effects of coherent noise should be deterministic,
 as their effects can be described by a unitary matrix applied

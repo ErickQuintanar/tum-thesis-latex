@@ -79,14 +79,25 @@ It is interesting to note that in~\cite{winderl_quantum_2023}
 they reported that normalizing the dataset per feature with the
 standard deviation hindered the convergence of the \ac{qml} models.
 However, we didn't experience this when training our \ac{qml} models,
-thus, we do normalize the data per the feature. \
+thus, we do normalize the data with the standard deviation per feature. \
 
 \subsection{Plus-Minus Dataset} \
 
-~\cite{wendlinger_comparative_2024} 18 x 18 = 324 monocromatic, plus,
-minus, vertical and horizontal line, 1200 samples. Useful to check
-semantical meaning, adversarial attacks literally transform into the
-other class. \
+The Plus-Minus Dataset~\cite{wendlinger_comparative_2024} is made of
+1,200 grayscale images, each containing \(18 \times 18 = 324\) pixels.
+Inside each image we can observe four different classes, respectively
+the symbols \(-\), \(+\), \(\vdash\) and \(\dashv\). By utilizing this
+dataset, we will be able to interpret the perturbations caused by
+the adversarial attacks better. For example, if an adversarial attack
+trying to force the \ac{ml} model into misclassifying \(\vdash\) into
+a \(+\), the most obvious semantical modification would be to add an
+horizontal line. \
+
+In~\cite{west_benchmarking_2023}, they observed that \ac{qml} models
+focus on different more robust features in the input data than
+\ac{ml} models. This dataset will help us verify this claim and
+provide deeper insight into the semantic meaning of adversarial
+attacks, specifically in the quantum setting. \
 
 \subsection{MNIST Dataset} \
 
@@ -376,12 +387,17 @@ any coherent noise disturbance. In addition, any control gate will
 not introduce any coherent noise to the target qubit if the control
 qubit is set to 0. \
 
-Finally, in the artifical test we get deterministic measurements that
+Finally, in the artificial test we get deterministic measurements that
 better represent coherent noise. Hence, for any further experiment
 utilizing coherent noise, we will combine Pennylane's
 \colorbox{inline_gray}{\lstinline|default.qubit|} with corresponding
 rotational gates after each quantum gate to achieve a model closer
 to reality. \
 
-% TODO: Think why we should train AML classically and not quantum
-% TODO: Think about using which type of AML
+% TODO: Think if using classical AML makes sense (west_benchmarking_2023)
+%       - probably not, paper says QVC are resilient to classical attacks
+%       - maybe train one classical model, perform attack and check how the QVC behaves
+
+% TODO: Think which comparisons are going to be made: (check transferability bewteen models)
+%       - QAML without any noise: Test on vanilla and noise induced QML models
+%       - QAML with noise: Test on vanilla and noise induced QML models

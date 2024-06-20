@@ -129,7 +129,7 @@ does not significatively visually affect the image recognition. \
   \caption{Visual comparison between both images.}\label{fig:mnist_resized}
 \end{figure} \
 
-Similar to~\cite{winderl_quantum_2023} we further divide the MNIST
+Similar to~\cite{lu_quantum_2020} we further divide the MNIST
 set to simulate a binary classifier and a 4-class classifier task. The
 resulting datasets are named MNIST2 and MNIST4 respectively. To obtain
 the MNIST2 dataset, we exclude all classes but the images that contain
@@ -184,7 +184,9 @@ range of -1 and 1. \
     \(\ket{+}\) & \(-i\ket{-}\) &  0 &  0.174 &  0.340 \\
     \hline
   \end{tabular}
-  \caption{Expectation value with Pauli Z observable of \(R_{Y}\) gate with \(\theta = \pi\) and \(\epsilon = 10^{\circ}\).}\label{tab:ry_noise}
+  \caption{Expectation value with Pauli Z observable of \(R_{Y}\) gate with \(\theta = \pi\) and \(\epsilon = 10^{\circ}\).
+  The fourth column represents the calculated effects of coherent noise without state preparation.
+  The fifth column represents the results of coherent noise with state preparation and Qiskit's Aer device.}\label{tab:ry_noise}
 \end{table} \
 
 The calculated expectation values for the \(R_{Y}(\theta + \epsilon)\) gate
@@ -234,7 +236,9 @@ two qubits from the quantum state. \
     \(\ket{11}\) & \(\ket{10}\) & [-1, 1]  & [-1, 0.985]  & [-0.992, 0.996] \\
     \hline
   \end{tabular}
-  \caption{Expectation value with Pauli Z observable of \ac{cnot} gate with \(\epsilon = 10^{\circ}\).}\label{tab:cnot_noise}
+  \caption{Expectation value with Pauli Z observable of \ac{cnot} gate with \(\epsilon = 10^{\circ}\).
+  The fourth column represents the calculated effects of coherent noise without state preparation.
+  The fifth column represents the results of coherent noise with state preparation and Qiskit's Aer device.}\label{tab:cnot_noise}
 \end{table} \
 
 In Table~\ref{tab:cnot_noise} we can find in the fourth column the calculated
@@ -346,7 +350,8 @@ sustained during noise preparation. \
     \(\ket{11}\) & [-0.985, 0.929] \\
     \hline
   \end{tabular}
-  \caption{Obtained artificial expectation value with Pauli Z observable of \ac{cnot} gate with \(\epsilon = 10^{\circ}\).}\label{tab:cnot_artificial_noise}
+  \caption{Obtained artificial expectation value with Pauli Z observable of \ac{cnot} gate with \(\epsilon = 10^{\circ}\).
+  The results include coherent noise induced by state preparation. }\label{tab:cnot_artificial_noise}
 \end{table} \
 
 We can look into a specific case to further specify the influence
@@ -398,6 +403,20 @@ to reality. \
 %       - probably not, paper says QVC are resilient to classical attacks
 %       - maybe train one classical model, perform attack and check how the QVC behaves
 
-% TODO: Think which comparisons are going to be made: (check transferability bewteen models)
+% FOCUS ON QAML (MAYBE DO CLASSICAL TRANSFER ATTACKS)
+
+% Maxi says not all qml models are robust to transfer attacks from classical ml / Amplitude encoding works differently (focuses on several areas of the image)
+
+% MENTION AMPLITUDE ENCODING DIFFERENT BEHAVIOUR (MAYBE: DO MORE ENCODING TYPES)
+
+% TODO: Think which comparisons are going to be made: (check transferability between models)
 %       - QAML without any noise: Test on vanilla and noise induced QML models
 %       - QAML with noise: Test on vanilla and noise induced QML models
+
+% FOCUS ON THE FULL NOISE AND BASELINE NO NOISE (MAYBE DO COMBINATIONS AFTERWARDS)
+
+% TODO: How to perform QAML? How to transform aml attacks into qaml?
+%       - Find unitary similar to identity and disturb input quantumm state? (qaml) (parameters 2^n x 2^n, n=#qubits) (how to retrieve disturbances in images e.g.?)
+%       - Directly disturb features from dataset? (parameters m=#features) (MAYBE FOR LATER)
+
+% Ask maxi how he did to include bias in multiclass classification tasks

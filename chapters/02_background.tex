@@ -1292,7 +1292,7 @@ observable's eigenvalues. Therefore, a threshold function is utilized to
 map the input to 0 or 1. Afterwards, all the measurements are binary
 decoded into the model's classes. \
 
-i.	Introduce variational quantum circuits. \
+i.	Introduce variational quantum algorithms. \
 
 VQA's are a specific type of  \ac{qml} models. They have many diverse
 applications (fig. 3 cerezo). Cost function needs to be defined.
@@ -1300,12 +1300,6 @@ Ansatz needs to be set to later be classically trained and optimized.
 Cost function has specific requirements.
 
 % TODO: Introduce VQA's / ~\cite{cerezo}, ~\cite{benedetti}, circuit-centric(?). get data from schuld book
-
-% ii.	Explain quantum kernel methods. \
-% https://pennylane.ai/qml/demos/tutorial_classical_kernels/
-% https://pennylane.ai/qml/demos/tutorial_kernels_module/#training-qeks
-% TODO: Say roughly what classical kernel methods are / ~\cite{wang}
-% TODO: Say what  quantum kernel embeddings are and how to train them / ~\cite{hubregsten}, Supervised quantum machine learning models are kernel methods
 
 \section{\acl{aml}} \
 
@@ -1325,63 +1319,90 @@ while minimizing the magnitude of the perturbation. \
 \end{figure} \
 
 There are two attack variants to generate adversarial examples, namely,
-targeted and untargeted attacks~\cite{eykholt}. For untargeted attacks,
-the goal is to find a perturbation \(\delta\) such that \(f_{\theta}
-\left(x + \delta\right) \neq y\), where \(f\) is the \ac{ml} model
-with trained \(\theta\) parameters, \(x\) is the input data, and \(y\)
-the corresponding target class. For targeted attacks, a perturbation
-\(\delta\) is sought such that \(f_{\theta} \left(x + \delta\right) =
-y^{\ast}\)\, where \(y^{\ast}\) is the target misclassification class
-different than \(y\). The difference between both types of attacks
-is that for targeted attacks the adversarial example is misleading the
-model to predict a specific target label, while untargeted attacks
-force an erroneous prediction to any class. \
+targeted and untargeted attacks~\cite{huang_adversarial_nodate}. For
+untargeted attacks,the goal is to find a perturbation \(\delta\) such
+that \(f_{\theta}\left(x + \delta\right) \neq y\), where \(f\) is the
+\ac{ml} model with trained \(\theta\) parameters, \(x\) is the input
+data, and \(y\) the corresponding target class. For targeted attacks,
+a perturbation \(\delta\) is sought such that \(f_{\theta}
+\left(x + \delta\right) = y^{\ast}\)\, where \(y^{\ast}\) is the
+target misclassification class different than \(y\). The difference
+between both types of attacks is that for targeted attacks the
+adversarial example is misleading the model to predict a specific
+target label, while untargeted attacks force an erroneous prediction
+to any class. \
+
+Another category to characterize adversarial attacks is based on the
+available information for the attacker. If the attacker has access
+to the model's architecture, its training data, and parameters, it
+is denominated a white-box attack. Otherwise, it would be considered
+a black-box~\cite{eykholt_robust_2018}. While getting access to a
+target \ac{ml} model might be impossible, transferability from
+adversarial examples between \ac{ml} models that have been trained
+on disjoint datasets and with different hyperparameters has been
+found~\cite{papernot_transferability_2016}. Therefore, an attacker
+only needs to train its own network and perform a white-box attack
+on it to generate adversarial examples that also affect the target
+\ac{ml} model.\
 
 Adversarial examples uncover the weaknesses of high accuracy \ac{ml} models,
 revealing that the models are not generalizing well, as small modifications
 to the original input lead to significant errors in classification.
 Furthermore, a trade-off between model robustness and model accuracy exists
-~\cite{tsipras}, thus the need for techniques that do not significantly
-decrease the model's accuracy while making it as robust as possible.
-Understanding and defending against adversarial attacks is essential
-in critical applications utilizing \ac{ml}, as exploiting the model's
-vulnerabilities might result in severe real-world harm. \
+~\cite{tsipras_robustness_2019}, thus the need for techniques that do
+not significantly decrease the model's accuracy while making it as
+robust as possible. Understanding and defending against adversarial
+attacks is essential in critical applications utilizing \ac{ml}, as
+exploiting the model's vulnerabilities might result in severe
+real-world harm. \
 
-2. Types of Adversarial Attacks \
+Moreover, several different techniques have been developed in order
+to generate more efficient and/or more powerful adversarial examples.
+In this thesis we will focus on \ac{fgsm} in Subsection
+~\ref{subsection:fgsm} (due to its simplicity and efficiency), and on
+\ac{pgd} in Subsection~\ref{subsection:pgd} (due to its high
+effectiveness with smaller perturbations.) \
 
-Adversarial attacks can be broadly categorized based on various factors such as the attacker's knowledge, the attack's goals, and the type of perturbation used. \
+\subsection{\acl{fgsm}}\label{subsection:fgsm} \
 
-1. **White-box attacks**: The attacker has full access to the model, including its architecture, parameters, and training data. \
-2. **Black-box attacks**: The attacker has limited or no knowledge of the model and can only query the model to observe its outputs. \
+The \ac{fgsm}~\cite{goodfellow_explaining_2015} technique is one
+of the earliest methods created to quickly develop adversarial
+examples. \ac{fgsm} exploits the gradients of the loss function
+with respect to the input data to manufacture adversarial
+perturbations. \
 
-**Types of Perturbations**: \
-- **L0 norm**: Minimizes the number of pixels changed. \
-- **L2 norm**: Minimizes the Euclidean distance between the adversarial example and the original input. \
-%- **L_{inf} norm**: Restricts the maximum change to any pixel, often used for crafting subtle perturbations. \
+We can find the definition of an adversarial example according
+to \ac{fgsm}'s methodology in Equation~\ref*{eq:fgsm}, where given
+a \ac{ml} model trained on parameters \(\theta\), an input data \(x\)
+and its corresponding label \(y\), and the cost function 
+\( J(\theta, x, y) \) to train the model, we can obtain
+an adversarial example \(x'\). \
 
-\subsection{\ac{fgsm}} \
+\begin{equation}\label{eq:fgsm}
+  x' = x + \epsilon \cdot \text{sign}(\nabla_x J(\theta, x, y))
+\end{equation} \
 
-The Fast Gradient Sign Method (FGSM) is one of the earliest and most influential techniques for generating adversarial examples. Introduced by Ian Goodfellow et al. in 2014, FGSM exploits the gradients of the loss function with respect to the input data to create adversarial perturbations. \
+Additionally, a strength regulating factor \(\epsilon\) is added
+to control the magnitude of the adversarial perturbation to \(x\).
+The higher \(\epsilon\) becomes, the bigger the adversarial
+perturbation will be. This leads to adversarial examples that have
+a higher probability to be misclassified, however, the modified
+input will start to become more evident. \
 
-**Mathematical Formulation**: \
-Given a model with parameters \( \theta \), an input \( x \), and its true label \( y \), the adversarial example \( x' \) is generated by: \
-\[
-x' = x + \epsilon \cdot \text{sign}(\nabla_x J(\theta, x, y))
-\] \
-where: \
-- \( J(\theta, x, y) \) is the loss function used to train the model. \
-- \( \nabla_x J(\theta, x, y) \) is the gradient of the loss with respect to the input \( x \). \
-- \( \epsilon \) is a small scalar value that controls the magnitude of the perturbation. \
+One of the main benefits of \ac{fgsm} is that this technique
+is computationally efficient, as it only needs to calculate
+once the gradient of the loss function to obtain an adversarial
+example. Another advantage is that this technique is very simple,
+therefore, it is straightforward to implement and execute.
+Nevertheless, \ac{fgsm} generates adversarial examples in just
+one step, which does not allow for fine-tuning adversarial
+examples. \
 
-**Key Characteristics**: \
-- **Efficiency**: FGSM is computationally efficient since it requires only a single gradient computation. \
-- **Simplicity**: The method is straightforward to implement and serves as a foundation for more complex attacks. \
+\subsection{\acl{pgd}}\label{subsection:pgd} \
 
-**Limitations**: \
-- FGSM is often considered a relatively weak attack, particularly against models that are specifically hardened against it. \
-- It generates perturbations in a single step, which can limit the effectiveness of the attack in some scenarios. \
-
-\subsection{\ac{pgd}} \
+\begin{equation}\label{eq:pgd}
+  x^{(k+1)} = \text{Proj}_{\mathcal{B}_\epsilon(x)} \left( x^{(k)} + \alpha \cdot \text{sign}(\nabla_x J(\theta, x^{(k)}, y)) \right)
+\end{equation} \
 
 The Projected Gradient Descent (PGD) method is a more powerful adversarial attack that can be seen as an iterative extension of FGSM. PGD iteratively applies gradient updates to the input, projecting the perturbed input back onto an allowed region (typically an \( L_p \) norm ball) after each update. \
 
@@ -1407,10 +1428,15 @@ where:
 
 Adversarial machine learning reveals critical vulnerabilities in machine learning models, with attacks like FGSM and PGD serving as fundamental techniques for understanding and probing these weaknesses. While FGSM offers a simple and computationally efficient method for generating adversarial examples, PGD extends this approach to provide a more powerful and effective attack through iterative refinement. Understanding these attacks is essential for developing more robust models and improving the security of machine learning systems in practice.
 
+Finally, in this thesis we will focus on white-box untargeted attacks
+utilizing both the \ac{fgsm} and \ac{pgd} methods to attack
+a \ac{qml} model based on a \ac{vqa} ansatz. In Chapter
+~\ref{chapter:results} we can observe the effects of the
+adversarial attacks on the different \ac{qml} models trained
+with different quantum noise sources. \
+
 % TODO: Introduce the subsections from the chapter and link them.
 
 i.	State generalization problems (general idea of aml).  \
 
 ii.	Present different attacks FGSM  and PGD\@. \
-
-iii.	Explain the relationship between general accuracy and adversarial resilience. \

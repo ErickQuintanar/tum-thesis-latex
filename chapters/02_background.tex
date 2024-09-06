@@ -1400,43 +1400,44 @@ examples. \
 
 \subsection{\acl{pgd}}\label{subsection:pgd} \
 
+The \ac{pgd}~\cite{madry_towards_2019} technique is a more
+powerful method to generate adversarial examples than \ac{fgsm},
+it is considered the strongest attack using the network's local
+first order information. \ac{pgd} is derived by iteratively
+applying the gradient updates to the input data while projecting
+the calculated perturbation into a predetermined area. \
+
+In Equation~\ref{eq:pgd} we can find the definition of an
+adversarial example after \(k+1\) iterations, where \(x^{(k)}\)
+is the previous adversarial example after \(k\) iterations,
+\(\alpha\) is a strength regulator factor and \(\Pi_{x+S}\)
+is the projection function to limit the perturbation to
+an allowed region. \
+
 \begin{equation}\label{eq:pgd}
-  x^{(k+1)} = \text{Proj}_{\mathcal{B}_\epsilon(x)} \left( x^{(k)} + \alpha \cdot \text{sign}(\nabla_x J(\theta, x^{(k)}, y)) \right)
+  x^{(k+1)} = \Pi_{x+S} \left( x^{(k)} + \alpha \cdot \text{sign}(\nabla_x J(\theta, x^{(k)}, y)) \right)
 \end{equation} \
 
-The Projected Gradient Descent (PGD) method is a more powerful adversarial attack that can be seen as an iterative extension of FGSM. PGD iteratively applies gradient updates to the input, projecting the perturbed input back onto an allowed region (typically an \( L_p \) norm ball) after each update. \
-
-**Mathematical Formulation**:
-The adversarial example \( x' \) is generated iteratively as follows:
-\[
-x^{(k+1)} = \text{Proj}_{\mathcal{B}_\epsilon(x)} \left( x^{(k)} + \alpha \cdot \text{sign}(\nabla_x J(\theta, x^{(k)}, y)) \right)
-\]
-where:
-- \( x^{(k)} \) represents the adversarial example after \( k \) iterations.
-- \( \alpha \) is the step size for each update.
-- \( \text{Proj}_{\mathcal{B}_\epsilon(x)} \) denotes the projection of the perturbed input back into the \( \epsilon \)-ball around the original input \( x \), ensuring that the perturbation remains within the allowed limit.
-
-**Key Characteristics**:
-- **Effectiveness**: PGD is considered one of the most effective attacks against models, especially when the number of iterations is large.
-- **Robustness**: The iterative nature allows PGD to find more optimal adversarial examples compared to FGSM, making it harder for models to defend against.
-
-**Limitations**:
-- **Computational Cost**: PGD requires multiple gradient computations, making it more computationally expensive than FGSM.
-- **Hyperparameter Sensitivity**: The attack's effectiveness can be sensitive to the choice of step size \( \alpha \) and the number of iterations.
-
-5. Conclusion
-
-Adversarial machine learning reveals critical vulnerabilities in machine learning models, with attacks like FGSM and PGD serving as fundamental techniques for understanding and probing these weaknesses. While FGSM offers a simple and computationally efficient method for generating adversarial examples, PGD extends this approach to provide a more powerful and effective attack through iterative refinement. Understanding these attacks is essential for developing more robust models and improving the security of machine learning systems in practice.
+We can observe that the formulation is very similar to \ac{fgsm},
+however, the iterative and the projection component enable \ac{pgd}
+to find more inconspicuous adversarial examples that still effectively
+fool the target \ac{ml} model. The effectivity of \ac{pgd} depends
+on the number of iterations, where higher iterations lead to a higher
+probability to force a misclassification. Therefore, \ac{pgd} is able to
+create adversarial examples that are harder to defend from.
+Nevertheless, \ac{pgd} requires more resources to craft an
+adversarial example than \ac{fgsm}. Another disadvantage from
+\ac{pgd} is that it becomes more sensitive to the values from
+the iterations and the strength regulator factor. \
 
 Finally, in this thesis we will focus on white-box untargeted attacks
 utilizing both the \ac{fgsm} and \ac{pgd} methods to attack
 a \ac{qml} model based on a \ac{vqa} ansatz. In Chapter
-~\ref{chapter:results} we can observe the effects of the
-adversarial attacks on the different \ac{qml} models trained
-with different quantum noise sources. \
+~\ref{chapter:implementation} the implementation of this techniques
+will be presented. In Chapter~\ref{chapter:results} we can observe
+the effects of the adversarial attacks on the different \ac{qml}
+models trained with different quantum noise sources. Understanding
+\ac{aml} attacks is essential for developing more robust models
+and improving the security of machine learning systems in practice. \
 
 % TODO: Introduce the subsections from the chapter and link them.
-
-i.	State generalization problems (general idea of aml).  \
-
-ii.	Present different attacks FGSM  and PGD\@. \

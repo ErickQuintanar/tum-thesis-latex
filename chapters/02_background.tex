@@ -3,16 +3,15 @@
 In Chapter~\ref{chapter:background} we will introduce the
 background information that is required to understand
 the main ideas of this thesis. First we introduce
-the basic concepts of quantum computing. Then we will
-describe advanced concepts regarding quantum noise. We
+the basic concepts of quantum computing (Sec.~\ref{section:qc}). Then we will
+describe advanced concepts regarding quantum noise (Sec.~\ref{section:noise}). We
 assume some baseline \ac{ml} knowledge, however, we
-will provide an outlook into \ac{qml}. Finally, we
-present several types of \ac{aml}
-and adversarial training as a defense mechanism. \
+will provide an outlook into \ac{qml} (Sec.\ref{section:qml}). Finally, we
+present several types of \ac{aml} (Sec.~\ref{section:aml}). \
 
-\section{Fundamentals of Quantum Computing} \
+\section{Fundamentals of Quantum Computing}\label{section:qc} \
 
-First we introduce the qubit (Subsec.~\ref{subsection:qubit}),
+In this section, first we introduce the qubit (Subsec.~\ref{subsection:qubit}),
 the Bloch sphere (Subsec.~\ref{subsection:bloch}), and
 multiple qubits (Subsec.~\ref{subsubsection:multiple_qubit}).
 Afterwards, we present the operations to manipulate qubits in 
@@ -1193,9 +1192,14 @@ can be observed in Figure~\ref{fig:phase_flip}. \
 % MAYBE: add fidelity, infidelity, diamond distance measure (iverson and preskill)
 % MAYBE: state correlation (pravia)
 
-\section{Quantum Machine Learning} \
+\section{\acl{qml}}\label{section:qml} \
 
-% TODO: Introduce the subsections from the chapter and link them.
+In this section we introduce the fundamental concepts to
+understand the intersection between quantum computing and
+machine learning, for short \ac{qml}. A brief introduction
+to \ac{qml} and its main structure follows suit. Furthermore,
+in Subsection~\ref{subsection:vqa} \ac{vqa} will be presented,
+taking a focus on the Circuit-Centric ansatz. \
 
 The main task of \acf{ml} is to find patterns in data. Consequently,
 \acf{qml} takes this goal and extends it with the use of quantum
@@ -1292,16 +1296,47 @@ observable's eigenvalues. Therefore, a threshold function is utilized to
 map the input to 0 or 1. Afterwards, all the measurements are binary
 decoded into the model's classes. \
 
-i.	Introduce variational quantum algorithms. \
+\subsection{\acl{vqa}}\label{subsection:vqa}
 
-VQA's are a specific type of  \ac{qml} models. They have many diverse
-applications (fig. 3 cerezo). Cost function needs to be defined.
-Ansatz needs to be set to later be classically trained and optimized.
-Cost function has specific requirements.
+\ac{vqa} is a specific type of quantum algorithm. It attempts to
+gain a quantum advantage with \ac{nisq} devices. Currently, there
+are \ac{vqa}s that have many diverse applications, in our specific
+case they can be used for \ac{qml} models as classifiers or
+generative models~\cite{cerezo_variational_2021}.\
 
-% TODO: Introduce VQA's / ~\cite{cerezo}, ~\cite{benedetti}, circuit-centric(?). get data from schuld book
+The required processing subroutine \(W_{\theta}\) for \ac{qml}
+is denominated an \textit{ansatz}. Ansätze can be tailored specifically
+for the classification problem or they can be application agnostic.
+Different classical techniques can be used to train the parameters
+from the ansatz, these include gradient-based and gradient-free
+methods~\cite{benedetti_parameterized_2019}. A popular option is
+ADAM~\cite{kingma_adam_2017}, a first-order gradient-based
+optimization process. \
 
-\section{\acl{aml}} \
+In this thesis we will focus on the Circuit-Centric Quantum
+Classifier~\cite{schuld_circuit-centric_2020} ansatz. A
+characteristic of this \ac{vqa} variation is that it utilizes
+a shallow quantum circuit, this enables it to be run on \ac{nisq}
+devices. However, the trade-off is that only a small
+subset of Hilbert space will be represented, limiting the
+flexibility of the classifier. \
+
+Each layer in the ansatz is formed by a sequence of \(R_{Z}\),
+\(R_{Y}\) and \(R_{Z}\) rotational gates with arbitrary
+rotational parameters applied to each wire. These rotational
+gates are followed by \(CNOT\) gates that entangle each pair
+of wires. The expressivity of the ansatz increases with the
+number of layers. Nevertheless, the complexity and difficulty
+of training increases as well. \
+
+\section{\acl{aml}}\label{section:aml} \
+
+In this section we introduce the fundamental concepts of
+adversarial machine learning. A brief introduction
+to the characterization of \ac{aml} follows suit. Furthermore,
+in Subsection~\ref{subsection:fgsm} the \ac{fgsm}
+attack will be presented, while in Subsection~\ref{subsection:pgd}
+the \ac{pgd} attack will be introduced. \
 
 \acl{aml} is a subfield of \ac{ml} and focuses on finding vulnerabilities of
 models to adversarial examples (Figure~\ref{fig:adversarial_example}).
@@ -1439,5 +1474,3 @@ the effects of the adversarial attacks on the different \ac{qml}
 models trained with different quantum noise sources. Understanding
 \ac{aml} attacks is essential for developing more robust models
 and improving the security of machine learning systems in practice. \
-
-% TODO: Introduce the subsections from the chapter and link them.

@@ -1,21 +1,90 @@
-\chapter{Implementation}\label{chapter:implementation}
+\chapter{Implementation}\label{chapter:implementation} \
 
-\section{Section} \
-
-1.	Explain why decoherent noise is used and not coherent. \
-
-  a. Coherent noise will probably just shift the bias. \
-
-  b. Coherent noise might add too much noise (quadratic growth). \
-
-  c. True random noise is required to improve generalization. \
-
-% TODO: Do an experiment implementing coherent noise to prove this claim.
-% Use https://pennylane.ai/qml/demos/tutorial_variational_classifier/ - circuit-centric quantum classifier ansatz
+In Chapter~\ref{chapter:implementation} we will introduce
+the methods used to implement the experiments to answer
+the research goals. In Section~\ref{section:vqa_training}
+we will present how the \ac{qml} models are trained.
+Futhermore, in Section~\ref{section:vqa_attacks} the
+attack methodology on the \ac{vqa} model will be described. \
 
 \section{Variational Quantum Algorithm Model Training}\label{section:vqa_training} \
 
-Introduce reproduction of variational circuits inspired by circuit centric ansatz. \
+In this section we will specify how the \ac{vqa} models
+were trained. In Subsection~\ref{subsection:preprocess},
+we will describe the dataset preprocessing methodology required
+for the training. Later on in Subsection~\ref{subsection:config},
+the configuration files utilized by the training pipeline will
+be defined. Afterwards, in Subsection~\ref{subsection:noise_injection}
+we will present how the noise is injected to the
+\ac{qml} models during training and evaluation.
+Finally, the pipeline required for the training will
+be presented in Subsection~\ref{subsection:pipeline}. \
+
+\subsection{Datasets Preprocessing}\label{subsection:preprocess} \
+
+In order to reduce the execution time of the model training, all the
+datasets mentioned in the Section~\ref{section:datasets} were
+stored preprocessed. All the datasets but the Plus-Minus dataset
+were retrieved using OpenML~\cite{vanschoren_openml_2014}. We
+obtained the Plus-Minus dataset by asking for it to the authors of 
+~\cite{wendlinger_comparative_2024}. \
+
+The preprocessing methodology encompasses for all the datasets the
+removal of data points that are missing at least one feature.
+Then, duplicate data points are removed to avoid overemphasizing
+these elements and creating a bias in the data distribution. In
+case the target labels are non-numeric, we modified them to
+represent numerical classes. Finally, all the datasets except
+the Iris Flower dataset are normalized using the standard
+deviation and rescaled between a range of \(0\) and \(1\). This
+is done with Scikit-learn~\cite{pedregosa_scikit-learn_2011}
+and its purpose is to prevent feature dominance and to quicken
+training convergence. \
+
+There are two last details with regards to the preprocessing
+of the datasets. Firstly, as mentioned in Subsection
+~\ref{subsection:mnist}, the images from MNIST were downsampled
+to be able to process them with a \ac{vqa}. Secondly, the majority
+class from the \ac{pid} dataset was reduced to obtain a balanced
+dataset with regards to the class distribution. \
+
+\subsection{Configuration File}\label{subsection:config} \
+
+The configuration files are essential to the training
+pipeline. Its contents define the dataset to be used,
+which type of \ac{qml} model is going to be trained,
+which noise model will be injected, and some hyperparameters
+regarding the \ac{qml} model's architecture. These hyperparameters
+are the number of qubits, the number of layers, the number of
+classes, the learning rate, the batch size, and the epochs. \
+
+\begin{lstlisting}[language=Python, caption={Example configuration file.}, label=lst:config_file]
+  {
+    "dataset" : "diabetes",
+    "qml_model" : "pqc",
+    "noise_model" : "none",
+    "num_qubits" : 3,
+    "num_layers" : 40,
+    "num_classes" : 2,
+    "learning_rate" : 0.0005,
+    "batch_size" : 16,
+    "epochs" : 10
+  }
+\end{lstlisting}
+
+An example configuration file can be seen in Listing
+~\ref{lst:config_file}. This configuration file is given
+to the training pipeline. Once the training is finished,
+two more fields will be added to the configuration file.
+These fields are the model accuracy on the test set and an
+\(id\) to help identify the resulting model weights. \
+
+\subsection{Noise Injection}\label{subsection:noise_injection} \
+
+\subsection{Training Pipeline}\label{subsection:pipeline} \
+
+cumbersome to create manually the config files, so script does the job
+with specific noise models and required arguments for them.
 
 \section{Adversarial Attacks on Variational Quantum Algorithm Model}\label{section:vqa_attacks} \
 

@@ -77,14 +77,82 @@ An example configuration file can be seen in Listing
 to the training pipeline. Once the training is finished,
 two more fields will be added to the configuration file.
 These fields are the model accuracy on the test set and an
-\(id\) to help identify the resulting model weights. \
+\(id\) to help identify the resulting model weights. The
+configuration files are helpful to automate the training
+and prepare the adversarial attacks on all the trained
+\ac{qml} models. \
 
 \subsection{Noise Injection}\label{subsection:noise_injection} \
 
-\subsection{Training Pipeline}\label{subsection:pipeline} \
+The Circuit-Centric ansatz is built upon a combination of 
+Pennylane's arbitrary rotation gate \colorbox{inline_gray}{\lstinline|Rot|}
+and \colorbox{inline_gray}{\lstinline|CNOT|} gates. In the case
+of Pennylane, the \(Rot\) gate is native to the framework, therefore,
+there is no need to decompose it into other supported gates.
+Nevertheless, if other frameworks or devices are utilized,
+the gate decomposition is required and it would modify the resulting
+trained model. \
 
+\begin{equation}\label{eq:rot_decomposition}
+  \Qcircuit @C=0.4em @R=0.4em {
+    & \gate{Rot(\theta_{1},\theta_{2},\theta_{3})} & \gate{N(\epsilon)} & \qw \\
+    & \gate{Rot(\theta_{1},\theta_{2},\theta_{3})} & \gate{N(\epsilon)} & \qw
+  } \qquad
+  \Qcircuit @C=0.4em @R=0.4em {
+    & \gate{RZ(\theta_{1})} & \gate{N(\epsilon)} & \gate{RY(\theta_{2})} & \gate{N(\epsilon)} & \gate{RZ(\theta_{3})} & \gate{N(\epsilon)} & \qw \\
+    & \gate{RZ(\theta_{1})} & \gate{N(\epsilon)} & \gate{RY(\theta_{2})} & \gate{N(\epsilon)} & \gate{RZ(\theta_{3})} & \gate{N(\epsilon)} & \qw
+  }
+\end{equation} \
+
+Pennylane's \(Rot(\theta_{1},\theta_{2},\theta_{3})\) gate can be
+decomposed in three rotational gates, namely the sequence of
+\(R_{Z}(\theta_{1})\), \(R_{Y}(\theta_{2})\), and \(R_{Z}(\theta_{3})\).
+If we injected the noise after every gate, the influence of noise on
+the quantum circuit would increase almost three times (Eq.
+~\ref{eq:rot_decomposition}). Consequently, we manually decompose the
+\(Rot\) gate into its three corresponding gates to generate a single
+layer in the Circuit-Centric ansatz. This will not only allow for the
+pipeline in the future to be expanded and tested with new devices
+and frameworks, but also will make the resuls of the thesis valid
+for all of the devices and frameworks. \
+
+In Equation~\ref{eq:rot_decomposition} the gate with the letter \(N\)
+simulates the injected noise to the circuit. The type of noise model
+to be injected to the \ac{qml} model is provided in the previously
+described configuration file. The configuration file must then provide
+one of the 6 possible noise models and either the corresponding probability
+of noise to occur or the angle miscalibration \(\epsilon\). \
+
+In order to inject noise to a \ac{qml} model we utilize Pennylane's
+\colorbox{inline_gray}{\lstinline|transform|} module. We utilize it
+in two different ways to create \ac{qml} models either with coherent
+or incoherent noise. To simulate coherent noise we create a Pennylane
+noise model object that will later on be applied to the quantum circuit.
+The noise model is conformed by the addition of \(R_{Y}(\epsilon)\),
+\(R_{Z}(\epsilon)\), or \(CRX(\epsilon)\) gates to the noiseless
+\(R_{Y}(\theta)\), \(R_{Z}(\theta)\), or \(CNOT\) gates respectively
+(where \(\epsilon\) represents the miscalibration angle). On the other
+hand, to simulate incoherent noise we insert the noisy operation
+depending on its type directly to the quantum circuit's gates.
+This means that after every quantum gate noise might occur with
+a given probability \(\epsilon\). \
+
+For the incoherent noise \ac{qml} models, the chosen values for the
+probability of noise occurring are \(2\%\), \(4\%\), \(6\%\), \(8\%\),
+and \(10\%\). These values were chosen to be enough to notice an
+influence in the training but not to overwhelm the classifier and
+drown down any potential learning from the data. The same reasons
+apply to the chosen values for the miscalibration angle for coherent
+noise, the values are \(2^{\circ}\), \(4^{\circ}\), \(6^{\circ}\),
+\(8^{\circ}\), and \(10^{\circ}\). \
+
+\subsection{Training Pipeline}\label{subsection:pipeline} \
 cumbersome to create manually the config files, so script does the job
-with specific noise models and required arguments for them.
+with specific noise models and required arguments for them. \
+
+based on the config file, the datasets are either fetched or loaded. \
+
+easy to expand, incorporate new qml models and new noise values. \
 
 \section{Adversarial Attacks on Variational Quantum Algorithm Model}\label{section:vqa_attacks} \
 

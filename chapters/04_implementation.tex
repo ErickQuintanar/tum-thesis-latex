@@ -17,7 +17,7 @@ the configuration files utilized by the training pipeline will
 be defined. Afterwards, in Subsection~\ref{subsection:noise_injection}
 we will present how the noise is injected to the
 \ac{qml} models during training and evaluation.
-Finally, the pipeline required for the training will
+Finally, the developed pipeline for the training will
 be presented in Subsection~\ref{subsection:pipeline}. \
 
 \subsection{Datasets Preprocessing}\label{subsection:preprocess} \
@@ -147,12 +147,81 @@ noise, the values are \(2^{\circ}\), \(4^{\circ}\), \(6^{\circ}\),
 \(8^{\circ}\), and \(10^{\circ}\). \
 
 \subsection{Training Pipeline}\label{subsection:pipeline} \
-cumbersome to create manually the config files, so script does the job
-with specific noise models and required arguments for them. \
 
-based on the config file, the datasets are either fetched or loaded. \
+The stepping stones for the training pipeline were presented
+in the previous subsections. The pipeline has been created
+in order to simplify and automatize the training of the
+\ac{qml} models. The pipeline is based on the configuration
+files. Each \ac{qml} model requires a configuration file to
+be trained, therefore, the amount of configuration files
+depends on the number of models to be trained. \
 
-easy to expand, incorporate new qml models and new noise values. \
+In this thesis we are training \ac{qml} models for 7
+datasets, with 6 noise types with each one having 5
+different miscalibrations or probabilities. Adding up
+the 7 noiseless models, we end up with 217 configuration
+files and \ac{qml} models to be trained. Manually creating
+the configuration files would take a considerable
+amount of time. Therefore, we coded a script to
+automatically create the configuration files of a
+given dataset. \
+% 7 * 6 * 5 = 210 + 7 (noiseless) = 217
+
+After the configuration files have been created,
+we can start with the training. Training 217
+\ac{qml} models individually is also time consuming.
+Thus, we created a script that retrieves all
+the configuration files from a specific dataset
+and performs the model training. More importantly,
+the resulting weights of the model are automatically
+saved in conjunction with the modified configuration
+files. This serves two purposes. Firstly, we need the model
+weights to evaluate their accuracy when performing the
+adversarial attacks. Secondly, the pipeline checks
+if the model has already been previously trained and
+can skip retraining it. Therefore, the automated training
+can be interrupted and resumed without losing any information
+about the trained models. \
+
+The actual model training is performed by using a training loop
+based on the PyTorch Lightning~\cite{falcon_pytorch_2019} workflow.
+To enable the Lightning workflow we created a helper file with
+utility functions that help train and evaluate the \ac{qml} model.
+In this file we define the training, validation and testing steps.
+Additionally, we implement helper functions to calculate the 
+accuracy and a threshold method to be able to evaluate the \ac{qml}
+model. Finally, we define the model architecture based on the
+weights, number of target labels to classify and a forward pass. \
+
+The Lightning workflow simplifies and streamlines the training.
+Nevertheless, in order to perform the training loop, a small
+setup before is required. First of all, based on the configuration
+file we retrieve the datasets. If the dataset has already been
+fetched, we simply load the preprocessed dataset from the local files.
+Later on, we define the \ac{qml} model based on the given hyperparameters.
+Moreover, the required weights for training the module are randomly
+initialized. \
+
+Once the preprocessed dataset has been loaded, we divide it into
+different sets to facilitate the training loop. For most of
+the datasets we have a \(70/30\) split between the training
+set and the test set. The test set is stratified according
+to the data distribution from the training set. For the
+MNIST and Plus-Minus datasets only \(20\%\) of the dataset
+is used for training, as theses datasets are substantially
+more computationally demanding than the other datasets. Moreover,
+for the MNIST datasets we have a \(70/15/15\) training, 
+validation, and test set split respectively. \
+
+The last requirements for the training loop to be prepared are the
+loss functionand the optimizer used to the adapt the \ac{qml} model. In our
+specific case we utilize ADAM, a gradient-based optimizer, as it will
+lead to faster convergence than just using a gradient descent. For the
+loss function we utilize PyTorch's implementation of the Cross Entropy
+Loss, therefore, we interpret the resulting measurements from the
+\ac{qml} model as a probability distribution.  \
+
+% easy to expand, incorporate new qml models and new noise values. \
 
 \section{Adversarial Attacks on Variational Quantum Algorithm Model}\label{section:vqa_attacks} \
 

@@ -156,10 +156,10 @@ files. Each \ac{qml} model requires a configuration file to
 be trained, therefore, the amount of configuration files
 depends on the number of models to be trained. \
 
-In this thesis we are training \ac{qml} models for 7
-datasets, with 6 noise types with each one having 5
+In this thesis we are training \ac{qml} models for \(7\)
+datasets, with \(6\) noise types with each one having \(5\)
 different miscalibrations or probabilities. Adding up
-the 7 noiseless models, we end up with 217 configuration
+the \(7\) noiseless models, we end up with \(217\) configuration
 files and \ac{qml} models to be trained. Manually creating
 the configuration files would take a considerable
 amount of time. Therefore, we coded a script to
@@ -168,7 +168,7 @@ given dataset. \
 % 7 * 6 * 5 = 210 + 7 (noiseless) = 217
 
 After the configuration files have been created,
-we can start with the training. Training 217
+we can start with the training. Training \(217\)
 \ac{qml} models individually is also time consuming.
 Thus, we created a script that retrieves all
 the configuration files from a specific dataset
@@ -202,6 +202,8 @@ Later on, we define the \ac{qml} model based on the given hyperparameters.
 Moreover, the required weights for training the module are randomly
 initialized. \
 
+% TODO: Mention specific hyperparameters / qml model architectures per dataset in a table
+
 Once the preprocessed dataset has been loaded, we divide it into
 different sets to facilitate the training loop. For most of
 the datasets we have a \(70/30\) split between the training
@@ -219,24 +221,189 @@ specific case we utilize ADAM, a gradient-based optimizer, as it will
 lead to faster convergence than just using a gradient descent. For the
 loss function we utilize PyTorch's implementation of the Cross Entropy
 Loss, therefore, we interpret the resulting measurements from the
-\ac{qml} model as a probability distribution.  \
+\ac{qml} model similar to a probability distribution.  \
 
-% easy to expand, incorporate new qml models and new noise values. \
+Once everything is set up, we let the \textit{Trainer} module
+perform the training of the \ac{qml} model. The \textit{Trainer}
+module is responsible for loading the data points in the given
+batch number, calculating the loss, and optimizing the \ac{qml}
+models weights towards convergence. We also implemented an early
+stopping mechanism when the training accuracy reaches \(100\%\)
+to avoid overfitting the simpler models. \
+
+With this implemented pipeline it is simple to perform
+any further updates. The helping files are modularly
+designed to be reused, modified, and updated. Incorporating
+new and different types of \ac{qml} models with noise
+injection is simple. Furthermore, the chosen noise types
+and values can be effortlessly modified and expanded. 
+Not only does the pipeline enable the replication of results,
+but the creation of new experimentats. \
 
 \section{Adversarial Attacks on Variational Quantum Algorithm Model}\label{section:vqa_attacks} \
 
-Mention cleverhans library and how it is used. Mention pipeline to create the adversarial samples. Mention the attack strenght ratio, take into account that the samples are being produced over preprocessed data.
+In this section we will specify how the adversarial
+attacks and evaluation are performed. In Subsection
+~\ref{subsection:adv_attacks}, we will describe the process
+to obtain adversarial examples with the \ac{fgsm} and \ac{pgd}
+techniques. Afterwards in Subsection~\ref{subsection:evaluation},
+the evaluation procedure of the trained \ac{qml} models against
+adversarial examples will be defined. \
 
-\section{Experiments}\label{section:experiments} \
+\subsection{Adversarial Attacks}\label{subsection:adv_attacks}\
 
-Possible experiments: \
+Similar to the training pipeline introduced in the previously
+section, we tried to automate and simplify as much as possible
+the creation of the adversarial examples. In our thesis we
+are utilizing two different adversarial techniques, namely
+\ac{fgsm} (Subsec.~\ref{subsection:fgsm}) and \ac{pgd}
+(Subsec.~\ref{subsection:pgd}). \
 
-a. Change the type of encoding \
+Instead of manually implementing the attacks, there are
+several Python libraries that already have coded functions according
+to different techniques to create adversarial examples. In our
+case we utilize Cleverhans~\cite{papernot_technical_2018} due
+to its easeness of use and its interface with PyTorch models.
+This allows our previous PyTorch \ac{qml} model definition to
+be used as an input for the attack functions. \
 
-b. Variational quantum circuits and kernels \
+The function to create adversarial examples using the
+\ac{fgsm} technique requires the previously mentioned
+PyTorch \ac{qml} model. Additionally, it requires the
+input data point to attack. We can provide as an argument
+whether it is a targeted attack or not. In our specific
+case we are creating untargeted adversarial examples,
+therefore, we don't have to specify a target label.
+Moreover, we indicate the \(L_{\infty}\) norm to be used,
+as it causes small uniform distributions across all
+the features that are harder to perceive. Finally,
+we must determine the attack strength \(\epsilon\). \
 
- 1. Amplitude damping (open quantum systems / how the quantum system is affected by its environment) \
+The function that implements the \ac{pgd} method
+requires all the previously mentioned arguments
+for the \ac{fgsm} technique. Additionally, it
+also needs the iterative step size and the
+number of iterations to recurringly create the
+adversarial examples. These specific arguments are
+set to \(0.01\)  and \(40\) respectively. \
 
- 2. Phase damping (loss of information but not energy) \
+The noiseless \ac{qml} model is used as the required
+PyTorch model for crafting the adversarial examples.
+Thus, we retrieve the pretrained weights according to the
+\ac{qml} model and the dataset we are targeting.
+This will enable us to create a baseline attack
+and check whether the noisy training improves
+the resilience of the models against adversarial
+attacks. \
 
- 3. Simpler phase and bit flips \
+Once the dataset has been retrieved, we perform
+both attacks on the test set to create the adversarial
+examples needed to evaluate the noisy \ac{qml} models.
+We evaluate directly the performance of the noiseless
+model with the adversarial examples to verify that
+the performed attacks are correctly implemented and
+that they are misclassified by the model they are
+intended to fool. This process is repeated 5 times,
+each with a different value for the attack strength
+\(\epsilon\). The result of this process is obtaining
+10 different variations of the adversarial examples with
+increasing difficulty to be correctly classified. This will
+allow us to quantify how resilient the noisy \ac{qml}
+models are in case they are actually more robust
+against adversarial attacks. \
+
+While for image data the modifications to obtain the adversarial
+examples are conceptually simple to understand (Fig.
+~\ref{fig:adversarial_example}), for the tabular data it
+might be more abstract to understand the changes. In Figure
+~\ref{fig:adversarial_tabular} we show the effects of \ac{fgsm}
+on two dimensions of a data point for the Iris dataset. We use
+two dimensions only to simplify the understanding of what
+disturbances are added to tabular data. \
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.75]{figures/tabular-adversarial.png}
+  \centering
+  \caption{Effects of \ac{fgsm} on the Iris dataset's \textit{Petal Length} and \textit{Sepal Length} features for different attack strengths.}
+~\label{fig:adversarial_tabular}
+\end{figure} \
+
+We can observe that the data point wihout any modifications
+is classified with the label \(0\). With an increasing attack
+strength the data point is modified such that the \textit{Sepal
+Lenght} is reduced while the \textit{Petal Length} is increased.
+The red line in this case represents the classification threshold,
+where the \ac{qml} classifier starts labeling the data point as
+\(1\) instead of \(0\). Once the features have been adapted
+accordingly to exceed the classification threshold, the \ac{qml}
+model will start to misclassify the data point. \
+
+In the case of attacking a binary classificator, utilizing
+a technique implementing an untargeted attack is equivalent
+to executing a targeted attack aiming to obtain a misclassification
+with the datapoint's contrary class. Therefore, for binary
+classificators there is no distinction between performing a
+targeted or an untargeted attack. However, this is not the case when
+the \ac{qml} model is trying to differentiate between more than
+two classes, as the result of an untargeted attack can now
+be classified into more than one category. \
+
+The attack strength regulates the magnitude of the perturbations
+added to the original input to create the adversarial examples. 
+In this thesis we chose \(5\) different attack strengths,
+specifically the values \(\left[0.1, 0.3, 0.5, 0.7, 0.9\right]\).
+This allows us to slowly increase the attack strength while
+checking over a big range how the noisy and noisless \ac{qml}
+models react. Another factor that influenced this range is that
+the attacks are being applied to the preprocessed data points
+that have been normalized and rescaled. \
+
+\subsection{Automated Evaluation}\label{subsection:evaluation} \
+
+Continuing the idea of the pipeline, evaluating the trained
+\ac{qml} models should be simple to execute. The evaluation
+requires two arguments, namely the dataset and a given \ac{qml}
+model type to assess. The evaluation code will then
+automatically calculate the accuracy scores of all the \(31\)
+(Subsection~\ref{subsection:pipeline}) trained models. Additionally,
+it also evaluates the \ac{qml} models against the two different
+adversarial attacks with five differing attack strength.
+The evaluation pipeline then results per dataset on \(310 + 31 = 341\)
+data points to be analysed. \
+
+In order to avoid performing a redundant assessment, first,
+the pipeline will check if the evaluation and the figures
+have already been created. If any of the two is missing,
+the pipeline will automatically calculate the \ac{qml} models'
+accuracies and draw the figures from the resulting data. To
+do this, it verifies that all the adversarial samples have
+already been crafted. \
+
+The evaluation process iterates over all the noise
+models (and its miscalibrations or noise probabilities)
+and assesses each model with the modified adversarial
+examples. The adversarial evaluation calculates first the
+\ac{qml} model's accuracy against the unmodified test set.
+Later on, the evaluation script retrieves the adversarial
+examples for both adversarial attack techniques and their
+variations and computes the adversarial accuracy of the model.
+The results of this evaluation are saved in a file
+for further use when creating the figures comparing the
+accuracy of the different models in differents scenarios. \
+
+The resulting file from the evaluation process stores the
+accuracies and the characteristics of the models. Per dataset,
+we can retrieve \(31\) clean accuracies without any attack
+performed and \(310\) adversarial accuracies, this corresponds
+to the previosly mentioned \(341\) cipher. This information
+is required by the figure creation process. \
+
+The graph creation process will output \(16\) different
+figures belonging to \(3\) different types of graphs. Each
+type of graph tries to convey a different comparison between
+the different \ac{qml} models. The first type of grpah.  \
+
+Mention the graph creation (probs reference notebook notes),
+state the 3 differents types of graphs created and how to read
+them. Accuracy on clean samples with noise model, Accuracy of
+noiseless model being attacked, accuracy of noisy models being attacked. \

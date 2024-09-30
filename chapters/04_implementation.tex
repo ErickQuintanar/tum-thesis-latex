@@ -389,21 +389,75 @@ examples for both adversarial attack techniques and their
 variations and computes the adversarial accuracy of the model.
 The results of this evaluation are saved in a file
 for further use when creating the figures comparing the
-accuracy of the different models in differents scenarios. \
+accuracy of the different models in differents scenarios.
+When the evaluation is performed, the weights of the noisy
+models are retrieved, however, the evaluation is performed
+with a noisless model to stop the calculations from being
+doubly impacted by the quantum noise. \
 
 The resulting file from the evaluation process stores the
 accuracies and the characteristics of the models. Per dataset,
 we can retrieve \(31\) clean accuracies without any attack
 performed and \(310\) adversarial accuracies, this corresponds
-to the previosly mentioned \(341\) cipher. This information
+to the previosly mentioned \(341\) number. This information
 is required by the figure creation process. \
 
 The graph creation process will output \(16\) different
-figures belonging to \(3\) different types of graphs. Each
+figures belonging to \(2\) different types of graphs. Each
 type of graph tries to convey a different comparison between
-the different \ac{qml} models. The first type of grpah.  \
+the different \ac{qml} models. The first type of graph deals
+with the accuracy of the the models on the clean dataset, 
+with this graph we can observe the accuracy of the noiseless
+model as well as how the noise probabilities or miscalibrations
+affect the noisy models. \
 
-Mention the graph creation (probs reference notebook notes),
-state the 3 differents types of graphs created and how to read
-them. Accuracy on clean samples with noise model, Accuracy of
-noiseless model being attacked, accuracy of noisy models being attacked. \
+In Figure~\ref{fig:sample-accuracy} we
+can find a sample of this type of graphs, all the noise types
+start at the \(0\) point on the \(x\) axis with the same value. This
+value represents the baseline performance of the noiseless model
+on a chosen dataset. For the incoherent noise models, all the
+noise models appear in one single graph to be able to also compare
+them between each other. We separate the coherent noise model graphs
+from the incoherent noise ones because the \(x\) axis corresponds to
+a different variable. \
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.70]{figures/accuracy-graph.png}
+  \centering
+  \caption{Sample graph showing the effects on the model's accuracy of the noise probability modifications to the different noise models.}
+~\label{fig:sample-accuracy}
+\end{figure} \
+
+The second type of graph can be found in Figure~\ref{fig:sample-adversarial}.
+This graph demonstrates the changes that a given adversarial attack with
+differing attack strengths provokes in the accuracy of differently trained
+models. Thus, there is one graph per type of attack for each noise model,
+which results in \(14\) graphs to be analyzed. The graphs for the
+noiseless models are used to verify the effectiveness and the
+correct working of both adversarial attack techniques. \
+
+Furthermore, each graph has all the different variations of noise intensity
+that affected during training each noise model. Additionally, the baseline
+performance of the noiseless model can also be found with the \(0\) modification
+label on the noisy graphs. Therefore, we can determine whether the noise
+improves, decreases or doesn't modify the robustness of the trained \ac{qml}
+models. \
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.70]{figures/adversarial-graph.png}
+  \centering
+  \caption{Sample graph showing the effects on the model's accuracy of the attack strength modifications to the different noise models.}
+~\label{fig:sample-adversarial}
+\end{figure} \
+
+With the automatic creation of the graphs we terminate the pipeline
+for preprocessing, training, storing, attacking, and evaluating the
+accuracy of noiseless and noisy \ac{qml} models. The pipeline implementation
+reduces to the minimum the user interaction and allows us to automatically
+perform the training of resource intensive \ac{qml} models. Additionally.
+we can observe the effect of different types of noise and noise intensity
+on model robustness against several adversarial attacks. Furthermore,
+the pipeline allows us also to easily modify it by implementing new
+architectures of \ac{qml} models or implementing new adversarial attack
+techniques. Thus, further research of the effects of noise on \ac{qml}
+model robustness is simple to perform. \

@@ -328,7 +328,7 @@ disturbances are added to tabular data. \
 ~\label{fig:adversarial_tabular}
 \end{figure} \
 
-We can observe that the data point wihout any modifications
+We can observe that the data point without any modifications
 is classified with the label \(0\). With an increasing attack
 strength the data point is modified such that the \textit{Sepal
 Lenght} is reduced while the \textit{Petal Length} is increased.
@@ -337,6 +337,14 @@ where the \ac{qml} classifier starts labeling the data point as
 \(1\) instead of \(0\). Once the features have been adapted
 accordingly to exceed the classification threshold, the \ac{qml}
 model will start to misclassify the data point. \
+
+More significantly, we can still appreciate both clusters
+formed by the data points and labels. We can observe that
+the adversarial attack is significative, because the attacked
+modified datapoints still don't come close to the cluster
+with the \textit{real} label \(1\) while being misclassified.
+Therefore, the attacked samples could still belong to the
+cluster with the \textit{real} label \(0\). \
 
 In the case of attacking a binary classificator, utilizing
 a technique implementing an untargeted attack is equivalent

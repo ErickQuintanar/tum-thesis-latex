@@ -69,11 +69,57 @@ property from noise is particularly interesting in \ac{nisq} devices, as their
 inherent noise might be able to improve \ac{qml} performance, accuracy and
 resilience against adversarial attacks. \
 
-\section{Research Goals}
-1. Test the effect of different types of noise in QML regarding robustness.
-2. Test the effect of noise in different parts of the QML circuits.
-3. Test the effect of noise between VQA and Kernel methods.
-4. Test the models with different types of adversarial attacks (FGSM, CaW, PGD)
+\section{Research Goals} \
 
-\section{Outline}
-Write here what is the general structure of the thesis.
+The main goal of this thesis is to investigate the effects of quantum noise
+on the resilience of \ac{qml} models against adversarial
+attacks. To achieve this we set four intermediate goals that build
+upon each other to fulfill the main goal. These goals are: \
+
+\begin{enumerate}
+    \item \textbf{Train noiseless \ac{qml} models on different datasets:}
+            We choose different datasets to train several \ac{qml} models.
+            Selecting distinct datasets, each with increasing amount of
+            features, will test the baseline performance of the \ac{qml}
+            models and set a benchmark for the upcoming noisy models. \
+    \item \textbf{Train noisy \ac{qml} models on different datasets:} Once
+            the baseline \ac{qml} model accuracy for the different datasets
+            has been established, we then train more \ac{qml} models that
+            suffer from quantum noise. We choose six different types of
+            noise models and for each type we modify the magnitude of the
+            noise with five different values. This allows us not only
+            to compare noiseless and noisy \ac{qml} models performance,
+            but also to observe the impact of quantum noise on the models'
+            accuracy. \
+    \item \textbf{Perform adversarial attacks on noiseless \ac{qml} models:}
+            We perform two different adversarial attacks on the noiseless
+            \ac{qml} models for the different datasets. This will allow
+            us to obtain the adversarial examples to further evaluate the
+            previously trained noisy models. Two differet adversarial
+            techniques with five different attack strenghts are utilized
+            to validate the possible effects of quantum noise as a defense
+            against adversarial attacks. \
+    \item \textbf{Evaluate noisy \ac{qml} models with adversarial samples:}
+            Finally, with the adversarial examples obtained from the noiseless
+            models, we test all the noisy \ac{qml} models with the different
+            constelations of noise magnitude. We cover different types of noise
+            with different noise magnitudes as well as different attack techniques
+            with increasing attack strenght. This will enable us to verify
+            any possible effect caused by quantum noise on \ac{qml} model robustness
+            against adversarial attacks. \
+  \end{enumerate} \
+
+\section{Outline} \
+
+This thesis is structured as follows. In Chapter~\ref{chapter:background}
+we will introduce the required quantum computing, quantum noise, \ac{qml},
+and \ac{aml} concepts important for this thesis. Furthermore, in Chapter
+~\ref{chapter:design} we will present the design decisions (and their
+justification) taken to implement the experiments aimed at investigating
+the research questions. Moreover, in Chapter~\ref{chapter:implementation}
+we describe the procedure that the tests follow to provide information
+about the research goals. Additionally, in Chapter~\ref{chapter:results}
+we provide the results of the conducted experiments and discuss the observed
+findings. Finally, a summary of the thesis and some suggestions on what
+can be further researched are given in Chapter~\ref{chapter:summary} and
+Chapter~\ref{chapter:future_work} respectively.\

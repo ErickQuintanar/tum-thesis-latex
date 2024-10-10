@@ -2,14 +2,69 @@
 
 In Chapter~\ref{chapter:results} we will introduce
 the results of the experiments presented in Chapter
-~\ref{chapter:implementation}. In Section~\ref{section:vqa_training}
-we will present how the \ac{qml} models are trained.
-Futhermore, in Section~\ref{section:vqa_attacks} the
-attack methodology on the \ac{vqa} model will be described. \
+~\ref{chapter:implementation}. The results will be presented
+per dataset. Each dataset contains two graphs related to
+the model accuracy on the clean test set for noisy and
+noiseless models. Additionally, two more graphs are
+introduced to portray the effect of the adversarial
+attacks on the noiseless \ac{qml} model, one for each
+attack with increasing attack strengths. Finally, two
+graphs for each of the six noise models are provided.
+These last graphs will provide insights of the effects
+of the diverse quantum noise sources with different noise 
+magnitudes on the adversarial accuracy of both adversarial
+attacks. \
+
+In Section~\ref{section:iris-eval} the results from
+the Iris dataset are shown. In Section~\ref{section:diabetes-eval}
+the results from the \ac{pid} dataset follow. Moreover,
+in Section~\ref{section:breast-cancer-eval} the outcomes
+for the Wisconsin Breast Cancer dataset can be found.
+Lastly, the experiments' outcomes from the Plus-Minus dataset
+are provided in Section~\ref{section:plus-minus-eval}. \
 
 \section{Iris Dataset}\label{section:iris-eval} \
 
+The results obtained from training the noisy and noiseless
+\ac{qml} models can be found in Subsection
+~\ref{subsection:iris-noisy-acc}. Moreover, the outcomes
+of both adversarial attacks will be presented in Subsection
+~\ref{subsection:iris-adv-acc}. Finally, the evaluation
+of the noisy models against the adverssarial attacks can
+are presented in Subsection~\ref{subsection:iris-noisy-adv-acc}. \
+
 \subsection{Noisy Models Accuracy}\label{subsection:iris-noisy-acc} \
+
+In Figure~\ref{fig:iris-12} we can observe the results
+from the training of noiseless and noisy \ac{qml} models
+for the Iris test dataset. The noiseless baseline model accuracy
+can be found on both graphs at the y-intercept, which in
+this case is of \(100\%\). We note in Subfigure~\ref{fig:iris1}
+that for the Iris dataset there are no perceptible
+repercussions on the model accuracy when training with
+coherent noise and remains the same as the noiseless
+baseline performance. \
+
+Nevertheless, for incoherent noise models in Subfigure
+~\ref{fig:iris2} we can already observe a decrease in
+model accuracy for certain noise models. For depolarizing
+noise and bit-flip induced noise we notice the same behavior
+as with coherent noise, remaining constant throughout
+the different noise magnitudes and obtaining the same
+performance as the noiseless model. \
+
+Regarding phase damping noise, the model performance
+marginally decreases the accuracy to \(97\%\) starting at
+\(8\%\) noise probability. For phase-flip induced noise
+the model performance slightly decreases in comparison
+to phase damping noise to \(90\%\) at \(6\%\) noise probability
+until the accuracy decreases to \(86\%\) at \(10\%\). Moreover,
+for amplitude damping noise we can appreciate that the model
+performance oscilates significantly starting \(4\%\) noise
+probability. Furthermore, amplitude damping \ac{qml}
+model's accuracy is significantly lower than other noiseless
+and noisy models, reaching \(50\%\) accuracy at \(10\%\)
+noise probability. \
 
 \begin{figure}[!h]
   \centering
@@ -26,9 +81,23 @@ attack methodology on the \ac{vqa} model will be described. \
   \end{subfigure}
 
   \caption{\ac{vqa}'s accuracy on the Iris clean test dataset.}
+  \label{fig:iris-12}
 \end{figure} \
 
 \subsection{Adversarial Accuracy}\label{subsection:iris-adv-acc} \
+
+In Figure~\ref{fig:iris-34} we introduce the effects of the
+adversarial attacks on the accuracy of the noiseless \ac{qml}
+model. As expected, we can observe that for both adversarial
+techniques the performance of the model decreases with increasing
+attack strength. For the \ac{fgsm} technique in Subfigure~\ref{fig:iris3}
+we notice a stark accuracy decrease until it stabilizes to around
+\(50\%\) after \(0.5\) attack strength. Furthermore, in Subfigure
+~\ref{fig:iris4} for the \ac{pgd} technique we see a lesser performance
+decrease that stabilizes to around \(70\%\) after \(0.5\) attack strength. 
+That \ac{fgsm} has a bigger performance impact than \ac{pgd} is expected
+as \ac{fgsm}'s perturbations tend to be bigger in magnitude and more
+disruptive to the input. \
 
 \begin{figure}[!h]
   \centering
@@ -45,6 +114,7 @@ attack methodology on the \ac{vqa} model will be described. \
   \end{subfigure}
 
   \caption{\ac{vqa}'s accuracy on the adversarial Iris test dataset.}
+  \label{fig:iris-34}
 \end{figure} \
 
 \subsection{Noisy Models Adversarial Accuracy}\label{subsection:iris-noisy-adv-acc} \
@@ -138,13 +208,19 @@ attack methodology on the \ac{vqa} model will be described. \
 
 \subsection{Noisy Models Adversarial Accuracy}\label{subsection:breast-cancer-noisy-adv-acc} \
 
-\section{Plus-Minus Dataset}\label{section:plus-minus-cancer-eval} \
+\section{Plus-Minus Dataset}\label{section:plus-minus-eval} \
 
-\subsection{Noisy Models Accuracy}\label{subsection:plus-minus-cancer-noisy-acc} \
+\subsection{Noisy Models Accuracy}\label{subsection:plus-minus-noisy-acc} \
 
-\subsection{Adversarial Accuracy}\label{subsection:plus-minus-cancer-adv-acc} \
+\subsection{Adversarial Accuracy}\label{subsection:plus-minus-adv-acc} \
 
-\subsection{Noisy Models Adversarial Accuracy}\label{subsection:plus-minus-cancer-noisy-adv-acc} \
+\subsection{Noisy Models Adversarial Accuracy}\label{subsection:plus-minus-noisy-adv-acc} \
+
+\subsection{Discussion}\label{subsection:discussion} \
+
+Iris dataset might be too simple on clean dataset.
+
+Coherent noise might just work as a bias term on the clean dataset.(?) \
 
 
 1.	Explain why decoherent noise is used and not coherent. \

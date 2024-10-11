@@ -448,6 +448,157 @@ to the input. \
 
 \subsection{Noisy Models Adversarial Accuracy}\label{subsection:diabetes-noisy-adv-acc} \
 
+In this subsection we introduce the results from performing
+the adversarial attacks on the noisy models with different noise
+magnitudes for the \ac{pid} dataset. In each graph the color gray
+represents the baseline adversarial accuracy obtained by the
+noiseless model. \
+
+In Figure~\ref{fig:diabetes-56} we present the outcomes from the amplitude
+damping noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:diabetes5}
+we note that \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/amplitude-damping-fgsm.png}
+      \subcaption{Amplitude damping noise model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:diabetes5}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/amplitude-damping-pgd.png}
+      \subcaption{Amplitude damping noise model's \ac{pgd} adversarial accuracy.}
+      \label{fig:diabetes6}
+  \end{subfigure}
+  \caption{Amplitude damping noise models' accuracy on the adversarial \ac{pid} test dataset.}
+  \label{fig:diabetes-56}
+\end{figure} \
+
+In Subfigure~\ref{fig:diabetes6} we introduce the results from the \ac{pgd}
+attack on the amplitude damping noisy models. \
+
+In Figure~\ref{fig:diabetes-78} we present the outcomes from the bit-flip
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:diabetes7}
+we note that \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/bit-flip-fgsm.png}
+      \subcaption{Bit-Flip noise model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:diabetes7}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/bit-flip-pgd.png}
+      \subcaption{Bit-Flip noise model's \ac{pgd} adversarial accuracy.}
+      \label{fig:diabetes8}
+  \end{subfigure}
+  \caption{Bit-Flip noise models' accuracy on the adversarial \ac{pid} test dataset.}
+  \label{fig:diabetes-78}
+\end{figure} \
+
+In Subfigure~\ref{fig:diabetes8} we introduce the results from the \ac{pgd}
+attack on the bit-flip noisy models. \
+
+In Figure~\ref{fig:diabetes-910} we present the outcomes from the coherent
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:diabetes9}
+we note that \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/coherent-fgsm.png}
+      \subcaption{Coherent noise model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:diabetes9}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/coherent-pgd.png}
+      \subcaption{Coherent noise model's \ac{pgd} adversarial accuracy.}
+      \label{fig:diabetes10}
+  \end{subfigure}
+  \caption{Coherent noise models' accuracy on the adversarial \ac{pid} test dataset.}
+  \label{fig:diabetes-910}
+\end{figure} \
+
+In Subfigure~\ref{fig:diabetes10} we introduce the results from the \ac{pgd}
+attack on the coherent noisy models. \
+
+In Figure~\ref{fig:diabetes-1112} we present the outcomes from the depolarizing
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:diabetes11}
+we note that \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/depolarizing-fgsm.png}
+      \subcaption{Depolarizing noise model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:diabetes11}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/depolarizing-pgd.png}
+      \subcaption{Depolarizing noise model's \ac{pgd} adversarial accuracy.}
+      \label{fig:diabetes12}
+  \end{subfigure}
+  \caption{Depolarizing noise models' accuracy on the adversarial \ac{pid} test dataset.}
+  \label{fig:diabetes-1112}
+\end{figure} \
+
+In Subfigure~\ref{fig:diabetes12} we introduce the results from the \ac{pgd}
+attack on the depolarizing noisy models. \
+
+In Figure~\ref{fig:diabetes-1314} we present the outcomes from the phase damping
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:diabetes13}
+we note that \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/phase-damping-fgsm.png}
+      \subcaption{Phase Damping noise model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:diabetes13}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/phase-damping-pgd.png}
+      \subcaption{Phase Damping noise model's \ac{pgd} adversarial accuracy.}
+      \label{fig:diabetes14}
+  \end{subfigure}
+  \caption{Phase damping models' accuracy on the adversarial \ac{pid} test dataset.}
+  \label{fig:diabetes-1314}
+\end{figure} \
+
+In Subfigure~\ref{fig:diabetes14} we introduce the results from the \ac{pgd}
+attack on the phase damping noisy models. \
+
+In Figure~\ref{fig:diabetes-1516} we present the outcomes from the phase-flip
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:diabetes15}
+we note that \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/phase-flip-fgsm.png}
+      \subcaption{Phase-Flip noise model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:diabetes15}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/phase-flip-pgd.png}
+      \subcaption{Phase-Flip noise model's \ac{pgd} adversarial accuracy.}
+      \label{fig:diabetes16}
+  \end{subfigure}
+
+  \caption{Phase-Flip noise models' accuracy on the adversarial \ac{pid} test dataset.}
+  \label{fig:diabetes-1516}
+\end{figure} \
+
+In Subfigure~\ref{fig:diabetes16} we introduce the results from the \ac{pgd}
+attack on the phase-flip noisy models. \
+
 \section{Breast Cancer Dataset}\label{section:breast-cancer-eval} \
 
 \subsection{Noisy Models Accuracy}\label{subsection:breast-cancer-noisy-acc} \
@@ -455,6 +606,157 @@ to the input. \
 \subsection{Adversarial Accuracy}\label{subsection:breast-cancer-adv-acc} \
 
 \subsection{Noisy Models Adversarial Accuracy}\label{subsection:breast-cancer-noisy-adv-acc} \
+
+In this subsection we introduce the results from performing
+the adversarial attacks on the noisy models with different noise
+magnitudes for the Wisconsin Breast Cancer dataset. In each graph
+the color gray represents the baseline adversarial accuracy obtained
+by the noiseless model. \
+
+In Figure~\ref{fig:bc-56} we present the outcomes from the amplitude
+damping noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:bc5}
+we note that \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/amplitude-damping-fgsm.png}
+      \subcaption{Amplitude damping noise model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:bc5}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/amplitude-damping-pgd.png}
+      \subcaption{Amplitude damping noise model's \ac{pgd} adversarial accuracy.}
+      \label{fig:bc6}
+  \end{subfigure}
+  \caption{Amplitude damping noise models' accuracy on the adversarial Wisconsin Breast Cancer test dataset.}
+  \label{fig:bc-56}
+\end{figure} \
+
+In Subfigure~\ref{fig:bc6} we introduce the results from the \ac{pgd}
+attack on the amplitude damping noisy models. \
+
+In Figure~\ref{fig:bc-78} we present the outcomes from the bit-flip
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:bc7}
+we note that \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/bit-flip-fgsm.png}
+      \subcaption{Bit-Flip noise model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:bc7}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/bit-flip-pgd.png}
+      \subcaption{Bit-Flip noise model's \ac{pgd} adversarial accuracy.}
+      \label{fig:bc8}
+  \end{subfigure}
+  \caption{Bit-Flip noise models' accuracy on the adversarial Wisconsin Breast Cancer test dataset.}
+  \label{fig:bc-78}
+\end{figure} \
+
+In Subfigure~\ref{fig:bc8} we introduce the results from the \ac{pgd}
+attack on the bit-flip noisy models. \
+
+In Figure~\ref{fig:bc-910} we present the outcomes from the coherent
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:bc9}
+we note that \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/coherent-fgsm.png}
+      \subcaption{Coherent noise model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:bc9}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/coherent-pgd.png}
+      \subcaption{Coherent noise model's \ac{pgd} adversarial accuracy.}
+      \label{fig:bc10}
+  \end{subfigure}
+  \caption{Coherent noise models' accuracy on the adversarial Wisconsin Breast Cancer test dataset.}
+  \label{fig:bc-910}
+\end{figure} \
+
+In Subfigure~\ref{fig:bc10} we introduce the results from the \ac{pgd}
+attack on the coherent noisy models. \
+
+In Figure~\ref{fig:bc-1112} we present the outcomes from the depolarizing
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:bc11}
+we note that \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/depolarizing-fgsm.png}
+      \subcaption{Depolarizing noise model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:bc11}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/depolarizing-pgd.png}
+      \subcaption{Depolarizing noise model's \ac{pgd} adversarial accuracy.}
+      \label{fig:bc12}
+  \end{subfigure}
+  \caption{Depolarizing noise models' accuracy on the adversarial Wisconsin Breast Cancer test dataset.}
+  \label{fig:bc-1112}
+\end{figure} \
+
+In Subfigure~\ref{fig:bc12} we introduce the results from the \ac{pgd}
+attack on the depolarizing noisy models. \
+
+In Figure~\ref{fig:bc-1314} we present the outcomes from the phase damping
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:bc13}
+we note that \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/phase-damping-fgsm.png}
+      \subcaption{Phase Damping noise model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:bc13}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/phase-damping-pgd.png}
+      \subcaption{Phase Damping noise model's \ac{pgd} adversarial accuracy.}
+      \label{fig:bc14}
+  \end{subfigure}
+  \caption{Phase damping models' accuracy on the adversarial Wisconsin Breast Cancer test dataset.}
+  \label{fig:bc-1314}
+\end{figure} \
+
+In Subfigure~\ref{fig:bc14} we introduce the results from the \ac{pgd}
+attack on the phase damping noisy models. \
+
+In Figure~\ref{fig:bc-1516} we present the outcomes from the phase-flip
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:bc15}
+we note that \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/phase-flip-fgsm.png}
+      \subcaption{Phase-Flip noise model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:bc15}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/phase-flip-pgd.png}
+      \subcaption{Phase-Flip noise model's \ac{pgd} adversarial accuracy.}
+      \label{fig:bc16}
+  \end{subfigure}
+
+  \caption{Phase-Flip noise models' accuracy on the adversarial Wisconsin Breast Cancer test dataset.}
+  \label{fig:bc-1516}
+\end{figure} \
+
+In Subfigure~\ref{fig:bc16} we introduce the results from the \ac{pgd}
+attack on the phase-flip noisy models. \
 
 \section{Plus-Minus Dataset}\label{section:plus-minus-eval} \
 

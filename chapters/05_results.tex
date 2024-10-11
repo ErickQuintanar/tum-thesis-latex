@@ -26,7 +26,7 @@ are provided in Section~\ref{section:plus-minus-eval}. \
 \section{Iris Dataset}\label{section:iris-eval} \
 
 The results obtained from training the noisy and noiseless
-\ac{qml} models can be found in Subsection
+\ac{qml} models on the Iris dataset can be found in Subsection
 ~\ref{subsection:iris-noisy-acc}. Moreover, the outcomes
 of both adversarial attacks will be presented in Subsection
 ~\ref{subsection:iris-adv-acc}. Finally, the evaluation
@@ -356,36 +356,95 @@ performance. The model with 6\% noise probability is the exception to
 this trend because it has the lowest adversarial accuracies throughout
 the whole attack strength range. \
 
-Amplitude damping works worse than baseline, no relation between noise
-probability and adv accuracy. \
-
-bit-flip, some models perform better than baseline but no relationship
-between noise probability and adv accuracy can be found. \
-
-for pgd with bit-flip and amplitude damping the performance gets better
-for some models with increased attack strength. \
-
-coherent noise seems to increase model robustness, specially at higher noise
-probabilities, maybe works as a bias term that better enables the model
-to adjust the classification threshold. \
-
-depolarizing noise is in general better in both attacks than the baseline
-model but no conclusions can be drawns. \
-
-phase-damping: main diff between pgd and fgsm is the accuracy levels,
-were fgsm affects reduces more the accuracy than pgd. this applies to
-all noisy models, so there isn't a different noisy model behavior
-depending on the adv attack, just a change in the adv acc values. \
-
-phase-flip: slight correlation found between noise probs and robustness,
-it is an inverse relationship, meaning that the higher the noise the worse
-the performance.
-
 \section{\acl{pid} Dataset}\label{section:diabetes-eval} \
+
+The results obtained from training the noisy and noiseless
+\ac{qml} models on the \ac{pid} dataset can be found in Subsection
+~\ref{subsection:diabetes-noisy-acc}. Moreover, the outcomes
+of both adversarial attacks will be presented in Subsection
+~\ref{subsection:diabetes-adv-acc}. Finally, the evaluation
+of the noisy models against the adversarial attacks can
+are presented in Subsection~\ref{subsection:diabetes-noisy-adv-acc}. \
 
 \subsection{Noisy Models Accuracy}\label{subsection:diabetes-noisy-acc} \
 
+In Figure~\ref{fig:diabetes-12} we can observe the results
+from the training of noiseless and noisy \ac{qml} models
+for the \ac{pid} test dataset. The noiseless baseline model accuracy
+can be found on both graphs at the y-intercept, which in
+this case is of 67.7\%. We note in Subfigure~\ref{fig:diabetes1}
+that for the \ac{pid} dataset the model accuracy slightly decreases
+when training with an increasing coherent noise effect. The model
+performance is slowly reduced until it reaches 49\% accuracy. \
+
+For incoherent noise models in Subfigure~\ref{fig:diabetes2}
+we can observe a decrease in model accuracy for all the noise
+models. In this case, phase damping noise performs the best
+of any noise models, followed then by models with amplitude
+damping noise. They each have an accuracy of 59\% and 49\% on the clean
+test dataset respectively, which represents a lower performance
+than the noiseless model's accuracy. \
+
+Regarding the bit-flip, depolarizing, and phase-flip noise, the model
+performance significantly decreases its accuracy to 44\% starting at
+4\% noise probability and remains at that same value for all
+higher noise probabilities. Interestingly enough, there seems
+to not be any relation between which type of incoherent noise
+is used and the performance of the model. While in the Iris
+dataset (Subfig.~\ref{fig:iris2}) the best performing models
+were the ones using bit-flip and depolarizing noise, in the
+\ac{pid} dataset phase and amplitude damping noise have the
+highest accuracy. \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/accuracy-coherent.png}
+      \subcaption{Coherent noise model's accuracy.}
+      \label{fig:diabetes1}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/accuracy-incoherent.png}
+      \subcaption{Incoherent noise models' accuracy.}
+      \label{fig:diabetes2}
+  \end{subfigure}
+
+  \caption{\ac{vqa}'s accuracy on the \ac{pid} clean test dataset.}
+  \label{fig:diabetes-12}
+\end{figure} \
+
 \subsection{Adversarial Accuracy}\label{subsection:diabetes-adv-acc} \
+
+In Figure~\ref{fig:diabetes-34} we introduce the effects of the
+adversarial attacks on the accuracy of the noiseless \ac{qml}
+model. As expected, we can observe that for both adversarial
+techniques the performance of the model decreases with increasing
+attack strength. For both of the adversarial techniques
+we notice a stark accuracy decrease until it stabilizes to around
+\(33\%\) after \(0.3\) attack strength. That \ac{fgsm} (Subfig.
+~\ref{fig:diabetes3}) has the same performance impact as \ac{pgd}
+(Subfigure~\ref{fig:diabetes4}) is not expected, as \ac{fgsm}'s
+perturbations tend to be bigger in magnitude and more disruptive
+to the input. \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/none-fgsm.png}
+      \subcaption{Noiseless model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:diabetes3}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/diabetes/pqc/figures/none-pgd.png}
+      \subcaption{Noiseless model's \ac{pgd} adversarial accuracy.}
+      \label{fig:diabetes4}
+  \end{subfigure}
+
+  \caption{\ac{vqa}'s accuracy on the adversarial \ac{pid} test dataset.}
+  \label{fig:diabetes-34}
+\end{figure} \
 
 \subsection{Noisy Models Adversarial Accuracy}\label{subsection:diabetes-noisy-adv-acc} \
 
@@ -413,6 +472,33 @@ values every time. \
 Iris dataset might be too simple on clean dataset. (probs not if it is being affected by the adversarial attacks)
 
 Coherent noise might just work as a bias term on the clean dataset? \
+
+Iris dataset notes: \
+
+Amplitude damping works worse than baseline, no relation between noise
+probability and adv accuracy. \
+
+bit-flip, some models perform better than baseline but no relationship
+between noise probability and adv accuracy can be found. \
+
+for pgd with bit-flip and amplitude damping the performance gets better
+for some models with increased attack strength. \
+
+coherent noise seems to increase model robustness, specially at higher noise
+probabilities, maybe works as a bias term that better enables the model
+to adjust the classification threshold. \
+
+depolarizing noise is in general better in both attacks than the baseline
+model but no conclusions can be drawns. \
+
+phase-damping: main diff between pgd and fgsm is the accuracy levels,
+were fgsm affects reduces more the accuracy than pgd. this applies to
+all noisy models, so there isn't a different noisy model behavior
+depending on the adv attack, just a change in the adv acc values. \
+
+phase-flip: slight correlation found between noise probs and robustness,
+it is an inverse relationship, meaning that the higher the noise the worse
+the performance.
 
 
 1.	Explain why decoherent noise is used and not coherent. \

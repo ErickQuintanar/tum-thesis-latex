@@ -30,7 +30,7 @@ The results obtained from training the noisy and noiseless
 ~\ref{subsection:iris-noisy-acc}. Moreover, the outcomes
 of both adversarial attacks will be presented in Subsection
 ~\ref{subsection:iris-adv-acc}. Finally, the evaluation
-of the noisy models against the adverssarial attacks can
+of the noisy models against the adversarial attacks can
 are presented in Subsection~\ref{subsection:iris-noisy-adv-acc}. \
 
 \subsection{Noisy Models Accuracy}\label{subsection:iris-noisy-acc} \
@@ -172,7 +172,7 @@ a lower or equal adversarial accuracy throughout the different
 attack strengths. While the model trained with \(10\%\) noise
 probability performs the best against attack strength's lower
 than \(0.7\), the adversarial accuracy drops to around \(33\%\)
-(the lowest recorded accuracy) at an attack strenght of \(0.9\). \
+(the lowest recorded accuracy) at an attack strength of \(0.9\). \
 
 \begin{figure}[!h]
   \centering
@@ -192,7 +192,27 @@ than \(0.7\), the adversarial accuracy drops to around \(33\%\)
 \end{figure} \
 
 In Subfigure~\ref{fig:iris8} we introduce the results from the \ac{pgd}
-attack on the amplitude damping noisy models. \
+attack on the bit-flip noisy models. Similar to the \ac{fgsm} performance,
+the models with noise probability (2\%, 4\%, and 10\%) perform better or equal
+than the baseline noiseless adversarial accuracy. Nevertheless, the stark
+performance drop from the model trained with 10\% noise probability
+at 0.9 attack strength does not occur in this case. Furthermore, analogous
+to the \ac{fgsm} results, the models trained with (6\% and 8\%) noise
+probability perform worse than the noiseless model. However, with attack
+strengths higher than 0.5, these models actually see a slight performance
+increase to match the baseline model at 0.9 attack strength. \
+
+In Figure~\ref{fig:iris-910} we present the outcomes from the coherent
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:iris9}
+we note that all the noisy models perform better than the noiseless
+models throught almost all of the attack strength range. Only at 
+attack strength 0.9 do the models with a misconfiguration of 2 and
+4 degrees have a marginally lower accuracy than the noiseless model's
+accuracy. In this specific case, there seems to be a slight correlation
+between model robustness and degree misconfiguration, where the
+higher the misconfiguration degree leads to a more robust model. The
+two models with the highest coherent noise (8 and 10 degrees) achieve
+an adversarial accuracy of around 96\% at the highest attack strength. \
 
 \begin{figure}[!h]
   \centering
@@ -211,6 +231,27 @@ attack on the amplitude damping noisy models. \
   \label{fig:iris-910}
 \end{figure} \
 
+In Subfigure~\ref{fig:iris10} we introduce the results from the \ac{pgd}
+attack on the coherent noisy models. Comparable to the results from the
+\ac{fgsm} evaluation, all the coherent noisy models perfom better than
+the baseline noiseless model benchmark. Furthermore, the coherent noisy
+models with a lower misconfiguration degree obtain a lower adversarial
+accuracy than the models with a higher noise disturbance. Thus, we can
+derive a slight correlation with the degree of misconfiguration and the
+adversarial accuracy. \
+
+In Figure~\ref{fig:iris-1112} we present the outcomes from the depolarizing
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:iris11}
+we note that all the noisy models but the one with 2\% noise probability
+perform at equal or better than the noiseless benchmark until the attack
+strength 0.7 is reached. The model with 4\% noise probability is the best
+model in this range. However, this model's adversarial accuracy significantly
+drops to the lowest value recorded at around 26\% with attack strength's
+higher than 0.7. While most of the noisy models have a higher adversarial
+accuracy than the noiseless model throughout the attack strength range,
+no direct correlation can be drawn between the noise probability and the
+model's robustness. \
+
 \begin{figure}[!h]
   \centering
 
@@ -228,6 +269,27 @@ attack on the amplitude damping noisy models. \
   \label{fig:iris-1112}
 \end{figure} \
 
+In Subfigure~\ref{fig:iris12} we introduce the results from the \ac{pgd}
+attack on the depolarizing noisy models. Comparable to the results from
+the \ac{fgsm} model evaluation, all models except the one with 2\% noise
+probability perform equal or better than the noiseless model throughout
+the whole attack strength spectrum. The 4\% noise probability model is
+still the best but now doesn't suffer a big drop-off at 0.9 attack strength
+like in the \ac{fgsm} outcomes. This model reaches around 83\% adversarial
+accuracy with the highest tested attack strength. In this case, although
+most of the noisy models have a higher accuracy than the noiseless model,
+no correlation can be drawn between model robustness and noise propensity. \
+
+In Figure~\ref{fig:iris-1314} we present the outcomes from the phase damping
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:iris13}
+we note that the models with intermediate noise probabilities (4\% and 6\%)
+perform marginally better than the baseline noiseless model up until the
+attack strength 0.7. Contrarily, the remaining noise probability models 2\%,
+8\% and 10\% obtain a lower adversarial accuracy than the noiseless model.
+While some noisy models perform better than the benchmark set by the noiseless
+model, no relation between the noise magnitude and the model robustness can
+be derived. \
+
 \begin{figure}[!h]
   \centering
 
@@ -244,6 +306,23 @@ attack on the amplitude damping noisy models. \
   \caption{Phase damping models' accuracy on the adversarial Iris test dataset.}
   \label{fig:iris-1314}
 \end{figure} \
+
+In Subfigure~\ref{fig:iris14} we introduce the results from the \ac{pgd}
+attack on the phase damping noisy models. The adversarial accuracies
+obtained with the \ac{pgd} technique show the same behavior than the
+values obtained by the \ac{fgsm} attack. The main difference lies
+on the magnitude of the adversarial accuracies, were the results
+from the \ac{pgd} tests are slightly higher than for the \ac{fgsm}
+experiments. \
+
+In Figure~\ref{fig:iris-1516} we present the outcomes from the phase-flip
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:iris15}
+we note that only the model with the lowest noise probability (2\%)
+obtains a higher adversarial accuracy than the baseline noiseless
+model. This relationship is maintained up until the 0.7 attack strength,
+where the noisy model performance is marginally lower than the noiseless
+model. The performance of both types of model, noisy and noiseless,
+converges to around 50\% at the highest attack strength. \
 
 \begin{figure}[!h]
   \centering
@@ -263,11 +342,44 @@ attack on the amplitude damping noisy models. \
   \label{fig:iris-1516}
 \end{figure} \
 
+In Subfigure~\ref{fig:iris16} we introduce the results from the \ac{pgd}
+attack on the phase-flip noisy models. Similar to the results from the
+\ac{fgsm} attack, only the model with 2\% noise probability performs
+better than the noiseless model. Nevertheless, in the case of the \ac{pgd}
+adversarial accuracies this behavior is found throughout all the attack
+strength range. The performance of the remaining noisy models unexpectedly
+either slightly increases or stays the same with increasing attack strength
+starting a strength calue of 0.5. For both, the \ac{pgd} and the
+\ac{fgsm} attack techniques we can observe a small correlation between the
+model robustness, where a higher noise probability equals lesser model
+performance. The model with 6\% noise probability is the exception to
+this trend because it has the lowest adversarial accuracies throughout
+the whole attack strength range. \
+
 Amplitude damping works worse than baseline, no relation between noise
 probability and adv accuracy. \
 
 bit-flip, some models perform better than baseline but no relationship
 between noise probability and adv accuracy can be found. \
+
+for pgd with bit-flip and amplitude damping the performance gets better
+for some models with increased attack strength. \
+
+coherent noise seems to increase model robustness, specially at higher noise
+probabilities, maybe works as a bias term that better enables the model
+to adjust the classification threshold. \
+
+depolarizing noise is in general better in both attacks than the baseline
+model but no conclusions can be drawns. \
+
+phase-damping: main diff between pgd and fgsm is the accuracy levels,
+were fgsm affects reduces more the accuracy than pgd. this applies to
+all noisy models, so there isn't a different noisy model behavior
+depending on the adv attack, just a change in the adv acc values. \
+
+phase-flip: slight correlation found between noise probs and robustness,
+it is an inverse relationship, meaning that the higher the noise the worse
+the performance.
 
 \section{\acl{pid} Dataset}\label{section:diabetes-eval} \
 
@@ -295,9 +407,12 @@ between noise probability and adv accuracy can be found. \
 
 \subsection{Discussion}\label{subsection:discussion} \
 
-Iris dataset might be too simple on clean dataset.
+PGD results might vary as the iterative process will result in different
+values every time. \
 
-Coherent noise might just work as a bias term on the clean dataset.(?) \
+Iris dataset might be too simple on clean dataset. (probs not if it is being affected by the adversarial attacks)
+
+Coherent noise might just work as a bias term on the clean dataset? \
 
 
 1.	Explain why decoherent noise is used and not coherent. \

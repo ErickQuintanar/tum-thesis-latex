@@ -119,6 +119,22 @@ disruptive to the input. \
 
 \subsection{Noisy Models Adversarial Accuracy}\label{subsection:iris-noisy-adv-acc} \
 
+In this subsection we introduce the results from performing
+the adversarial attacks on the noisy models with different noise
+magnitudes for the Iris dataset. In each graph the color gray
+represents the baseline adversarial accuracy obtained by the
+noiseless model. \
+
+In Figure~\ref{fig:iris-56} we present the outcomes from the amplitude
+damping noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:iris5}
+we note that the model with \(2\%\) noise probability obtains the same
+performance as the noiseless model. Furthermore, we observe that an
+increase in noise probability when training in general does not equate
+to a worse adversarial accuracy at lower attack strengths, as the model
+with \(8\%\) noise probability performs better than the one with \(6\%\)
+noise probability. Nevertheless, once the attack strength reaches a
+value of \(0.9\) all the models perform equally, converging to \(50\%\)
+accuracy. \
 
 \begin{figure}[!h]
   \centering
@@ -133,6 +149,33 @@ disruptive to the input. \
       \subcaption{Amplitude damping noise model's \ac{pgd} adversarial accuracy.}
       \label{fig:iris6}
   \end{subfigure}
+  \caption{Amplitude damping noise models' accuracy on the adversarial Iris test dataset.}
+  \label{fig:iris-56}
+\end{figure} \
+
+In Subfigure~\ref{fig:iris6} we introduce the results from the \ac{pgd}
+attack on the amplitude damping noisy models. As with the \ac{fgsm} attack
+we can observe that the best performing model (close to the noiseless
+model's performance) is the one with the smallest noise probability. Also,
+we can note that increasing noise probability does not equal a direct
+decrease in adversarial accuracy at lower attack strengths. Nevertheless,
+noisy models in general perform significantly worse than the noiseless
+model. Interestingly, when the attack strength surpasses \(0.5\), all
+the noisy models (with the exception of the model with \(2\%\) noise
+probability) perform slightly better than at lower attack strengths. \
+
+In Figure~\ref{fig:iris-78} we present the outcomes from the bit-flip
+noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:iris7}
+we note that there are some models (\(2\%, 4\%, 10\%\)) performing
+better than the noiseless model, while others (\(6\%, 8\%\)) have
+a lower or equal adversarial accuracy throughout the different
+attack strengths. While the model trained with \(10\%\) noise
+probability performs the best against attack strength's lower
+than \(0.7\), the adversarial accuracy drops to around \(33\%\)
+(the lowest recorded accuracy) at an attack strenght of \(0.9\). \
+
+\begin{figure}[!h]
+  \centering
 
   \begin{subfigure}{0.45\textwidth}
       \includegraphics[width=\linewidth]{figures/evaluation_results/iris/pqc/figures/bit-flip-fgsm.png}
@@ -144,6 +187,15 @@ disruptive to the input. \
       \subcaption{Bit-Flip noise model's \ac{pgd} adversarial accuracy.}
       \label{fig:iris8}
   \end{subfigure}
+  \caption{Bit-Flip noise models' accuracy on the adversarial Iris test dataset.}
+  \label{fig:iris-78}
+\end{figure} \
+
+In Subfigure~\ref{fig:iris8} we introduce the results from the \ac{pgd}
+attack on the amplitude damping noisy models. \
+
+\begin{figure}[!h]
+  \centering
 
   \begin{subfigure}{0.45\textwidth}
       \includegraphics[width=\linewidth]{figures/evaluation_results/iris/pqc/figures/coherent-fgsm.png}
@@ -155,6 +207,12 @@ disruptive to the input. \
       \subcaption{Coherent noise model's \ac{pgd} adversarial accuracy.}
       \label{fig:iris10}
   \end{subfigure}
+  \caption{Coherent noise models' accuracy on the adversarial Iris test dataset.}
+  \label{fig:iris-910}
+\end{figure} \
+
+\begin{figure}[!h]
+  \centering
 
   \begin{subfigure}{0.45\textwidth}
       \includegraphics[width=\linewidth]{figures/evaluation_results/iris/pqc/figures/depolarizing-fgsm.png}
@@ -166,6 +224,12 @@ disruptive to the input. \
       \subcaption{Depolarizing noise model's \ac{pgd} adversarial accuracy.}
       \label{fig:iris12}
   \end{subfigure}
+  \caption{Depolarizing noise models' accuracy on the adversarial Iris test dataset.}
+  \label{fig:iris-1112}
+\end{figure} \
+
+\begin{figure}[!h]
+  \centering
 
   \begin{subfigure}{0.45\textwidth}
       \includegraphics[width=\linewidth]{figures/evaluation_results/iris/pqc/figures/phase-damping-fgsm.png}
@@ -177,6 +241,12 @@ disruptive to the input. \
       \subcaption{Phase Damping noise model's \ac{pgd} adversarial accuracy.}
       \label{fig:iris14}
   \end{subfigure}
+  \caption{Phase damping models' accuracy on the adversarial Iris test dataset.}
+  \label{fig:iris-1314}
+\end{figure} \
+
+\begin{figure}[!h]
+  \centering
 
   \begin{subfigure}{0.45\textwidth}
       \includegraphics[width=\linewidth]{figures/evaluation_results/iris/pqc/figures/phase-flip-fgsm.png}
@@ -189,8 +259,15 @@ disruptive to the input. \
       \label{fig:iris16}
   \end{subfigure}
 
-  \caption{Noisy models' accuracy on the adversarial Iris test dataset.}
+  \caption{Phase-Flip noise models' accuracy on the adversarial Iris test dataset.}
+  \label{fig:iris-1516}
 \end{figure} \
+
+Amplitude damping works worse than baseline, no relation between noise
+probability and adv accuracy. \
+
+bit-flip, some models perform better than baseline but no relationship
+between noise probability and adv accuracy can be found. \
 
 \section{\acl{pid} Dataset}\label{section:diabetes-eval} \
 

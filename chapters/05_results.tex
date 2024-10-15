@@ -456,7 +456,17 @@ noiseless model. \
 
 In Figure~\ref{fig:diabetes-56} we present the outcomes from the amplitude
 damping noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:diabetes5}
-we note that \
+we note that almost all the noisy models perform equal or better than the
+baseline noiseless model after an attack strength of 0.1. Moreover,
+a relationship between the magnitude of the noise probability and
+the adversarial accuracy can be observed. We notice that the adversarial
+accuracy obtains a higher value with models that have a higher noise
+probability. The models with 8\% and 10\% noise probability perform
+the best, obtaining around 60\% adversarial accuracy at the highest attack
+strength of 0.9. This performance is close to the baseline noiseless
+performance of 67\% without any attack performed, and is significantly
+higher than the noiseless model's adversarial accuracy of around 33\%
+at attack strength 0.9. \
 
 \begin{figure}[!h]
   \centering
@@ -476,11 +486,31 @@ we note that \
 \end{figure} \
 
 In Subfigure~\ref{fig:diabetes6} we introduce the results from the \ac{pgd}
-attack on the amplitude damping noisy models. \
+attack on the amplitude damping noisy models. Similar to the results
+obtained from the \ac{fgsm} attack evaluation, we can also observe
+a direct link between noise probability and model robustness.
+The best performing models are again the models with the highest noise
+probability, outperforming the noiseless model by a significant margin.
+The models with 8\% and 10\% noise probability achieve an adversarial
+accuracy of around 57\% and 56\% respectively at an attack strengths of
+0.9. These adversarial accuracy values surpass the performance of
+the noiseless model by approximately 24\%. The noisy model with the
+worst performance has a 2\% noise probability and performs relatively
+equal to the noiseless model, meaning that there is no disadvantage
+provoked by any noise appearance with regards to adversarial accuracy. \
 
 In Figure~\ref{fig:diabetes-78} we present the outcomes from the bit-flip
 noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:diabetes7}
-we note that \
+we note that all of the noisy models except the model with the lowest
+noise probability of 2\% behave almost identically throughout all the
+attack strength spectrum, obtaining the same higher adversarial
+accuracy. These models achieve an adversarial accuracy of around 56\% at
+the 0.9 attack strength. While these models have a higher adversarial
+accuracy than the noiseless model, the model robustness does not linearly
+scale. This means that the model robustness does not increase the
+higher the noise probability affecting the model is. The model with
+2\% noise probability behaves exactly as the noiseless model, reaching
+an adversarial accuracy of around 35\% at an attack strength of 0.9. \
 
 \begin{figure}[!h]
   \centering
@@ -500,11 +530,33 @@ we note that \
 \end{figure} \
 
 In Subfigure~\ref{fig:diabetes8} we introduce the results from the \ac{pgd}
-attack on the bit-flip noisy models. \
+attack on the bit-flip noisy models. Analogous to the results obtained
+from the \ac{fgsm} attacks, all the noisy models but the model with 2\%
+noise probability perform exactly the same. We observe a better model
+robustness for the previously mentioned models, achieving a better
+adversarial accuracy throughout the attack strength range after 0.1.
+These models obtain an adversarial accuracy of around 54\% at
+an attack strength of 0.9, higher than the noiseless model's adversarial
+accuracy of 33\% at the same attack strength. Nevertheless, the
+relationship between model robustness and noise probability magnitude
+is not linear. Finally, the model with 2\% noise probability mimics
+the noiseless adversarial performance and is lower than the noisier
+models. \
 
 In Figure~\ref{fig:diabetes-910} we present the outcomes from the coherent
 noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:diabetes9}
-we note that \
+we note that the most robust model at the highest attack strength
+is the model with a misconfiguration degree of 10. This model obtains
+an adversarial accuracy of around 57\% at an attack strength of 0.9. The
+worst performing models are the two models with the lowest misconfiguration.
+Both models (2 and 4 degree misconfiguration) behave similarly to the
+noiseless model, getting an adversarial accuracy of around 35\%. Furthermore,
+the model with a 6 degree misconfiguration performs slightly better than
+the 8 degree model, but their adversarial accuracy is around 50\% at the
+highest attack strength. However, their performance is lower than the
+model miscalibrated by 10 degrees. Because of this, we can deduce a
+positive relationship between the model robustness and the degree of
+misconfiguration. \
 
 \begin{figure}[!h]
   \centering
@@ -524,11 +576,28 @@ we note that \
 \end{figure} \
 
 In Subfigure~\ref{fig:diabetes10} we introduce the results from the \ac{pgd}
-attack on the coherent noisy models. \
+attack on the coherent noisy models. Comparable to the results obtained
+from the \ac{fgsm} attack, the noisiest model (10°) has the highest adversarial
+accuracy (around 57\%) at the highest attack strength (0.9). The next best
+models are the models with a miscalibration of 6 and 8 degrees, they both
+achieve around 49\%. Finally, the noisy models with the lowest misconfiguration
+degree (2 and 4) perform bettern than the noiseless model. These noisy models
+behave similar and get an adversarial accuracy of around 41\%, higher than
+the noiseless model's 33\%. Analogous to the results from the \ac{fgsm}
+attack, we can derive a positive relationship between the miscalibration
+degree and the model robustness at the higher range of the attack strengths
+spectrum.  \
 
 In Figure~\ref{fig:diabetes-1112} we present the outcomes from the depolarizing
 noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:diabetes11}
-we note that \
+we note that the models behave similarly to models with bit-flip noise.
+We observe again that the worst performing noisy model is the model with
+the lowest noise probability (2\%) and it matches the performance of the
+noiseless model. All the remaining noisy models obtain the same accuracy
+throughtout the attack strength spectrum and achieve an adversarial
+accuracy of around 56\% at 0.9 attack strength. While the results indicate
+that a higher noise probability leads to a more robust model, this
+relationship does not linearly scale. \
 
 \begin{figure}[!h]
   \centering
@@ -548,11 +617,28 @@ we note that \
 \end{figure} \
 
 In Subfigure~\ref{fig:diabetes12} we introduce the results from the \ac{pgd}
-attack on the depolarizing noisy models. \
+attack on the depolarizing noisy models. Similar to the results obtaining
+from the \ac{fgsm} attack and the evaluation from the noisy bit-flip models,
+the worst performing noisy model is the model with the lowest (2\%)
+noise probability. This model's performance matches the behavior of the
+noiseless model throught the attack strengths range and achives an
+adversarial accuracy of around 34\%. The remaining noisy models perfom
+similarly throughout the whole attack strength spectrum and obtain
+an adversarial accuracy of around 54\% at the highest attack strength
+0f 0.9. In this case, a higher noise probability does mean a more robust
+model. However, this relationship doesn't scale linearly and robustness
+simply increases to a determined adversarial accuracy with a noisy
+probability higher than 2\%. \
 
 In Figure~\ref{fig:diabetes-1314} we present the outcomes from the phase damping
 noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:diabetes13}
-we note that \
+we note that in this case the noiseless and the noisy models have the
+same performance throughtout the whole attack strengths, disregarding
+the noise probabilities. All the models' adversarial accuracies decrease
+significantly to around 35\% at attack strength 0.3 and stabilizes to the
+same value at attack strength 0.9. There are some slight variations in
+between the models but they are less than 5\% throughout the different
+attack strength values. \
 
 \begin{figure}[!h]
   \centering
@@ -572,11 +658,28 @@ we note that \
 \end{figure} \
 
 In Subfigure~\ref{fig:diabetes14} we introduce the results from the \ac{pgd}
-attack on the phase damping noisy models. \
+attack on the phase damping noisy models. These outcomes highly resemble
+the values obtained by the \ac{fgsm} attack evaluation. We notice that
+all the models (noisy and noiseless) behave similarly throughtout the
+range of attack strengths. This means that for phase damping noisy models
+the model robustness is independent from the magnitude of the noise
+probability. While some slight differences between the adversarial
+accuracies from distinct models can be found, the differences are
+mostly smaller than 5\% and do not deviate much from the trend set
+by all the models. \
 
 In Figure~\ref{fig:diabetes-1516} we present the outcomes from the phase-flip
 noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:diabetes15}
-we note that \
+we note that the behavior from the bit-flip and depolarizing noisy models
+is replicated with phase-flip noise. We can observe that the worst
+performing noisy model has 2\% noise probability and matches the noiseless
+baseline performance throughout the whole attack strength range. Both 
+models obtain around 33\% adversarial accuracy at 0.9 attack strength.
+Regarding the remaining noisy models, they all behave similarly across
+the attack strength spectrum and they reach an adversarial accuracy at
+0.9 attack strength of around 56\%. While no linear relationship between noise
+probability and model robustness can be drawn, models with higher noise
+probability than 2\% are more robust after an attack strength of 0.1. \
 
 \begin{figure}[!h]
   \centering
@@ -597,13 +700,115 @@ we note that \
 \end{figure} \
 
 In Subfigure~\ref{fig:diabetes16} we introduce the results from the \ac{pgd}
-attack on the phase-flip noisy models. \
+attack on the phase-flip noisy models. The obtained adversarial accuracy
+values are comparable to the results obtained in the \ac{fgsm} attacks.
+In this case, the noisy models that have a noise probability higher than
+2\% are more robust than the remaining models after an attack
+strength value of 0.1. The noisy robust models maintain around 50\%
+adversarial accuracy throughout the attack strength range and there
+are no significant differences in between each other. For the noiseless
+model, the performance is almost identical to the model with 2\% noise
+probability. Both models stabilize to an adversarial accuracy of around
+33\% with an attack strength equal or higher tha 0.3. While no linear
+relationship between noise probability and model robustness can be
+determined, models with noise probability higher than 2\% perform
+significantly better. \
 
 \section{Breast Cancer Dataset}\label{section:breast-cancer-eval} \
 
+The results obtained from training the noisy and noiseless
+\ac{qml} models on the Wisconsin Breast Cancer dataset can be found in Subsection
+~\ref{subsection:breast-cancer-noisy-acc}. Moreover, the outcomes
+of both adversarial attacks will be presented in Subsection
+~\ref{subsection:breast-cancer-adv-acc}. Finally, the evaluation
+of the noisy models against the adversarial attacks can
+are presented in Subsection~\ref{subsection:breast-cancer-noisy-adv-acc}. \
+
 \subsection{Noisy Models Accuracy}\label{subsection:breast-cancer-noisy-acc} \
 
+In Figure~\ref{fig:bc-12} we can observe the results
+from the training of noiseless and noisy \ac{qml} models
+for the Wisconsin Breast Cancer test dataset. The noiseless baseline model accuracy
+can be found on both graphs at the y-intercept, which in
+this case is of 84.4\%. Analogous to the \ac{pid} dataset, we note
+in Subfigure~\ref{fig:bc1} that for the Wisconsin Breast Cancer
+dataset the model accuracy decreases when training
+with an increasing coherent noise effect. The model performance
+is slowly reduced until it reaches 55.5\% accuracy. \
+
+For incoherent noise models in Subfigure~\ref{fig:bc2}
+we can observe a decrease in model accuracy for all the noise
+models. In this case, similar to the results from the \ac{pid}
+dataset, phase damping noise performs the best of any noise
+models. Its accuracy decreases to around 73\%, which is only
+10\% less than the noiseless model. The worst performing model
+is the one using amplitude damping noise, this model achieves
+only around 46\% accuracy. \
+
+Regarding the bit-flip, depolarizing, and phase-flip noise, the model
+performance decreases its accuracy to around 68\% starting at
+4\% noise probability and remains at that same value for all
+higher noise probabilities. The 4\% noise probability convergence
+for these specific models also appears in the \ac{pid} dataset. Still,
+it seems that there is not any relation between which type of incoherent noise
+is used and the performance of the model. While in the \ac{pid}
+dataset (Subfig.~\ref{fig:diabetes2}) the best performing models
+were the ones using phase and amplitude damping noise, in the
+Wisconsin Breast Cancer dataset phase damping noise has again the
+highest accuracy but amplitude damping has the worst performance. \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/accuracy-coherent.png}
+      \subcaption{Coherent noise model's accuracy.}
+      \label{fig:bc1}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/accuracy-incoherent.png}
+      \subcaption{Incoherent noise models' accuracy.}
+      \label{fig:bc2}
+  \end{subfigure}
+
+  \caption{\ac{vqa}'s accuracy on the Wisconsin Breast Cancer clean test dataset.}
+  \label{fig:bc-12}
+\end{figure} \
+
 \subsection{Adversarial Accuracy}\label{subsection:breast-cancer-adv-acc} \
+
+In Figure~\ref{fig:bc-34} we introduce the effects of the
+adversarial attacks on the accuracy of the noiseless \ac{qml}
+model. As expected, we can observe that for both adversarial
+techniques the performance of the model decreases with increasing
+attack strength. For both of the adversarial techniques
+we notice a stark accuracy decrease to around 18\% for \ac{fgsm}
+and 29\% for \ac{pgd} at 0.9 attack strength. The \ac{fgsm} technique
+(Subfig.~\ref{fig:bc3}) has an overall a lower performance than the
+\ac{pgd} attack (Subfigure~\ref{fig:bc4}). This is the expected
+behavior, as \ac{fgsm}'s perturbations tend to be bigger in
+magnitude and more disruptive to the input. We also note that the
+noiseless model's adversarial accuracy for the Wisconsin Breast
+Cancer dataset decreases significantly more (around 66\% for
+\ac{fgsm} and 55\% for \ac{pgd}) than for the previous datasets. \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/none-fgsm.png}
+      \subcaption{Noiseless model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:bc3}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/breast-cancer/pqc/figures/none-pgd.png}
+      \subcaption{Noiseless model's \ac{pgd} adversarial accuracy.}
+      \label{fig:bc4}
+  \end{subfigure}
+
+  \caption{\ac{vqa}'s accuracy on the adversarial Wisconsin Breast Cancer test dataset.}
+  \label{fig:bc-34}
+\end{figure} \
 
 \subsection{Noisy Models Adversarial Accuracy}\label{subsection:breast-cancer-noisy-adv-acc} \
 
@@ -801,6 +1006,25 @@ depending on the adv attack, just a change in the adv acc values. \
 phase-flip: slight correlation found between noise probs and robustness,
 it is an inverse relationship, meaning that the higher the noise the worse
 the performance.
+
+Diabetes dataset notes: \
+
+amplitude-damping: higher noise probability leads to more robust models. \
+
+bit-flip: more noise equals more robustness but it doesn't scale linearly \
+
+coherent: same as amplitude-damping noise \
+
+depolarizing:  same as bit-flip \
+
+phase damping: robustness independent from noise \
+
+phase-flip: same as bit-flip and depolarizing \
+
+Breast Cancer dataset notes: \
+
+Adversarial accuracy is significantly lowered, maybe because it has
+more features to modify. \
 
 
 1.	Explain why decoherent noise is used and not coherent. \

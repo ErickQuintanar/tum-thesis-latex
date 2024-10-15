@@ -44,9 +44,10 @@ training convergence. \
 There are two last details with regards to the preprocessing
 of the datasets. Firstly, as mentioned in Subsection
 ~\ref{subsection:mnist}, the images from MNIST were downsampled
-to be able to process them with a \ac{vqa}. Secondly, the majority
-class from the \ac{pid} dataset was reduced to obtain a balanced
-dataset with regards to the class distribution. \
+to a \(16 \times 16\) image be able to process them with a \ac{vqa}.
+Secondly, the majority class from the \ac{pid} dataset was
+reduced to obtain a balanced dataset with regards to the
+class distribution. \
 
 \subsection{Configuration File}\label{subsection:config} \
 
@@ -216,7 +217,7 @@ for the MNIST datasets we have a \(70/15/15\) training,
 validation, and test set split respectively. \
 
 The last requirements for the training loop to be prepared are the
-loss functionand the optimizer used to the adapt the \ac{qml} model. In our
+loss function and the optimizer used to the adapt the \ac{qml} model. In our
 specific case we utilize ADAM, a gradient-based optimizer, as it will
 lead to faster convergence than just using a gradient descent. For the
 loss function we utilize PyTorch's implementation of the Cross Entropy
@@ -238,7 +239,7 @@ new and different types of \ac{qml} models with noise
 injection is simple. Furthermore, the chosen noise types
 and values can be effortlessly modified and expanded. 
 Not only does the pipeline enable the replication of results,
-but the creation of new experimentats. \
+but the creation of new experiments. \
 
 \section{Adversarial Attacks on Variational Quantum Algorithm Model}\label{section:vqa_attacks} \
 
@@ -414,7 +415,7 @@ The graph creation process will output \(16\) different
 figures belonging to \(2\) different types of graphs. Each
 type of graph tries to convey a different comparison between
 the different \ac{qml} models. The first type of graph deals
-with the accuracy of the the models on the clean dataset, 
+with the accuracy of the models on the clean dataset, 
 with this graph we can observe the accuracy of the noiseless
 model as well as how the noise probabilities or miscalibrations
 affect the noisy models. \

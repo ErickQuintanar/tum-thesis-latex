@@ -310,14 +310,14 @@ added as a global phase. \
                i & 0
              \end{pmatrix}
              \begin{pmatrix} 1 \\ 0 \end{pmatrix} = 
-             \begin{pmatrix} 0 \\ 1 \end{pmatrix} =
+             \begin{pmatrix} 0 \\ i \end{pmatrix} =
              i\ket{1}, \qquad
   Y\ket{1} = \begin{pmatrix}
                0 & -i \\
                i & 0
             \end{pmatrix}
             \begin{pmatrix} 0 \\ 1 \end{pmatrix} = 
-            \begin{pmatrix} 1 \\ 0 \end{pmatrix} =
+            \begin{pmatrix} i \\ 0 \end{pmatrix} =
             -i\ket{0}
 \end{equation} \
 
@@ -391,10 +391,10 @@ basis to be measured. \
 \end{equation} \
 
 Another interesting property of the previously mentioned single-qubit
-gates is that all of them are involutory. An involutory matrix is a
-square matrix that is its own inverse. This implies that performing
-twice the same gate will not modify the quantum state as the identity
-transformation would have been applied. \
+gates (except the rotational gates) is that all of them are involutory.
+An involutory matrix is a square matrix that is its own inverse. This
+implies that performing twice the same gate will not modify the quantum
+state as the identity transformation would have been applied. \
 
 % MAYBE: Add S and T gates
 
@@ -949,9 +949,9 @@ circuit's size. \
 Once we know which type of noise we might encounter performing operations
 in a quantum system, it is of special importance to know when and where
 it can occur. There are three main places in a quantum algorithm where
-noise can be present. The first occasion were we might encounter is when
+noise can be present. The first occasion were we might encounter noise is when
 preparing the initial state of the quantum system. The second location
-where noise can be found is when performing any gate quantum gate.
+where noise can be found is when performing any gate quantum operation.
 Finally, every time a measurement is performed we will come across noise.
 It is remarkable to note that both, coherent and incoherent noise, can
 appear in any of these places, even at the same time. \

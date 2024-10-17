@@ -23,7 +23,7 @@ be presented in Subsection~\ref{subsection:pipeline}. \
 \subsection{Datasets Preprocessing}\label{subsection:preprocess} \
 
 In order to reduce the execution time of the model training, all the
-datasets mentioned in the Section~\ref{section:datasets} were
+datasets mentioned in Section~\ref{section:datasets} were
 stored preprocessed. All the datasets but the Plus-Minus dataset
 were retrieved using OpenML~\cite{vanschoren_openml_2014}. We
 obtained the Plus-Minus dataset by asking for it to the authors of 
@@ -35,7 +35,7 @@ Then, duplicate data points are removed to avoid overemphasizing
 these elements and creating a bias in the data distribution. In
 case the target labels are non-numeric, we modified them to
 represent numerical classes. Finally, all the datasets except
-the Iris Flower dataset are normalized using the standard
+the Iris Flower dataset are normalized per feature using the standard
 deviation and rescaled between a range of \(0\) and \(1\). This
 is done with Scikit-learn~\cite{pedregosa_scikit-learn_2011}
 and its purpose is to prevent feature dominance and to quicken
@@ -44,7 +44,7 @@ training convergence. \
 There are two last details with regards to the preprocessing
 of the datasets. Firstly, as mentioned in Subsection
 ~\ref{subsection:mnist}, the images from MNIST were downsampled
-to a \(16 \times 16\) image be able to process them with a \ac{vqa}.
+to a \(16 \times 16\) image to be able to process them with a \ac{vqa}.
 Secondly, the majority class from the \ac{pid} dataset was
 reduced to obtain a balanced dataset with regards to the
 class distribution. \
@@ -114,7 +114,7 @@ the quantum circuit would increase almost three times (Eq.
 \(Rot\) gate into its three corresponding gates to generate a single
 layer in the Circuit-Centric ansatz. This will not only allow for the
 pipeline in the future to be expanded and tested with new devices
-and frameworks, but also will make the resuls of the thesis valid
+and frameworks, but also will make the results of the thesis valid
 for all of the devices and frameworks. \
 
 In Equation~\ref{eq:rot_decomposition} the gate with the letter \(N\)
@@ -362,7 +362,7 @@ added to the original input to create the adversarial examples.
 In this thesis we chose \(5\) different attack strengths,
 specifically the values \(\left[0.1, 0.3, 0.5, 0.7, 0.9\right]\).
 This allows us to slowly increase the attack strength while
-checking over a big range how the noisy and noisless \ac{qml}
+checking over a big range how the noisy and noiseless \ac{qml}
 models react. Another factor that influenced this range is that
 the attacks are being applied to the preprocessed data points
 that have been normalized and rescaled. \
@@ -377,7 +377,7 @@ automatically calculate the accuracy scores of all the \(31\)
 (Subsection~\ref{subsection:pipeline}) trained models. Additionally,
 it also evaluates the \ac{qml} models against the two different
 adversarial attacks with five differing attack strength.
-The evaluation pipeline then results per dataset on \(310 + 31 = 341\)
+The evaluation pipeline then results per dataset on \(341\)
 data points to be analysed. \
 
 In order to avoid performing a redundant assessment, first,
@@ -401,14 +401,14 @@ for further use when creating the figures comparing the
 accuracy of the different models in differents scenarios.
 When the evaluation is performed, the weights of the noisy
 models are retrieved, however, the evaluation is performed
-with a noisless model to stop the calculations from being
+with a noiseless model to stop the calculations from being
 doubly impacted by the quantum noise. \
 
 The resulting file from the evaluation process stores the
 accuracies and the characteristics of the models. Per dataset,
 we can retrieve \(31\) clean accuracies without any attack
 performed and \(310\) adversarial accuracies, this corresponds
-to the previosly mentioned \(341\) number. This information
+to the previously mentioned \(341\) number. This information
 is required by the figure creation process. \
 
 The graph creation process will output \(16\) different
@@ -422,12 +422,12 @@ affect the noisy models. \
 
 In Figure~\ref{fig:sample-accuracy} we
 can find a sample of this type of graphs, all the noise types
-start at the \(0\) point on the \(x\) axis with the same value. This
+start at the \(0\) point on the \(x\)-axis with the same value. This
 value represents the baseline performance of the noiseless model
 on a chosen dataset. For the incoherent noise models, all the
 noise models appear in one single graph to be able to also compare
 them between each other. We separate the coherent noise model graphs
-from the incoherent noise ones because the \(x\) axis corresponds to
+from the incoherent noise ones because the \(x\)-axis corresponds to
 a different variable. \
 
 \begin{figure}[h!]

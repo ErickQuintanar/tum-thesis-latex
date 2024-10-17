@@ -172,9 +172,9 @@ are not able to process quantum information efficiently. \
 Once that quantum states have been defined, performing operations
 on them is the next step to understand how quantum computing works.
 These operations are denominated \textit{quantum gates} and they
-modify the quantum state according to gates' properties. A quantum gate
+modify the quantum state according to the gates' properties. A quantum gate
 can be represented as a matrix that fulfills one single property,
-namely that it is a unitary matrix. In Equation~\ref{eq:unitary} we
+namely, that it is a unitary matrix. In Equation~\ref{eq:unitary} we
 can observe that a unitary matrix is one which when multiplied by its
 own transpose conjugate is equal to the identity matrix.
 
@@ -321,6 +321,8 @@ added as a global phase. \
             -i\ket{0}
 \end{equation} \
 
+\pagebreak
+
 \paragraph{Rotational Gates} \
 
 As a complement to the Pauli gates, there are gates that
@@ -355,7 +357,7 @@ global phase from their respective rotational gate for a
 given angle \(\theta = \pi\). Additionally, if two rotation
 gates of the same type are contiguously applied to a quantum
 state, they can be summarized by one gate of the same type
-executing a rotation of the both angles' sum, such that
+executing a rotation of the sum of both angles, such that
 \(R(\alpha)R(\beta)\ket{\psi} = R(\alpha + \beta)\ket{\psi}\)
 is valid. \
 
@@ -585,7 +587,7 @@ information with less resources. \
 
 \subsection{Quantum Measurement}\label{subsection:measurement} \
 
-So far performing a measurement will collapse the quantum state to
+So far, performing a measurement will collapse the quantum state to
 one of the two computational basis. Nonetheless, a quantum state
 can be measured in several different basis depending on the
 measurement operator that is being used. Quantum measurements
@@ -997,10 +999,10 @@ properties. All the relevant information is condensed into the
 Kraus operators. Therefore, if we can derive the Kraus operators, we
 can observe the effects of the environment on the quantum system. \
 
-\paragraph{Bit Flip} \
+\paragraph{Bit-Flip} \
 
-A bit flip is characterized by the Kraus operators in Equation
-~\ref{eq:bit_kraus}. These operators indicate that a bit flip
+A bit-flip is characterized by the Kraus operators in Equation
+~\ref{eq:bit_kraus}. These operators indicate that a bit-flip
 will happen to the quantum state with probability \(p\), while
 the state will not change with probability \(1-p\). If \(p=1\)
 then the operation will just be like applying a X gate. \
@@ -1019,21 +1021,21 @@ then the operation will just be like applying a X gate. \
 The effects of quantum operations can be illustrated on the Bloch sphere.
 This depiction is very helpful to understand consequence of noise on
 quantum states. In Figure~\ref{fig:bit_flip} we can observe the effects
-of the bit flip channel with \(p=0.3\). The distorted bloch sphere shows
+of the bit-flip channel with \(p=0.3\). The distorted bloch sphere shows
 that the \(x\)-axis remains unaffected but the \(y-z\) plane is compressed,
 limiting the possible values for the quantum state. \
 
 \begin{figure}[h!]
   \includegraphics[scale=0.39]{figures/bit_flip.png}
   \centering
-  \caption{Effects of a bit flip channel on the Bloch sphere. Taken from~\cite{nielsen_quantum_2010}.}
+  \caption{Effects of a bit-flip channel on the Bloch sphere. Taken from~\cite{nielsen_quantum_2010}.}
 ~\label{fig:bit_flip}
 \end{figure} \
 
-\paragraph{Phase Flip} \
+\paragraph{Phase-Flip} \
 
-A phase flip is defined by the Kraus operators detailed in Equation
-~\ref{eq:phase_kraus}. These operators signify that a phase flip
+A phase-flip is defined by the Kraus operators detailed in Equation
+~\ref{eq:phase_kraus}. These operators signify that a phase-flip
 may occur on the quantum state with a probability of \(p\), whereas
 the state will remain unchanged with a probability of \(1-p\). If
 \(p=1\) then the operation will essentially apply a Z gate. \
@@ -1049,7 +1051,7 @@ the state will remain unchanged with a probability of \(1-p\). If
         \end{pmatrix}
 \end{equation} \
 
-Figure~\ref{fig:phase_flip} depicts the impact of the bit flip
+Figure~\ref{fig:phase_flip} depicts the impact of the phase-flip
 channel when \(p=0.3\). We can appreciate that in the modified
 Bloch sphere the \(z\)-axis is left untouched while the \(x-y\)
 plane is reduced. Thus, the quantum state becomes less pure. \
@@ -1057,7 +1059,7 @@ plane is reduced. Thus, the quantum state becomes less pure. \
 \begin{figure}[h!]
   \includegraphics[scale=0.39]{figures/phase_flip.png}
   \centering
-  \caption{Effects of a phase flip channel on the Bloch sphere. Taken from~\cite{nielsen_quantum_2010}.}
+  \caption{Effects of a phase-flip channel on the Bloch sphere. Taken from~\cite{nielsen_quantum_2010}.}
 ~\label{fig:phase_flip}
 \end{figure} \
 
@@ -1172,7 +1174,7 @@ and reduces the amplitude of \(\ket{1}\). \
 To better understand the effects of phase damping, we can derive equivalent but
 differently expressed Kraus operators. In Equation~\ref{eq:phase_damping_kraus_mod}
 with \(\alpha = \left(1 + \sqrt{1 - \lambda}\right)\) we can rewrite the
-Kraus operators such that they correspond to the phase flip's operators with
+Kraus operators such that they correspond to the phase-flip's operators with
 the probabilities inversed. This is important because while the physical
 quantum process don't match, the transformation of the quantum state due to
 the noise is the same. Thus, the effect of phase damping on the Bloch sphere
@@ -1355,7 +1357,7 @@ while minimizing the magnitude of the perturbation. \
 
 There are two attack variants to generate adversarial examples, namely,
 targeted and untargeted attacks~\cite{huang_adversarial_nodate}. For
-untargeted attacks,the goal is to find a perturbation \(\delta\) such
+untargeted attacks, the goal is to find a perturbation \(\delta\) such
 that \(f_{\theta}\left(x + \delta\right) \neq y\), where \(f\) is the
 \ac{ml} model with trained \(\theta\) parameters, \(x\) is the input
 data, and \(y\) the corresponding target class. For targeted attacks,
@@ -1371,7 +1373,7 @@ Another category to characterize adversarial attacks is based on the
 available information for the attacker. If the attacker has access
 to the model's architecture, its training data, and parameters, it
 is denominated a white-box attack. Otherwise, it would be considered
-a black-box~\cite{eykholt_robust_2018}. While getting access to a
+a black-box attack~\cite{eykholt_robust_2018}. While getting access to a
 target \ac{ml} model might be impossible, transferability from
 adversarial examples between \ac{ml} models that have been trained
 on disjoint datasets and with different hyperparameters has been

@@ -106,45 +106,6 @@ focus on different more robust features in the input data than
 provide deeper insight into the semantic meaning of adversarial
 attacks, specifically in the quantum setting. \
 
-\subsection{MNIST Dataset}\label{subsection:mnist} \
-
-The MNIST Dataset~\cite{bottou_comparison_1994} is composed by
-70,000 images representing handwritten individual digits between
-the range from \(0\) to \(9\). Each image is a monocromatic gray scale
-image shaped by \(28 \times 28 = 746\) pixels. A \ac{qml} model would
-require 10 qubits to encode the features with the amplitude embedding
-technique. Because the amount of operations required for the
-\ac{qml} model to process the data increments exponentially, the model
-quickly becomes intractable to train in commonly available hardware.
-Therefore, we downsample the images by half to \(16 \times 16 = 256\) and
-the \ac{qml} model would now only require 8 qubits. In Figure
-~\ref{fig:mnist_resized} we can observe that downsampling the images
-does not significatively visually affect the image recognition. \
-
-\begin{figure}
-  \centering
-  \begin{subfigure}{0.35\textwidth}
-    \centering
-    \includegraphics[width = \textwidth]{figures/reshaped.jpg}
-    \caption{Original image.}
-  \end{subfigure} \qquad \qquad
-  \begin{subfigure}{0.35\textwidth}
-    \centering
-    \includegraphics[width = \textwidth]{figures/resized.jpg}
-    \caption{Downsampled image.}
-  \end{subfigure}
-  \caption{Visual comparison between both images.}\label{fig:mnist_resized}
-\end{figure} \
-
-Similar to~\cite{lu_quantum_2020} we further divide the MNIST
-set to simulate a binary classifier and a 4-class classifier task. The
-resulting datasets are named MNIST2 and MNIST4 respectively. To obtain
-the MNIST2 dataset, we exclude all classes but the images that contain
-a one or a nine. Furthermore, to retrieve the MNIST4 dataset we kept
-all the images with digits one, three, seven and nine. With this extension
-we can now compare how the \ac{qml} models accuracy varies with the
-amount of classes to categorize. \
-
 \section{State Preparation with Coherent Noise}\label{section:state_preparation_noise} \
 
 In the next chapter (Sec.~\ref{section:vqa_training}) the trained variational circuit classifiers

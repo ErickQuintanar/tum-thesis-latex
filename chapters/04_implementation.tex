@@ -41,13 +41,10 @@ is done with Scikit-learn~\cite{pedregosa_scikit-learn_2011}
 and its purpose is to prevent feature dominance and to quicken
 training convergence. \
 
-There are two last details with regards to the preprocessing
-of the datasets. Firstly, as mentioned in Subsection
-~\ref{subsection:mnist}, the images from MNIST were downsampled
-to a \(16 \times 16\) image to be able to process them with a \ac{vqa}.
-Secondly, the majority class from the \ac{pid} dataset was
-reduced to obtain a balanced dataset with regards to the
-class distribution. \
+There is one last details with regards to the preprocessing
+of the datasets. Namely that the majority class from the
+\ac{pid} dataset was reduced to obtain a balanced dataset
+with regards to the class distribution. \
 
 \subsection{Configuration File}\label{subsection:config} \
 
@@ -210,11 +207,9 @@ different sets to facilitate the training loop. For most of
 the datasets we have a \(70/30\) split between the training
 set and the test set. The test set is stratified according
 to the data distribution from the training set. For the
-MNIST and Plus-Minus datasets only \(20\%\) of the dataset
+Plus-Minus datasets only \(20\%\) of the dataset
 is used for training, as theses datasets are substantially
-more computationally demanding than the other datasets. Moreover,
-for the MNIST datasets we have a \(70/15/15\) training, 
-validation, and test set split respectively. \
+more computationally demanding than the other datasets. \
 
 The last requirements for the training loop to be prepared are the
 loss function and the optimizer used to the adapt the \ac{qml} model. In our

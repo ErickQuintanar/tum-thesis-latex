@@ -597,7 +597,7 @@ we note that the models behave similarly to models with bit-flip noise.
 We observe again that the worst performing noisy model is the model with
 the lowest noise probability (2\%) and it matches the performance of the
 noiseless model. All the remaining noisy models obtain the same accuracy
-throughtout the attack strength spectrum and achieve an adversarial
+throughout the attack strength spectrum and achieve an adversarial
 accuracy of around 56\% at 0.9 attack strength. While the results indicate
 that a higher noise probability leads to a more robust model, this
 relationship does not linearly scale. \
@@ -628,18 +628,18 @@ noiseless model throught the attack strengths range and achives an
 adversarial accuracy of around 34\%. The remaining noisy models perfom
 similarly throughout the whole attack strength spectrum and obtain
 an adversarial accuracy of around 54\% at the highest attack strength
-0f 0.9. In this case, a higher noise probability does mean a more robust
+of 0.9. In this case, a higher noise probability does mean a more robust
 model. However, this relationship doesn't scale linearly and robustness
 simply increases to a determined adversarial accuracy with a noisy
 probability higher than 2\%. \
 
 In Figure~\ref{fig:diabetes-1314} we present the outcomes from the phase damping
 noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:diabetes13}
-we note that in this case the noiseless and the noisy models have the
-same performance throughtout the whole attack strengths, disregarding
+we note that, in this case, the noiseless and the noisy models have the
+same performance throughout the whole attack strengths, disregarding
 the noise probabilities. All the models' adversarial accuracies decrease
-significantly to around 35\% at attack strength 0.3 and stabilizes to the
-same value at attack strength 0.9. There are some slight variations in
+significantly to around 35\% at attack strength 0.3 and stabilize to the
+same value at an attack strength of 0.9. There are some slight variations in
 between the models but they are less than 5\% throughout the different
 attack strength values. \
 
@@ -663,7 +663,7 @@ attack strength values. \
 In Subfigure~\ref{fig:diabetes14} we introduce the results from the \ac{pgd}
 attack on the phase damping noisy models. These outcomes highly resemble
 the values obtained by the \ac{fgsm} attack evaluation. We notice that
-all the models (noisy and noiseless) behave similarly throughtout the
+all the models (noisy and noiseless) behave similarly throughout the
 range of attack strengths. This means that for phase damping noisy models
 the model robustness is independent from the magnitude of the noise
 probability. While some slight differences between the adversarial
@@ -712,7 +712,7 @@ adversarial accuracy throughout the attack strength range and there
 are no significant differences in between each other. For the noiseless
 model, the performance is almost identical to the model with 2\% noise
 probability. Both models stabilize to an adversarial accuracy of around
-33\% with an attack strength equal or higher tha 0.3. While no linear
+33\% with an attack strength equal or higher than 0.3. While no linear
 relationship between noise probability and model robustness can be
 determined, models with noise probability higher than 2\% perform
 significantly better. \
@@ -748,18 +748,6 @@ models. Its accuracy decreases to around 73\%, which is only
 is the one using amplitude damping noise, this model achieves
 only around 46\% accuracy. \
 
-Regarding the bit-flip, depolarizing, and phase-flip noise, the model
-performance decreases its accuracy to around 68\% starting at
-4\% noise probability and remains at that same value for all
-higher noise probabilities. The 4\% noise probability convergence
-for these specific models also appears in the \ac{pid} dataset. Still,
-it seems that there is not any relation between which type of incoherent noise
-is used and the performance of the model. While in the \ac{pid}
-dataset (Subfig.~\ref{fig:diabetes2}) the best performing models
-were the ones using phase and amplitude damping noise, in the
-Wisconsin Breast Cancer dataset phase damping noise has again the
-highest accuracy but amplitude damping has the worst performance. \
-
 \begin{figure}[!h]
   \centering
 
@@ -777,6 +765,18 @@ highest accuracy but amplitude damping has the worst performance. \
   \caption{\ac{vqa}'s accuracy on the Wisconsin Breast Cancer clean test dataset.}
   \label{fig:bc-12}
 \end{figure} \
+
+Regarding the bit-flip, depolarizing, and phase-flip noise, the model
+performance decreases its accuracy to around 68\% starting at
+4\% noise probability and remains at that same value for all
+higher noise probabilities. The 4\% noise probability convergence
+for these specific models also appears in the \ac{pid} dataset. Still,
+it seems that there is no relation between which type of incoherent noise
+is used and the performance of the model. While in the \ac{pid}
+dataset (Subfig.~\ref{fig:diabetes2}) the best performing models
+were the ones using phase and amplitude damping noise, in the
+Wisconsin Breast Cancer dataset phase damping noise has again the
+highest accuracy but amplitude damping has the worst performance. \
 
 \subsection{Adversarial Accuracy}\label{subsection:breast-cancer-adv-acc} \
 
@@ -823,7 +823,7 @@ by the noiseless model. \
 
 In Figure~\ref{fig:bc-56} we present the outcomes from the amplitude
 damping noisy models evaluation. For \ac{fgsm} in Subfigure~\ref{fig:bc5}
-we note that for lower attack strength the noiseless model performs
+we note that for lower attack strength values the noiseless model performs
 better than the noisy models. Nevertheless, if the attack strength is
 higher than 0.5, the noisy models start obtaining a higher adversarial
 accuracy. At an attack strength of 0.9, the noiseless model achieves
@@ -923,7 +923,7 @@ noisy models when an attack strength lower than 0.7 is utilized.
 Nevertheless, at the highest attack strength of 0.9, the noisy
 models perform equal or better than the noiseless model. The
 best performing model at an attack strength of 0.9 is the model
-with the highest degree miscalibration of 10\%, achieving an adversarial
+with the highest degree miscalibration of 10°, achieving an adversarial
 accuracy of around 46\%. Furthermore, we can appreciate that the adversarial
 accuracy from the noisy models begins to improve when an attack strength
 higher or equal to 0.3 is utilized. We also note that the noisy models'
@@ -1000,7 +1000,7 @@ attack on the depolarizing noisy models. Similar to the outcomes
 from the \ac{fgsm} attack, the \ac{pgd} results are comparable to
 the adversarial accuracy from the bit-flip noisy models when the \ac{pgd}
 attack is being utilized. Therefore, we notice that the noisy models
-except the one with noise probability of 2\% perform worse or equal
+(except the one with noise probability of 2\%) perform worse or equal
 than the noiseless model throughout the attack strength spectrum. 
 These models achieve an adversarial accuracy of around 28\% at
 an attack strength of 0.9. The best performing model is the noisy
@@ -1091,7 +1091,7 @@ noise probability is augmented. \
 In Subfigure~\ref{fig:bc16} we introduce the results from the \ac{pgd}
 attack on the phase-flip noisy models. We notice that the model behavior
 is quite similar to results from the bit-flip and depolarizing noisy
-models. The model with a noise probability obtains the best performance
+models. The model with a noise probability of 2\% obtains the best performance
 when an attack strength higher than 0.1 is utilized. This model achieves
 an adversarial accuracy of around 39\% at an attack strength value of
 0.9. The remaining noisy models perform worst or equal than the
@@ -1109,7 +1109,8 @@ a relationship between model robustness and noise probability. \
 
 \subsection{Noisy Models Adversarial Accuracy}\label{subsection:plus-minus-noisy-adv-acc} \
 
-\subsection{Discussion}\label{subsection:discussion} \
+\section{Analysis}\label{section:analysis} \
+\iffalse
 
 PGD results might vary as the iterative process will result in different
 values every time. \
@@ -1234,3 +1235,5 @@ Presentation: \
 
  noisy aml analysis \
  - find physical explanations for the different noise models (maybe check density matric for some samples) \
+
+\fi

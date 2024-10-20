@@ -1,17 +1,35 @@
 \chapter{Future Work}\label{chapter:future_work} \
 
-When creating the weights to be trained, a proper selection might increase the accuracy of the models or avoid barren plateaus. \
+In this Chapter we discuss future possible research avenues related to
+this thesis. First we suggest investigating the impact of weight initialization
+on the trained \ac{qml} models. The weight initialization problem is not trivial
+~\cite{mcclean_barren_2018} and it can highly affect the results of the
+optimization. Another characteristic that can impact substantially the
+trained \ac{qml} models is the optimizers used. In this thesis we optimized
+the models using ADAM, a gradient based optimizer. Nevertheless, gradientless
+based optimizing algorithms might improve \ac{qml} model training
+~\cite{kulshrestha_learning_2023}. \ 
 
-Investigate \ac{qml} model training with different optimizers, maybe even no gradient-based methods. \
+Furthermore, the effect of the chosen loss function when training \ac{qml}
+models is still largely an open question. In this thesis we utilized
+the Categorical Cross Entropy Loss, interpreting the \ac{qml} measurements
+as a normalized probability distribution. This is a valid assumption
+because the labels to classify are a power of two. However, when the classes
+are not a power of two, this assumption is broken and choosing how to
+attribute a measurement to a class becomes non-trivial. \
 
-Investigate the influence of the different loss functions when training a \ac{qml} model. How to interpret correctly the measurements at the end of the \ac{qml} model, can it be assumed to be a probability distribution? \
+Moreover, utilizing different ansätze than \ac{vqa} would yield
+different \ac{qml} models. We suggest exploring
+a quantum kernel ansatz~\cite{hubregtsen_training_2022} to
+verify the possible differences in model performance and resilience.
+We also recommend trying different classical data encoding mechanisms
+(e.g.\ angle encoding or data re-uploading~\cite{aminpour_strategic_2024})
+as encoding might have a substantial influence in how features
+are interpreted by the \ac{qml} models. \
 
-Do experiments with new ansätze, maybe quantum kernels. \
-
-Do experiments with new encoding mechanisms, angle, etc. (encoding might have a big influence in how the features are interpreted) \
-
-Perform other different attacks like carlini and wagner \
-
-Perform transfer attacks between noisy models including the noiseless models. Basically create adversarial examples from noisy models and see how effective they are against other noisy models or the noiseless model. \
-
-% Take noise out of the evaluation part of the training (i think currently the noisy model is used to calculate the accuracy of the model during training) \
+Additionally, focusing on adversarial attacks, other adversarial
+techniques (e.g.~\cite{carlini_towards_2017}) could be utilized
+to verify or dispute the trends derived in this thesis. Finally,
+verifying the transferability of adversarial examples in between noisy
+models, and also \ac{qml} models with different architectures, is of big importance
+for training robust and resilient \ac{qml} classifiers. \

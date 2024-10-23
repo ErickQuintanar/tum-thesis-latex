@@ -1195,21 +1195,193 @@ be. \
 
 \subsection{Adversarial Accuracy}\label{subsection:model_adv_acc} \
 
-2. Adversarial accuracy from noiseless models \
+We derived two main findings regarding the adversarial accuracy
+of the noiseless \ac{qml} models. Firstly, we noted that both
+adversarial attack techniques were successful in forcing
+misconfigurations for all the datasets. Moreover, utilizing
+a higher attack strength value would normally lead to a
+decrease in adversarial accuracy. This finding signifies
+that \ac{qml} models also suffer from the same lack of generalization
+that can be found in classical \ac{ml} models. Therefore, we assume
+that other adversarial techniques can be seemlessly transfered
+from \ac{ml} to \ac{qml} models. \
 
-More features equals more modifications possible equals
-lower adversarial accuracy for higher attack strengths,
-we can see the progression from the iris dataset to the
-diabetes and then the breast cancer dataset. We also
-note that the attacks were effective and that
-the adversarial accuracy is reduced. \
+The second deduction we can make from the adversarial
+accuracy evaluation is that adversarial attacks are
+easier to perform with higher dimensional datasets. 
+In the case of lower dimensional datasets, the attacks have
+less features to modify. Thus, the attacks are severely limited
+by the number of perturbations they can make to maximize
+the loss function and force the model to missclassify the
+input. We can observe that for the Iris dataset, the
+adversarial accuracy is higher than for all the higher
+dimensional datasets. The adversarial accuracy is
+the lowest for the Plus-Minus dataset, even at a
+lower attack strength range. \
 
-the stagnation might be due to performing the attacks on preprocessed
-data (?). in the iris dataset in fgsm it is because all the 0 labels
-are missclassified but none of the 1 labels are missclassified. see teams message. \
+One interesting finding when generating adversarial examples
+with the \ac{fgsm} technique for the Iris dataset is that
+the adversarial accuracy stagnates at 50\% after an attack strength
+of 0.5 (Fig.~\ref{fig:iris-34}). We further investigated
+this behavior and we were able to determine why this happens.
+We first inspected the adversarial samples and looked into the
+calculated gradients to maximize the loss function. We observed
+that for both classes (0 and 1) the Sepal Width feature was
+being increased, therefore, we excluded it from the analysis. \
 
-PGD results might vary as the iterative process will result in different
-values every time. \
+With the remaining features (Sepal Length, Petal Length, and Petal Width)
+we noticed that the calculated gradients were opposite per dimension for
+both classes. Afterwards, we created three graphs comparing the possible
+combinations between the 3 features (Fig.~\ref{fig:adv-fgsm}) for all
+the attack strength values. In these graphs we can verify how the
+adversarial examples are being modified by the attacks. \
+
+We can observe that the attacks decrease the Sepal Length feature
+for datapoints labeled with class 0, while the opposite happens
+for datapoints labeled with class 1. Contrarily, the attacks
+increase the Petal Length dimension for datapoints from class 0,
+while the Petal Length decreases for datapoints from class 1. For
+the Petal Width feature we can note the same behavior as for the
+Petal Length feature. \
+
+If we compare the predicted class from the adversarial attacks
+at attack strengths from 0.1 and 0.9, we can note that the \ac{qml}
+model started classifying correctly all the classes and ends up
+missclassifying all the datapoints from class 0 but still
+predicts correctly the datapoints from class 1. The 50\% adversarial
+accuracy at an attack strength of 0.9 is reached because the class
+distribution for the dataset test set is balanced, thus 50\% of
+the samples belong to class 1 and the remaining half belong to
+class 0. \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{\textwidth}
+      \includegraphics[width=\linewidth]{figures/adversarial_analysis/adversarial-fgsm-0.1.png}
+      \subcaption{\ac{fgsm} adversarial examples for an attack strength of 0.1.}
+      \label{fig:adv1}
+  \end{subfigure}
+
+  \begin{subfigure}{\textwidth}
+    \includegraphics[width=\linewidth]{figures/adversarial_analysis/adversarial-fgsm-0.3.png}
+    \subcaption{\ac{fgsm} adversarial examples for an attack strength of 0.3.}
+    \label{fig:adv2}
+  \end{subfigure}
+
+  \begin{subfigure}{\textwidth}
+    \includegraphics[width=\linewidth]{figures/adversarial_analysis/adversarial-fgsm-0.5.png}
+    \subcaption{\ac{fgsm} adversarial examples for an attack strength of 0.5.}
+    \label{fig:adv3}
+  \end{subfigure}
+
+  \caption{Scatter plots between the Sepal Length, Petal Length, and Petal Width features from the Iris dataset when the \ac{fgsm} adversarial attack is performed.}
+  \label{fig:adv-fgsm}
+\end{figure} \
+
+\begin{figure}[!h]
+  \ContinuedFloat
+  \centering
+
+  \begin{subfigure}{\textwidth}
+      \includegraphics[width=\linewidth]{figures/adversarial_analysis/adversarial-fgsm-0.7.png}
+      \subcaption{\ac{fgsm} adversarial examples for an attack strength of 0.7.}
+      \label{fig:adv4}
+  \end{subfigure}
+
+  \begin{subfigure}{\textwidth}
+    \includegraphics[width=\linewidth]{figures/adversarial_analysis/adversarial-fgsm-0.9.png}
+    \subcaption{\ac{fgsm} adversarial examples for an attack strength of 0.9.}
+    \label{fig:adv5}
+  \end{subfigure}
+
+  \caption{Scatter plots between the Sepal Length, Petal Length, and Petal Width features from the Iris dataset when the \ac{fgsm} adversarial attack is performed.}
+  \label{fig:adv-fgsm}
+\end{figure} \
+
+Furthermore, this indicates that the classification boundaries
+derived from the \ac{qml} model training are very close to
+the class 0 cluster but far from the class 1 cluster.
+Therefore, all the datapoints labeled 0 are missclassified but
+the datapoints labeled 1 remain without any missclassification.
+While the adversarial examples are linearly separable
+with Petal Width feature throughout all the attack strength values,
+we forced the \ac{qml} model not to learn from this feature
+during training by setting the feature to 0 on all
+datapoints. Thus, no information can be gained from that
+dimension. \
+
+We repeated the same analysis utilizing the \ac{pgd}
+technique (Fig.~\ref{fig:adv-pgd}) to compare the attacks.
+We can note that for the \ac{pgd} attack, the sign
+of the gradients does not remain constant per
+feature (as in the \ac{fgsm} attack). This is caused
+by the iterative nature of \ac{pgd}, as this technique
+adjust the gradients several times per attack strength
+trying to maximize the loss function, not only once. \
+
+Additionally, when using \ac{pgd}, if an attack
+strength of less than 0.5 is used, we still can
+linearly separate both classes using the Petal Width
+feature. Nevertheless, with higher attack strengths
+it becomes impossible to classify the set only using
+that feature. This demonstrates how the \ac{pgd}
+attack modifies the datapoints and shows how more
+complex it is in comparison to the \ac{fgsm} technique. \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{\textwidth}
+      \includegraphics[width=\linewidth]{figures/adversarial_analysis/adversarial-pgd-0.1.png}
+      \subcaption{\ac{pgd} adversarial examples for an attack strength of 0.1.}
+      \label{fig:adv6}
+  \end{subfigure}
+
+  \begin{subfigure}{\textwidth}
+    \includegraphics[width=\linewidth]{figures/adversarial_analysis/adversarial-pgd-0.3.png}
+    \subcaption{\ac{pgd} adversarial examples for an attack strength of 0.3.}
+    \label{fig:adv7}
+  \end{subfigure}
+
+  \begin{subfigure}{\textwidth}
+    \includegraphics[width=\linewidth]{figures/adversarial_analysis/adversarial-pgd-0.5.png}
+    \subcaption{\ac{pgd} adversarial examples for an attack strength of 0.5.}
+    \label{fig:adv8}
+  \end{subfigure}
+
+  \caption{Scatter plots between the Sepal Length, Petal Length, and Petal Width features from the Iris dataset when the \ac{fgsm} adversarial attack is performed.}
+  \label{fig:adv-pgd}
+\end{figure} \
+
+\begin{figure}[!h]
+  \ContinuedFloat
+  \centering
+
+  \begin{subfigure}{\textwidth}
+      \includegraphics[width=\linewidth]{figures/adversarial_analysis/adversarial-pgd-0.7.png}
+      \subcaption{\ac{pgd} adversarial examples for an attack strength of 0.7.}
+      \label{fig:adv9}
+  \end{subfigure}
+
+  \begin{subfigure}{\textwidth}
+    \includegraphics[width=\linewidth]{figures/adversarial_analysis/adversarial-pgd-0.9.png}
+    \subcaption{\ac{pgd} adversarial examples for an attack strength of 0.9.}
+    \label{fig:adv10}
+  \end{subfigure}
+
+  \caption{Scatter plots between the Sepal Length, Petal Length, and Petal Width features from the Iris dataset when the \ac{pgd} adversarial attack is performed.}
+  \label{fig:adv-pgd}
+\end{figure} \
+
+Last but not least, we note that the PGD results might
+vary as the iterative process may result in different
+gradients calculations every time. Therefore, the
+results from different runs of the \ac{pgd} attack
+could be different. However, the observed behavior
+should remain relatively constant and the obtained
+adversarial samples should not show significant
+differences. \
 
 \subsection{Noisy Model Adversarial Accuracy}\label{subsection:noisy_adv_acc} \
 
@@ -1305,11 +1477,6 @@ Presentation: \
  - aml \
 
  around 20-25 mins \
-
-
- aml analysis \
- - check values from diff attack strengths (maybe gradients go 0) \
-
 
  noisy aml analysis \
  - find physical explanations for the different noise models (maybe check density matric for some samples) \

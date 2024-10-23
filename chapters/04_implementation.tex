@@ -362,7 +362,16 @@ This allows us to slowly increase the attack strength while
 checking over a big range how the noisy and noiseless \ac{qml}
 models react. Another factor that influenced this range is that
 the attacks are being applied to the preprocessed data points
-that have been normalized and rescaled. \
+that have been normalized and rescaled. Nevertheless,
+for the Plus-Minus dataset we had to adapt the attack
+strength range and diminish the attack strength values to
+\(\left[0.04, 0.08, 0.12, 0.16, 0.2\right]\).
+The reason behind this new range is that the Plus-Minus
+dataset has significantly more features than the previous
+models, therefore, it is considerably easier to perform
+the adversarial attacks. With the previous attack range
+we would not see a smooth progression and it would drop to
+almost 0\% after the first attack strength value of 0.1. \
 
 \subsection{Automated Evaluation}\label{subsection:evaluation} \
 

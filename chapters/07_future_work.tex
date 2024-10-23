@@ -1,6 +1,6 @@
 \chapter{Future Work}\label{chapter:future_work} \
 
-In this Chapter we discuss future possible research avenues related to
+In this chapter we discuss future possible research avenues related to
 this thesis. First we suggest investigating the impact of weight initialization
 on the trained \ac{qml} models. The weight initialization problem is not trivial
 ~\cite{mcclean_barren_2018} and it can highly affect the results of the
@@ -26,6 +26,15 @@ We also recommend trying different classical data encoding mechanisms
 (e.g.\ angle encoding or data re-uploading~\cite{aminpour_strategic_2024})
 as encoding might have a substantial influence in how features
 are interpreted by the \ac{qml} models. \
+
+Likewise, we would suggest using more complex datasets to visualize
+any possible behavior change when training and attacking \ac{qml}
+models. Currently, there are hardware limitations on quantum
+simulations, thus, more complex datasets are not able to be trained.
+When new more capable hardware becomes available, we would suggest
+continuing this research with datasets like MNIST~\cite{bottou_comparison_1994}
+or CIFAR-10~\cite{krizhevsky_learning_nodate}, as they are substantially more complex and delve
+into the realm of computer vision. \
 
 Additionally, focusing on adversarial attacks, other adversarial
 techniques (e.g.~\cite{carlini_towards_2017}) could be utilized

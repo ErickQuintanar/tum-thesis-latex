@@ -20,8 +20,10 @@ the Iris dataset are shown. In Section~\ref{section:diabetes-eval}
 the results from the \ac{pid} dataset follow. Moreover,
 in Section~\ref{section:breast-cancer-eval} the outcomes
 for the Wisconsin Breast Cancer dataset can be found.
-Lastly, the experiments' outcomes from the Plus-Minus dataset
-are provided in Section~\ref{section:plus-minus-eval}. \
+Additionally, the experiments' outcomes from the Plus-Minus dataset
+are provided in Section~\ref{section:plus-minus-eval}.
+Finally, an analysis on the observed results will
+be provided in Section~\ref{section:analysis}. \
 
 \section{Iris Dataset}\label{section:iris-eval} \
 
@@ -1107,13 +1109,132 @@ a relationship between model robustness and noise probability. \
 
 \subsection{Adversarial Accuracy}\label{subsection:plus-minus-adv-acc} \
 
+In Figure~\ref{fig:pm-34} we introduce the effects of the
+adversarial attacks on the accuracy of the noiseless \ac{qml}
+model. As expected, we can observe that for both adversarial
+techniques the performance of the model decreases with increasing
+attack strength. For both of the adversarial techniques
+we notice a stark accuracy decrease to around 2\% at 0.9 attack
+strength. The \ac{fgsm} technique (Subfig.~\ref{fig:bc3}) has a
+similar performance to the \ac{pgd} attack (Subfigure~\ref{fig:bc4}).
+This is the expected not the expected behavior, as \ac{fgsm}'s
+perturbations tend to be bigger in magnitude and more disruptive
+to the input. We also note that the noiseless model's adversarial
+accuracy for the Plus-Minus dataset decreases the most (close to
+0\% accuracy) in comparison to the previous datasets. We also
+notice that the attacks provoke this accuracy decrease with
+lower attack strength values. Furthermore, the adversarial accuracy
+stagnates after a value of 0.12, most likely because it cannot
+go lower. \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/plus-minus/pqc/figures/none-fgsm.png}
+      \subcaption{Noiseless model's \ac{fgsm} adversarial accuracy.}
+      \label{fig:pm3}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/plus-minus/pqc/figures/none-pgd.png}
+      \subcaption{Noiseless model's \ac{pgd} adversarial accuracy.}
+      \label{fig:pm4}
+  \end{subfigure}
+
+  \caption{\ac{vqa}'s accuracy on the adversarial Plus-Minus test dataset.}
+  \label{fig:pm-34}
+\end{figure} \
+
 \subsection{Noisy Models Adversarial Accuracy}\label{subsection:plus-minus-noisy-adv-acc} \
 
 \section{Analysis}\label{section:analysis} \
-\iffalse
+
+In this section we present an in depth analysis from the obtained
+results. In Subsection~\ref{subsection:model_acc} we introduce
+the knowledge acquired from training noiseless and noisy \ac{qml}
+models. Furthermore, in Subsection~\ref{subsection:model_adv_acc}
+we discuss the findings from the calculated adversarial accuracy
+on the noiseless models. Finally, in Subsection
+~\ref{subsection:noisy_adv_acc} we will describe the results
+from the adversarial attacks on the noisy models. \
+
+\subsection{Noisy Model Accuracy}\label{subsection:model_acc} \
+
+In this subsection we discuss the model accuracy when training
+\ac{qml} models with noise and comparing them to the noiseless
+version. The main finding can be summarized into one main observation.
+Namely, that a noiseless model will always perform equal or better
+than any noisy model. Throughout all this chapter we have observed
+that, for every dataset, the effects of quantum noise are negative
+to the model's accuracy when using the original test set. This
+result is not surprising, as quantum noise (even in small
+quantities) does tend to drown out any operations. This effect
+is one of the main disadvantages of current \ac{nisq} devices
+and it's exacerbated the longer the quantum circuit is. \
+
+One peculiar case is the use of coherent noise on Iris dataset
+training. In this case the model performance did not drop
+throughout all the misconfiguration degrees and reached the
+same accuracy than the noiseless model. The reason why this
+was the observed behavior could be that the Iris dataset is
+simple to classify (as it is linearly separable). Additionally,
+because the coherent noise is constant and not probabilistic,
+it might just shift the operation like a bias term which does
+not significantly diminish the model's classification ability. \
+
+Moreover, regarding the impact that quantum noise and its
+magnitude have on \ac{qml} models accuracy, we did not find
+a significant relationship between the model performance
+and the type of quantum noise. Thus, no specific quantum
+noise type constantly performed better or worse than the
+other quantum noise types. However, the magnitude of the
+noise did tend to significantly impact the model's accuracy.
+Meaning that normally the higher the quantum noise used
+during model training, the lower the model performance would
+be. \
+
+\subsection{Adversarial Accuracy}\label{subsection:model_adv_acc} \
+
+2. Adversarial accuracy from noiseless models \
+
+More features equals more modifications possible equals
+lower adversarial accuracy for higher attack strengths,
+we can see the progression from the iris dataset to the
+diabetes and then the breast cancer dataset. We also
+note that the attacks were effective and that
+the adversarial accuracy is reduced. \
+
+the stagnation might be due to performing the attacks on preprocessed
+data (?). in the iris dataset in fgsm it is because all the 0 labels
+are missclassified but none of the 1 labels are missclassified. see teams message. \
 
 PGD results might vary as the iterative process will result in different
 values every time. \
+
+\subsection{Noisy Model Adversarial Accuracy}\label{subsection:noisy_adv_acc} \
+
+3. Adversarial accuracy from noisy models \
+
+Cases: \
+1. Noiseless is always better. \
+  1.1 Noiseless is better at lower attack strengths.  => 2.2 \
+  1.2 Noiseless is better at higher attack strengths. => 2.1 \
+2. Noisy is always better. \
+  2.1 Noisy is better at lower attack strengths.  => 1.2 \
+  2.2 Noisy is better at higher attack strengths. => 1.1 \
+3. Some noisy are better and some aren't. \
+4. All equal. \
+
+Sometimes a higher attack strength would lead to an adversarial
+accuracy increase (or it would remain the same) on noisy
+models instead of a decrease. \ 
+
+For some models we could derive a relationship between
+model robustness and noise probability (special case 2), bu
+even if case 2 was true, for some tests we couldn't determine
+this relationship. \
+
+\iffalse
 
 Iris dataset might be too simple on clean dataset. (probs not if it is being affected by the adversarial attacks)
 
@@ -1176,49 +1297,6 @@ depolarizing: identical to bit-flip
 phase-damping: fgsm breakpoint at 0.3 noisiest perform better and low noise worse than noiseless, pgd same breakpoint but then noisy is better but no linear relation. \
 
 phase-flip: basically same as bit-flip and depolarizing \
-
-
-\section{Analysis}\label{section:analysis} \
-
-1. Model accuracy when training with noise \
-
-Iris results are probably an anomaly as it is a quite simple model to classify.
-No noise model is better than other, all depends on individual basis.
-More noise significantly reduces the model's accuracy, independent
-of which noise type is used. \
-
-2. Adversarial accuracy from noiseless models \
-
-More features equals more modifications possible equals
-lower adversarial accuracy for higher attack strengths,
-we can see the progression from the iris dataset to the
-diabetes and then the breast cancer dataset. We also
-note that the attacks were effective and that
-the adversarial accuracy is reduced, the stagnation
-might be due to performing the attacks on preprocessed
-data (?). \
-
-3. Adversarial accuracy from noisy models \
-
-Cases: \
-1. Noiseless is always better. \
-  1.1 Noiseless is better at lower attack strengths.  => 2.2 \
-  1.2 Noiseless is better at higher attack strengths. => 2.1 \
-2. Noisy is always better. \
-  2.1 Noisy is better at lower attack strengths.  => 1.2 \
-  2.2 Noisy is better at higher attack strengths. => 1.1 \
-3. Some noisy are better and some aren't. \
-4. All equal. \
-
-Sometimes a higher attack strength would lead to an adversarial
-accuracy increase (or it would remain the same) on noisy
-models instead of a decrease. \ 
-
-For some models we could derive a relationship between
-model robustness and noise probability (special case 2), bu
-even if case 2 was true, for some tests we couldn't determine
-this relationship. \
-
 
 Add the data we have +- \
 

@@ -1199,7 +1199,9 @@ can be observed in Figure~\ref{fig:phase_flip}. \
 In this section we introduce the fundamental concepts to
 understand the intersection between quantum computing and
 machine learning, for short \ac{qml}. A brief introduction
-to \ac{qml} and its main structure follows suit. Furthermore,
+to \ac{qml} and its main structure follows suit. Additionally,
+a short overview on supervised learning will be given in
+Subsection~\ref{subsection:supervised}. Furthermore,
 in Subsection~\ref{subsection:vqa} \ac{vqa} will be presented,
 taking a focus on the Circuit-Centric ansatz. \
 
@@ -1298,7 +1300,23 @@ observable's eigenvalues. Therefore, a threshold function is utilized to
 map the input to 0 or 1. Afterwards, all the measurements are binary
 decoded into the model's classes. \
 
-\subsection{\acl{vqa}}\label{subsection:vqa}
+\subsection{Supervised Learning}\label{subsection:supervised} \
+
+Supervised learning is the process in which \ac{qml} models
+are trained to correctly classify a given input to its
+corresponding class. In this case, the parameters \(\theta\)
+are optimized to minimize a loss function \(L\). \(L\) describes
+the difference between the predicted class \(f_{\theta}(x) = \hat{y}\)
+and the target class \(y\). The optimization step is repeated
+until a certain loss value or model accuracy has been achieved,
+or until a given number of \textit{epochs} (iterations) has been
+performed. When the parameter optimization is finished,
+\(f_{\theta}\) should be as close as possible to the
+mapping \(g(x) = y\), where \(g\) is the true function
+we are trying to approximate and describes the relationship
+between the input \(x\) and the class \(y\). \
+
+\subsection{\acl{vqa}}\label{subsection:vqa} \
 
 \ac{vqa} is a specific type of quantum algorithm. It attempts to
 gain a quantum advantage with \ac{nisq} devices. Currently, there

@@ -1,0 +1,80 @@
+\chapter{Conclusion}\label{chapter:conclusion} \
+
+In this chapter we conclude with this thesis by summarizing
+the contributions. Furthermore, we discuss how we answered
+the research goals defined in Section~\ref{section:research_goals}. \
+
+\ac{qml} has emerged as an innovative field combining quantum
+computing and \ac{ml}. Quantum devices, particularly in their
+current \ac{nisq} state, are limited by noise, which arises
+because they are not fully isolated from environmental interactions.
+This noise interferes with computations, creating challenges for
+quantum algorithms, despite their potential to outperform classical
+counterparts. \
+
+In \ac{ml}, adversarial attacks exploit model weaknesses by
+subtly altering inputs to mislead the model's classification.
+Noise has proven useful in classical \ac{ml} for enhancing
+generalization and avoiding local optima. This suggests that
+the inherent noise in \ac{nisq} devices could improve \ac{qml}
+performance, accuracy, and robustness against adversarial attacks,
+potentially making \ac{qml} models more resilient. \
+
+In our thesis we trained \ac{qml} models for four different
+datasets, each with different properties. We demonstrated
+that \ac{qml} models are capable of performing simple classification
+tasks in current simulated hardware using the Circuit-Centric ansatz.
+With these models we encode the input data with the amplitude embedding
+technique and interpret the output measurements as a probability
+distribution to assign the different classes. Furthermore,
+we trained several \ac{qml} models with six different types
+of noise models, each with five different noise magnitudes.
+This enabled us to visualize how quantum noise affects
+the \ac{qml}'s model performance. \
+
+Morevover, we performed two different adversarial attacks on the
+noiseless \ac{qml} model. Each attack was performed with different
+attack strength magnitudes to show the effects of the adversarial
+examples on the model's robustness. Finally, with the crafted
+adversarial examples, we evaluated the \ac{qml} models trained
+with different types of noise. This final evaluation was
+executed to verify the whether a noisy training would improve
+model robustness against adversarial attacks. \
+
+With this work we covered all the objectives from the research
+goals and the findings are presented below. \
+
+\begin{enumerate}
+    \item \textbf{Train noiseless \ac{qml} models on different datasets:}
+        We trained several \ac{qml} models to classify diverse datasets.
+        The datasets varied in their dimension and the classification
+        task (two and four classes). Each of these models was capable of
+        classifying the correct datasets up to an acceptable performance.
+        This showed that, while limited to lower-dimensional datasets,
+        \ac{qml} models can achieve similar performances to classical
+        \ac{ml} models. \
+    \item \textbf{Train noisy \ac{qml} models on different datasets:}
+        We examined the accuracy of \ac{qml} models trained
+        with noise compared to noiseless versions. The key takeaway is
+        that noiseless models consistently outperform noisy ones, as
+        quantum noise generally degrades model accuracy across datasets.
+        This effect, particularly impactful on today's \ac{nisq} devices,
+        intensifies with longer circuits. A notable exception is seen with
+        coherent noise on the Iris dataset, where accuracy remains comparable
+        to the noiseless model, likely due to the dataset's simplicity and the
+        constant nature of coherent noise. While noise type showed no significant
+        effect, increased noise magnitude led to a marked decrease in model accuracy. \
+    \item \textbf{Perform adversarial attacks on noiseless \ac{qml} models:}
+        We identified two main insights on adversarial accuracy in noiseless
+        \ac{qml} models. First, adversarial attacks effectively induce
+        misclassifications across datasets, with stronger attacks reducing the
+        adversarial accuracy similarly to classical \ac{ml} models. High-dimensional
+        datasets are more susceptible to these attacks, as observed in the Plus-Minus
+        dataset, while lower-dimensional datasets like Iris offer fewer modifiable
+        features. In \ac{fgsm} attacks on Iris, adversarial accuracy stalls at 50\%
+        after a 0.5 attack strength due to the class distribution. The \ac{pgd}
+        attack differs, with iterative adjustments creating variable results
+        and stronger misclassifications at higher strengths, particularly
+        challenging linear separability with the Petal Width feature. \
+    \item \textbf{Evaluate noisy \ac{qml} models with adversarial samples:}
+\end{enumerate} \

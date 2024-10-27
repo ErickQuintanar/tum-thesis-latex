@@ -1104,8 +1104,64 @@ models and the noiseless models get an adversarial accuracy of around
 a relationship between model robustness and noise probability. \
 
 \section{Plus-Minus Dataset}\label{section:plus-minus-eval} \
+The results obtained from training the noisy and noiseless
+\ac{qml} models on the Plus-Minus dataset can be found in Subsection
+~\ref{subsection:plus-minus-noisy-acc}. Moreover, the outcomes
+of both adversarial attacks will be presented in Subsection
+~\ref{subsection:plus-minus-adv-acc}. \ %Finally, the evaluation
+%of the noisy models against the adversarial attacks is
+%presented in Subsection~\ref{subsection:plus-minus-noisy-adv-acc}. \
 
 \subsection{Noisy Models Accuracy}\label{subsection:plus-minus-noisy-acc} \
+
+In Figure~\ref{fig:pm-12} we can observe the results
+from the training of noiseless and noisy \ac{qml} models
+for the Plus-Minus test dataset. The noiseless baseline model accuracy
+can be found on both graphs at the y-intercept, which in
+this case is of 75\%. We note in Subfigure~\ref{fig:pm1}
+that for the Plus-Minus dataset the model accuracy slightly decreases
+with miscalibrations equal or lower than 4 degrees. Nevertheless,
+the model performance significantly drops to around 30\% with
+miscalibration degrees higher than 4 are used. \
+
+For incoherent noise models in Subfigure~\ref{fig:pm2}
+we can observe a decrease in model accuracy for all the noise
+models. In this case, at noise probabilities smaller than 4\%,
+phase damping noise performs the best of any noise models,
+followed then by models with amplitude damping noise. When
+a noise probability higher than 4\% is used, all the
+noisy models tend to perform almost identical. These
+models obtain an accuracy of around 35\% at the highest
+noise probability used. This accuracy does represent
+a significant downgrade from the noiseless' model
+accuracy of 75\%. \
+
+Regarding the bit-flip, depolarizing, and phase-flip noise, the model
+performance significantly decreases its accuracy to around 35\% starting at
+2\% noise probability and remains at that same value for all
+higher noise probabilities. In the previous datasets we were not able
+to draw any relationship between the type of noise used and the model
+performance they achieved. Nevertheless, the noisy models from the
+\ac{pid} (Fig.~\ref{fig:diabetes2}) dataset perform similarly to the
+ones from the Plus-Minus dataset. \
+
+\begin{figure}[!h]
+  \centering
+
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/plus-minus/pqc/figures/accuracy-coherent.png}
+      \subcaption{Coherent noise model's accuracy.}
+      \label{fig:pm1}
+  \end{subfigure} \qquad
+  \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{figures/evaluation_results/plus-minus/pqc/figures/accuracy-incoherent.png}
+      \subcaption{Incoherent noise models' accuracy.}
+      \label{fig:pm2}
+  \end{subfigure}
+
+  \caption{\ac{vqa}'s accuracy on the Plus-Minus clean test dataset.}
+  \label{fig:pm-12}
+\end{figure} \
 
 \subsection{Adversarial Accuracy}\label{subsection:plus-minus-adv-acc} \
 
@@ -1479,6 +1535,6 @@ Presentation: \
  around 20-25 mins \
 
  noisy aml analysis \
- - find physical explanations for the different noise models (maybe check density matric for some samples) \
+ - find physical explanations for the different noise models (maybe check density matrix for some samples) \
 
 \fi

@@ -78,7 +78,26 @@ These fields are the model accuracy on the test set and an
 \(id\) to help identify the resulting model weights. The
 configuration files are helpful to automate the training
 and prepare the adversarial attacks on all the trained
-\ac{qml} models. \
+\ac{qml} models. The hyperparameters used to train the
+models can be found in Table~\ref{tab:hyperparameters}. \
+
+\begin{table}[htpb]
+  \centering
+  \begin{tabular}{| c | c | c | c | c | c | c |}
+    \hline
+    Dataset & Qubits & Layers & Classes & Learning Rate & Batch Size & Epochs \\
+    \hline
+    Iris & 2 & 2 & 2 & 0.05 & 30 & 10 \\
+    \hline
+    \ac{pid} & 3 & 40 & 2 & 0.005 & 30 & 10 \\
+    \hline
+    Breast-Cancer & 4 & 40 & 2 & 0.0005 & 16 & 10 \\
+    \hline
+    Plus-Minus & 8 & 32 & 4 & 0.001 & 50 & 10 \\
+    \hline
+  \end{tabular}
+  \caption[Hyperparameters table.]{Hyperparameters used for the different datasets.}\label{tab:hyperparameters}
+\end{table}
 
 \subsection{Noise Injection}\label{subsection:noise_injection} \
 
@@ -143,8 +162,6 @@ drown down any potential learning from the data. The same reasons
 apply to the chosen values for the miscalibration angle for coherent
 noise, the values are \(2^{\circ}\), \(4^{\circ}\), \(6^{\circ}\),
 \(8^{\circ}\), and \(10^{\circ}\). \
-
-\pagebreak
 
 \subsection{Training Pipeline}\label{subsection:pipeline} \
 

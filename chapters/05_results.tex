@@ -1018,7 +1018,7 @@ we note that all the models perform similarly until an attack strength
 higher than 0.3 is used. After this breaking point, the noisy models
 with the highest noise probabilities (6\%, 8\% and 10\%) achieve
 a higher adversarial accuracy than the noiseless model. Nevertheless,
-after this breakpoint, the models with the lowest noise probabilites
+after this breakpoint, the models with the lowest noise probabilities
 (2\% and 4\%) perform slightly worse than the noiselss model. Even
 though the noisiest models perform better than any other model, there
 is not a conclusive relationship between noise probability and model
@@ -1108,9 +1108,9 @@ The results obtained from training the noisy and noiseless
 \ac{qml} models on the Plus-Minus dataset can be found in Subsection
 ~\ref{subsection:plus-minus-noisy-acc}. Moreover, the outcomes
 of both adversarial attacks will be presented in Subsection
-~\ref{subsection:plus-minus-adv-acc}. \ %Finally, the evaluation
-%of the noisy models against the adversarial attacks is
-%presented in Subsection~\ref{subsection:plus-minus-noisy-adv-acc}. \
+~\ref{subsection:plus-minus-adv-acc}. Due to hardware and time constraints,
+the results from the noisy models adversarial accuracy will not
+be presented. \
 
 \subsection{Noisy Models Accuracy}\label{subsection:plus-minus-noisy-acc} \
 
@@ -1201,8 +1201,6 @@ go lower. \
   \label{fig:pm-34}
 \end{figure} \
 
-\subsection{Noisy Models Adversarial Accuracy}\label{subsection:plus-minus-noisy-adv-acc} \
-
 \section{Analysis}\label{section:analysis} \
 
 In this section we present an in depth analysis from the obtained
@@ -1248,6 +1246,8 @@ noise did tend to significantly impact the model's accuracy.
 Meaning that normally the higher the quantum noise used
 during model training, the lower the model performance would
 be. \
+
+\pagebreak
 
 \subsection{Adversarial Accuracy}\label{subsection:model_adv_acc} \
 
@@ -1400,19 +1400,19 @@ complex it is in comparison to the \ac{fgsm} technique. \
     \label{fig:adv7}
   \end{subfigure}
 
-  \begin{subfigure}{\textwidth}
-    \includegraphics[width=\linewidth]{figures/adversarial_analysis/adversarial-pgd-0.5.png}
-    \subcaption{\ac{pgd} adversarial examples for an attack strength of 0.5.}
-    \label{fig:adv8}
-  \end{subfigure}
-
-  \caption{Scatter plots between the Sepal Length, Petal Length, and Petal Width features from the Iris dataset when the \ac{fgsm} adversarial attack is performed.}
+  \caption{Scatter plots between the Sepal Length, Petal Length, and Petal Width features from the Iris dataset when the \ac{pgd} adversarial attack is performed.}
   \label{fig:adv-pgd}
 \end{figure} \
 
 \begin{figure}[!h]
   \ContinuedFloat
   \centering
+
+  \begin{subfigure}{\textwidth}
+    \includegraphics[width=\linewidth]{figures/adversarial_analysis/adversarial-pgd-0.5.png}
+    \subcaption{\ac{pgd} adversarial examples for an attack strength of 0.5.}
+    \label{fig:adv8}
+  \end{subfigure}
 
   \begin{subfigure}{\textwidth}
       \includegraphics[width=\linewidth]{figures/adversarial_analysis/adversarial-pgd-0.7.png}
@@ -1430,6 +1430,8 @@ complex it is in comparison to the \ac{fgsm} technique. \
   \label{fig:adv-pgd}
 \end{figure} \
 
+\pagebreak
+
 Last but not least, we note that the PGD results might
 vary as the iterative process may result in different
 gradients calculations every time. Therefore, the
@@ -1441,26 +1443,68 @@ differences. \
 
 \subsection{Noisy Model Adversarial Accuracy}\label{subsection:noisy_adv_acc} \
 
-3. Adversarial accuracy from noisy models \
+We determined one main finding regarding the adversarial accuracy
+of the noisy \ac{qml} models. This observation is that there is no
+direct relationship between model robustness and quantum noise.
+Nevertheless, some noisy models fared better against adversarial
+attacks as the baseline noiseless model. To better illustrate this
+specific situation, from the graphs we identified four special
+cases when noisy and noiseless models were evaluated with
+different adversarial attacks. Each case can have special
+variations depending on the combination of datasets,
+\ac{qml} model used, and adversarial attack employed.
+The encountered cases are: \
 
-Cases: \
-1. Noiseless is always better. \
-  1.1 Noiseless is better at lower attack strengths.  => 2.2 \
-  1.2 Noiseless is better at higher attack strengths. => 2.1 \
-2. Noisy is always better. \
-  2.1 Noisy is better at lower attack strengths.  => 1.2 \
-  2.2 Noisy is better at higher attack strengths. => 1.1 \
-3. Some noisy are better and some aren't. \
-4. All equal. \
+\begin{enumerate}
+  \item Noiseless model always perform better: throughout the whole attack
+        strength range the noiseless model outperforms all the noisy models
+        (Fig.~\ref{fig:iris-56}). \
+  \item Noisy models always perform better: throughout the whole attack
+        strength range for a specific type of quantum noise, all the noisy
+        models trained with all the noise probabilities outperform the
+        noiseless model (Fig.~\ref{fig:iris10}). \
+  \item Some noisy models perform better than the noiseless model: throughout
+        the whole attack strength range for a specific type of quantum noise,
+        some noisy models with specific noise probabilities outperform the
+        noiseless model, while the remaining noisy models obtain a lower
+        adversarial accuracy (Fig.~\ref{fig:iris8}). \
+  \item All models perform equally: throughout the whole attack strength
+        range the noiseless model performs equally to all the noisy models
+        (Fig.~\ref{fig:diabetes-1314}). \
+\end{enumerate}
 
-Sometimes a higher attack strength would lead to an adversarial
-accuracy increase (or it would remain the same) on noisy
-models instead of a decrease. \ 
+Although these four cases cover a comprehensive number of outcomes,
+there are specific occasions where a variation of them can be found.
+These two subcases apply to the first two types of cases and are
+as follows: \ 
 
-For some models we could derive a relationship between
-model robustness and noise probability (special case 2), bu
-even if case 2 was true, for some tests we couldn't determine
-this relationship. \
+\begin{enumerate}[a)]
+  \item Noiseless model performs better than all the noisy models
+        at lower attack strength values. \
+  \item Noiseless model performs worse than all the noisy models
+        at lower attack strength values. \
+\end{enumerate}
+
+Some specific combinations of cases and subcases directly could imply
+other combinations. For example, the combination 1a) states that
+noiseless models perform better at lower attack strength values than all
+the noisy models. This case (Fig.~\ref{fig:bc15}) implicitly states
+that all the noisy models perform better than the noiseless
+model for higher attack strength values, which is corresponds to the
+2b) case. \
+
+Furthermore, we investigated the measurements at the end of the models
+trained with noise and we were not able to observe any direct impact
+from quantum noise on the quantum states. A direct impact would be,
+for example, observing the maximally mixed state at the end of the
+circuit before the classification is performed when depolarizing noise
+is used. The reason why we cannot observe any direct result is because
+when performing the evaluation, we only utilize the weights derived
+from the noisy training but we utilize a noiseless model. Therefore,
+no quantum noise takes place when the evaluation is performed. Nevertheless,
+the weights obtained from the training of noisy and noiseless models do
+differ. Thus, we can observe the impacts of quantum noise during training
+on the model's parameters. \
 
 \iffalse
 
@@ -1525,16 +1569,5 @@ depolarizing: identical to bit-flip
 phase-damping: fgsm breakpoint at 0.3 noisiest perform better and low noise worse than noiseless, pgd same breakpoint but then noisy is better but no linear relation. \
 
 phase-flip: basically same as bit-flip and depolarizing \
-
-Add the data we have +- \
-
-Presentation: \
- - general noise\
- - aml \
-
- around 20-25 mins \
-
- noisy aml analysis \
- - find physical explanations for the different noise models (maybe check density matrix for some samples) \
 
 \fi

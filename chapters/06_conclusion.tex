@@ -77,4 +77,17 @@ goals and the findings are presented below. \
         and stronger misclassifications at higher strengths, particularly
         challenging linear separability with the Petal Width feature. \
     \item \textbf{Evaluate noisy \ac{qml} models with adversarial samples:}
-\end{enumerate} \
+        We found that quantum noise does not directly correlate with increased model
+        robustness against adversarial attacks. Instead, model performance under
+        adversarial conditions varies, with noisy models occasionally surpassing
+        noiseless ones depending on the type and probability of noise, dataset,
+        and attack strength. Four primary scenarios emerged: noiseless models
+        generally performing better, noisy models consistently outperforming
+        noiseless ones, selective noisy models surpassing noiseless models,
+        and cases where all models performed equally. Subcases indicate that
+        model performance can fluctuate at specific attack strengths, highlighting
+        complex interactions between noise and adversarial accuracy. Furthermore,
+        while noisy training affects model weights, the lack of observable direct
+        quantum state changes during evaluation suggests that noise influences model
+        parameters but not the quantum states directly during testing. \
+\end{enumerate}

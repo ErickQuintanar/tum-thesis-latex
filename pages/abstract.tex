@@ -1,3 +1,32 @@
 \chapter{\abstractname}
 
-%TODO: Abstract
+This thesis explores the potential of utilizing quantum noise in \acl{qml}
+models to enhance robustness against adversarial attacks. Quantum noise,
+typically seen as a challenge in quantum computing, is applied here with
+the hypothesis that it may improve model resilience. This thesis employs a
+\acl{vqa} to evaluate the effects of different types and strengths of
+quantum noise on the robustness of \ac{qml} models under adversarial
+conditions created by \acl{fgsm} and \acl{pgd} attacks. The work examines
+both noisy and noiseless models, revealing four main scenarios of
+adversarial performance across various noise combinations. \
+
+Interestingly, results indicate that while some noisy models achieve
+higher adversarial accuracy at specific attack strengths, no
+direct linear relationship exists between noise probability and
+model robustness. This lack of a straightforward correlation suggests
+that certain noise configurations might indeed offer resilience advantages,
+although the outcomes vary based on attack type and dataset. Additionally,
+quantum noise utilized during the training phase does not alter the model's
+final state, as the weights are adapted to noise conditions in
+training yet evaluated noiselessly. This distinction offers
+insights into how noise affects parameter adjustments rather
+than the final classification states, proposing a nuanced
+understanding of robustness in noisy QML environments. \
+
+This thesis contributes to the field of quantum adversarial machine
+learning by demonstrating that quantum noise may serve as a resource
+for improving \acl{qml} model resilience under adversarial attacks. 
+Potentially, this thesis enables the development of \ac{qml}
+architectures that inherently integrate quantum noise for
+robustness purposes without sacrificing model performance on
+non-adversarial samples. \
